@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "navbarwid.h"
-#include "home_mainwid.h"
+#include "td_mainwid.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,6 +27,7 @@ protected slots:
 private:
     Ui::MainWindow *ui;
 
+    Td_MainWid *mTdWid;
     NavBarWid *mNavBarWid;
     Home_MainWid *mHomeWid;
 };

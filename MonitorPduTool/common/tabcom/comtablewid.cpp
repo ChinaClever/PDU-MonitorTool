@@ -20,9 +20,9 @@ ComTableWid::ComTableWid(QWidget *parent) :
     timer->start(1*1000);
     connect(timer, SIGNAL(timeout()),this, SLOT(timeoutDone()));
 
-//    QGridLayout *gridLayout = new QGridLayout(parent);
-//    gridLayout->setContentsMargins(0, 0, 0, 0);
-//    gridLayout->addWidget(this);
+    //    QGridLayout *gridLayout = new QGridLayout(parent);
+    //    gridLayout->setContentsMargins(0, 0, 0, 0);
+    //    gridLayout->addWidget(this);
 }
 
 ComTableWid::~ComTableWid()
@@ -47,7 +47,7 @@ void ComTableWid::initTableWidget(QStringList &header)
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(ui->tableWidget,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),
-                this,SLOT(itemDoubleClicked(QTableWidgetItem *)));
+            this,SLOT(itemDoubleClicked(QTableWidgetItem *)));
 
     // ui->tableWidget->setColumnHidden(0, true);
     // ui->tableWidget->setColumnWidth(0,200);
@@ -127,6 +127,11 @@ void ComTableWid::setTableItem(int id, int column, const QString &str)
     } else {
         item->setText(str);
     }
+}
+
+void ComTableWid::setAlignLeft(int row, int col)
+{
+    ui->tableWidget->item(row, col)->setTextAlignment(Qt::AlignLeft);
 }
 
 int ComTableWid::currentRow()

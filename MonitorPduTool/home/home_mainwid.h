@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "serialstatuswid.h"
 #include "home_envtabwid.h"
-//#include "home_workwid.h"
+#include "home_workwid.h"
 
 namespace Ui {
 class Home_MainWid;
@@ -27,10 +27,11 @@ protected:
 private:
     Ui::Home_MainWid *ui;
 
+    Home_WorkWid *mWorkWid;
     Home_EnvTabWid *mEnvTabWid;
     Home_LineTabWid *mLineTabWid;
     Home_ThresholdTabWid *mThTabWid;
-//    Home_WorkWid *mModeWid;
+
 };
 
 #endif // HOMEMAINWID_H

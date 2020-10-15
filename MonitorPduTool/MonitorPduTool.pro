@@ -17,6 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(home/home.pri)
 include(common/common.pri)
+include(testdata/testdata.pri)
+
 
 SOURCES += \
     main.cpp \
