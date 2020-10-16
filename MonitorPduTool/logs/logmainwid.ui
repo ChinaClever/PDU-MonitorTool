@@ -37,6 +37,9 @@
    </property>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="contextMenuPolicy">
+      <enum>Qt::PreventContextMenu</enum>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::East</enum>
      </property>
@@ -45,6 +48,9 @@
      </property>
      <property name="currentIndex">
       <number>-1</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::ElideNone</enum>
      </property>
     </widget>
    </item>

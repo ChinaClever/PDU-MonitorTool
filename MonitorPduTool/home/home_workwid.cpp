@@ -35,6 +35,19 @@ void Home_WorkWid::initLayout()
     gridLayout->addWidget(this);
 
     mSetDlg = new Home_SetDlg(this);
+
+    timer = new QTimer(this);
+    timer->start(500);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeoutDone()));
+
+    QString strColor;
+    strColor = "background-color:yellow; color:rgb(0, 0, 0);";
+
+    strColor += "font:100 34pt \"微软雅黑\";";
+
+    QString str = "00:23";
+    ui->timeLab->setText(str);
+    ui->timeLab->setStyleSheet(strColor);
 }
 
 void Home_WorkWid::setInsertTextColor(const QColor &color)
@@ -55,4 +68,15 @@ void Home_WorkWid::setInsertTextColor(const QColor &color)
 void Home_WorkWid::on_setBtn_clicked()
 {
     mSetDlg->exec();
+}
+
+void Home_WorkWid::timeoutDone()
+{
+
+
+}
+
+void Home_WorkWid::on_startBtn_clicked()
+{
+
 }
