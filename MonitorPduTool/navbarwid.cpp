@@ -11,10 +11,10 @@ NavBarWid::NavBarWid(QWidget *parent) :
     QGridLayout *gridLayout = new QGridLayout(parent);
     gridLayout->setContentsMargins(0, 0, 0, 6);
     gridLayout->addWidget(this);
-//    mUserLand = new UsrLandDlg(this);
+    mUserLand = new UsrLandDlg(this);
 
-//    QTimer::singleShot(5,this,SLOT(on_loginBtn_clicked()));
-//    connect(mUserLand,SIGNAL(sendUserNameSig(QString)),this,SLOT(recvUserNameSlot(QString)));
+    QTimer::singleShot(5,this,SLOT(on_loginBtn_clicked()));
+    connect(mUserLand,SIGNAL(sendUserNameSig(QString)),this,SLOT(recvUserNameSlot(QString)));
 }
 
 NavBarWid::~NavBarWid()
@@ -44,17 +44,17 @@ void NavBarWid::on_logBtn_clicked()
 
 void NavBarWid::on_loginBtn_clicked()
 {
-//    bool lang = LandingUser::get()->land;
-//    if(lang) {
-//        int ret = mUserLand->selectWork();
-//        if(ret == 1) { // 用户切换
-//            mUserLand->exec();
-//        }  else if(ret == 2) { // 用户退出
-//            mUserLand->quitWidget();
-//        }
-//    } else {
-//        mUserLand->exec();
-//    }
+    bool lang = LandingUser::get()->land;
+    if(lang) {
+        int ret = mUserLand->selectWork();
+        if(ret == 1) { // 用户切换
+            mUserLand->exec();
+        }  else if(ret == 2) { // 用户退出
+            mUserLand->quitWidget();
+        }
+    } else {
+        mUserLand->exec();
+    }
 }
 
 

@@ -123,7 +123,7 @@
     <item row="2" column="0">
      <widget class="QLabel" name="label_8">
       <property name="text">
-       <string>标准/中性</string>
+       <string>交直流</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -146,17 +146,12 @@
       </property>
       <item>
        <property name="text">
-        <string>标准</string>
+        <string>交流</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>定制</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>中性</string>
+        <string>直流</string>
        </property>
       </item>
      </widget>
@@ -230,10 +225,10 @@
        </size>
       </property>
       <property name="text">
-       <string>报警阈值:</string>
+       <string>报警阈值：</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -291,7 +286,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>60</width>
+        <width>80</width>
         <height>16777215</height>
        </size>
       </property>
@@ -400,7 +395,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>60</width>
+        <width>80</width>
         <height>16777215</height>
        </size>
       </property>

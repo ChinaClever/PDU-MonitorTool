@@ -3,7 +3,7 @@
 
 #include <QtCore>
 #include <QWidget>
-//#include "usrlanddlg.h"
+#include "usrlanddlg.h"
 
 namespace Ui {
 class NavBarWid;
@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::NavBarWid *ui;
-//    UsrLandDlg* mUserLand;
+    UsrLandDlg* mUserLand;
 };
 
 #endif // NAVBARWID_H

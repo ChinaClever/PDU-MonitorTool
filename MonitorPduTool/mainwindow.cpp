@@ -29,11 +29,11 @@ void MainWindow::initWid()
     ui->stackedWid->addWidget(mTdWid);
 //    connect(mHomeWid, SIGNAL(startSig()), mStatusWid, SLOT(startSlot()));
 
-//    mSetupWid = new Setup_MainWid(ui->stackedWid);
-//    ui->stackedWid->addWidget(mSetupWid);
+    mSetupWid = new Setup_MainWid(ui->stackedWid);
+    ui->stackedWid->addWidget(mSetupWid);
 
-//    mLog = new LogMainWid(ui->stackedWid);
-//    ui->stackedWid->addWidget(mLog);
+    mLog = new LogMainWid(ui->stackedWid);
+    ui->stackedWid->addWidget(mLog);
 
     mNavBarWid = new NavBarWid(ui->barWid);
     connect(mNavBarWid, SIGNAL(navBarSig(int)), this, SLOT(navBarSlot(int)));

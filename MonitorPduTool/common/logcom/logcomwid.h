@@ -16,7 +16,7 @@ public:
     explicit LogComWid(QWidget *parent = 0);
     ~LogComWid();
 
-    void initWid(BasicSql *db, LogBtnBar *bar,  SqlQueryBase *btn);
+    void initWid(BasicSql *db, LogBtnBar *bar, SqlQueryBase *btn, const QString &title="");
 
 protected:
     Ui::LogComWid *ui;
