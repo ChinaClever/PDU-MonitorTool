@@ -2,6 +2,7 @@
 #define HOME_LINETABWID_H
 
 #include "comtablewid.h"
+#include "datapacket.h"
 
 class Home_LineTabWid : public ComTableWid
 {
@@ -13,8 +14,13 @@ signals:
 
 protected:
     void initWid();
+    void appendItem(sDataUnit *unit);
 
+protected slots:
+    void timeoutDone();
 
+private:
+    sObjData *mData;
 };
 
 #endif // HOME_LINETABWID_H

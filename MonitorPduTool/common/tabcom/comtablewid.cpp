@@ -241,8 +241,7 @@ void ComTableWid::setAlarmBackgroundColor(int id)
 {
     int column = ui->tableWidget->columnCount();
     for(int i=0; i<column; ++i) {
-        QTableWidgetItem *item = ui->tableWidget->item(id, i);
-        item->setForeground(QBrush(QColor(255, 0, 0)));
+        setItemColor(id, i, 2);
     }
 }
 
@@ -250,8 +249,7 @@ void ComTableWid::setNormalBackgroundColor(int id)
 {
     int column = ui->tableWidget->columnCount();
     for(int i=0; i<column; ++i) {
-        QTableWidgetItem *item = ui->tableWidget->item(id, i);
-        item->setForeground(QBrush(QColor(0, 0, 0)));
+        setItemColor(id, i, 0);
     }
 }
 
@@ -263,22 +261,10 @@ void ComTableWid::setNormalBackgroundColor(int id)
  */
 void ComTableWid::setItemColor(int id, int column, int alarm)
 {
-    addTableRows(id+1);
+    QColor bc(0,0,0);
+    if(2 == alarm) bc.setRgb(255, 0, 0);
     QTableWidgetItem *item = ui->tableWidget->item(id, column);
-
-    switch (alarm) {
-    case 0:
-        item->setTextColor(QColor(Qt::black));
-        break;
-    case 1:
-        item->setTextColor(QColor(232,157,18));
-        break;
-    case 2:
-        item->setTextColor(QColor(Qt::red));
-        break;
-    default:
-        break;
-    }
+    item->setForeground(QBrush(bc));
 }
 
 void ComTableWid::scrollToBottomTable()

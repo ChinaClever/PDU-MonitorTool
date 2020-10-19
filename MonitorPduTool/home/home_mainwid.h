@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "serialstatuswid.h"
-#include "home_envtabwid.h"
 #include "home_workwid.h"
 
 namespace Ui {

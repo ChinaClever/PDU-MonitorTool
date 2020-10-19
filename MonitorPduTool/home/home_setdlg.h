@@ -2,7 +2,8 @@
 #define HOME_SETDLG_H
 
 #include <QDialog>
-#include "common.h"
+//#include "common.h"
+#include "home_envtabwid.h"
 
 namespace Ui {
 class Home_SetDlg;

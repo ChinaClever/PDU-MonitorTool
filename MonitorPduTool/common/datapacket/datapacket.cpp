@@ -7,20 +7,16 @@
 
 sDataPacket::sDataPacket()
 {
-    tg = new sTgObjData;
-    data = new sDataUnit;
-    devType = new sDevType;
+    for(int i=0; i<DEV_NUM; ++i) {
+        dev[i] = new sDevData;
+        clear(i);
+    }
 }
 
-void sDataPacket::clear()
+void sDataPacket::clear(int id)
 {
-    memset(tg, 0, sizeof(sTgObjData));
-    memset(data, 0, sizeof(sDataUnit));
-    memset(devType, 0, sizeof(sDevType));
-
-    dev_type.clear();
+    memset(dev[id], 0, sizeof(sDevData));
     status.clear();
-    sn.clear();
 }
 
 
@@ -30,14 +26,4 @@ sDataPacket *sDataPacket::bulid()
     if(sington == nullptr)
         sington = new sDataPacket();
     return sington;
-}
-
-int sDataPacket::tgCur()
-{
-    int ret = 0;
-    for(int i=0; i<data->size; ++i) {
-        ret += data->cur[i];
-    }
-
-    return ret;
 }

@@ -8,6 +8,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
     ui->setupUi(this);
 
     initLayout();
+    mManualDlg = new Home_ManualDlg(this);
 
     for(int i=0; i<2; ++i) {
         setInsertTextColor(QColor("red"));
@@ -78,5 +79,5 @@ void Home_WorkWid::timeoutDone()
 
 void Home_WorkWid::on_startBtn_clicked()
 {
-
+    mManualDlg->exec();
 }

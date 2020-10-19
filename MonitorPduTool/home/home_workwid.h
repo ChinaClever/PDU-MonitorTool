@@ -2,7 +2,7 @@
 #define HOME_WORKWID_H
 
 #include <QWidget>
-#include "home_setdlg.h"
+#include "home_manualdlg.h"
 
 namespace Ui {
 class Home_WorkWid;
@@ -30,6 +30,7 @@ private:
 
     QTimer *timer;
     Home_SetDlg *mSetDlg;
+    Home_ManualDlg *mManualDlg;
 };
 
 #endif // HOME_WORKWID_H

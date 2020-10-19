@@ -3,64 +3,81 @@
 #include <QtCore>
 #include <QColor>
 
-#define PACK_ARRAY_SIZE 16
+#define LINE_NUM  3
+#define SENOR_NUM 1
+#define NAME_SIZE 32
+#define DEV_NUM 3
+#define ARRAY_SIZE 255 //一包数据最长
+#define PACK_ARRAY_SIZE LINE_NUM
 
 // 倍率定义
-#define COM_RATE_VOL	1.0    // 电压
-#define COM_RATE_CUR	10.0    // 电流
+#define COM_RATE_VOL	10.0    // 电压
+#define COM_RATE_CUR	100.0    // 电流
 #define COM_RATE_POW	1000.0  // 功率
 #define COM_RATE_ELE	10.0    // 电能
 #define COM_RATE_PF     100.0   // 功率因数
 #define COM_RATE_TEM	10.0    // 温度
 #define COM_RATE_HUM	10.0    // 湿度
 
-struct sThreshold {
-    ushort min[PACK_ARRAY_SIZE];
-    ushort max[PACK_ARRAY_SIZE];
-};
 
 /**
- * 数据对象：包括电流，电压，功率，电能，开关状态，插接位名称
+ * 数据单元：包括当前值，阈值，临界值，告警状态等
  */
 struct sDataUnit
 {
     sDataUnit() {size=0;}
-    int size;
-    double rate;
-    sThreshold volTh;
-    ushort vol[PACK_ARRAY_SIZE]; // 电压
 
-    sThreshold curTh;
-    ushort cur[PACK_ARRAY_SIZE]; // 电流
-    ushort cured[PACK_ARRAY_SIZE]; // 电流
-    ushort pow[PACK_ARRAY_SIZE]; // 功率
-    ushort powed[PACK_ARRAY_SIZE]; // 功率
-    uint ele[PACK_ARRAY_SIZE]; // 电能
-
-    uchar pf[PACK_ARRAY_SIZE]; // 功率因数
-    uchar sw[PACK_ARRAY_SIZE]; // 开关状态  0 表示未启用 1 表示开
-    uchar tem;
-    uchar hum;
-
-    uchar hz; // 电压频率
-    uchar br; // 波特率
-    uchar version;
-    uchar chipStatus;
-    ushort activePow[PACK_ARRAY_SIZE]; // 有功功率值
+    ushort size;
+    ushort value[PACK_ARRAY_SIZE]; // 值
+    ushort min[PACK_ARRAY_SIZE]; // 最小值
+    ushort max[PACK_ARRAY_SIZE]; // 最大值
+    uchar alarm[PACK_ARRAY_SIZE]; // 报警值 0表示未报警  1表示已报警 2表示已纪录
     uchar status[PACK_ARRAY_SIZE];
-    ushort reserve;
-    uchar ip[18];
 };
 
-struct sTgObjData
-{
-    uint vol; // 电压
-    uint cur;  // 电流
-    uint pow; // 功率
 
-    uint ele; // 电能
-    uint pf; // 功率因数
-    uint activePow; // 视在功率
+
+/**
+ * 数据对象：包括电流，电压，功率，电能，开关状态，插接位名称
+ */
+struct sObjData
+{
+    sObjData() {size=0;}
+    int size;
+    sDataUnit vol; // 电压
+    sDataUnit cur; // 电流
+
+    uint pow[PACK_ARRAY_SIZE]; // 功率
+    uint ele[PACK_ARRAY_SIZE]; // 电能
+
+    ushort pf[PACK_ARRAY_SIZE]; // 功率因数
+    uchar sw[PACK_ARRAY_SIZE]; // 开关状态 0 表示未启用
+
+    uchar hz[PACK_ARRAY_SIZE]; // 电压频率
+    uint aPow[PACK_ARRAY_SIZE]; // 视在功率值
+
+    uint powStatus[PACK_ARRAY_SIZE]; // 功率
+    uint ratedCur[PACK_ARRAY_SIZE]; // 额定电流
+    uint wave[PACK_ARRAY_SIZE]; // 谐波值
+    uint tem[PACK_ARRAY_SIZE];
+    uchar delay[PACK_ARRAY_SIZE];
+
+    uchar pl[PACK_ARRAY_SIZE]; // 负载百分比
+    uint curThd[PACK_ARRAY_SIZE]; // 电流谐波含量
+    uint volThd[PACK_ARRAY_SIZE]; // 电压谐波含量
+};
+
+
+
+/**
+ * 环境数据结构体
+ */
+struct sEnvData
+{
+    sEnvData() {size=0;}
+    uchar size;
+    sDataUnit tem; // 温度
+    sDataUnit hum; // 湿度
 };
 
 
@@ -79,7 +96,31 @@ struct sDevType
 
     uchar specs; // 1 互感器  2锰铜
     uchar version; // 版本号
+
+    char sn[NAME_SIZE];
+    char dev_type[NAME_SIZE];
 };
+
+
+
+/**
+ * 设备数据结构体：
+ */
+struct sDevData
+{
+    sDevData() {id=0; en=0;}
+
+    uchar id, en;  // 设备号
+    sDevType devType; //设备类型
+    uchar offLine; //离线标志 > 0在线
+
+    sObjData line; // 相数据
+    sEnvData env; // 环境数据
+
+    uchar hz; // 电压频率
+    ushort br;  // 00	表示波特率9600(00默认9600，01为4800，02为9600，03为19200，04为38400)
+};
+
 
 /**
  * 数据包
@@ -90,18 +131,14 @@ class sDataPacket
 public:
     static sDataPacket *bulid();
 
-    void clear();
-    int tgCur();
-
-    sTgObjData *tg; // 统计数据
-    sDataUnit *data;
-    sDevType *devType;
-
-    QString dev_type;
-    QString sn;
+    void clear(int id=1);
+    sDevData *getDev(int id=1) {return dev[id];}
 
     QString status;
     int pass;
+
+protected:
+    sDevData *dev[DEV_NUM];
 };
 
 
