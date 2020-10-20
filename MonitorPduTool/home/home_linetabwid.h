@@ -14,7 +14,7 @@ signals:
 
 protected:
     void initWid();
-    void appendItem(sDataUnit *unit);
+    void appendItem(sObjData *dev);
 
 protected slots:
     void timeoutDone();

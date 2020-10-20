@@ -13,7 +13,13 @@ signals:
 
 protected:
     void initWid();
+    void appendItem(sObjData *dev);
 
+protected slots:
+    void timeoutDone();
+
+private:
+    sObjData *mData;
 };
 
 #endif // HOME_THRESHOLDTABWID_H

@@ -37,9 +37,8 @@ void Home_LineTabWid::appendItem(sObjData *dev)
 
 void Home_LineTabWid::timeoutDone()
 {
+    clearTable();
     if(mData->size) {
         appendItem(mData);
-    } else {
-        clearTable();
     }
 }
