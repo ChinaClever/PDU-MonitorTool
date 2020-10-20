@@ -13,6 +13,15 @@ signals:
 
 protected:
     void initWid();
+    void setDataUnit(int id, sDataUnit &unit);
+    void setHum(sDataUnit &unit);
+    void appendItem();
+
+protected slots:
+    void timeoutDone();
+
+private:
+    sEnvData *mEnv;
 };
 
 #endif // HOME_ENVTABWID_H

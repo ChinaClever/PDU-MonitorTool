@@ -4,7 +4,7 @@
  *      Author: Lzy
  */
 #include "sqltableview.h"
-//#include "ad_config.h"
+#include "config.h"
 
 SqlTableView::SqlTableView(QWidget *parent) : QWidget(parent)
 {
@@ -142,9 +142,7 @@ void SqlTableView::refreshSlot()
 
 void SqlTableView::autoDelSlot()
 {
-    ///////////=========
-//    int size = Ad_Config::bulid()->item->logCount;
-    int size = 10*1000;
+    int size = Cfg::bulid()->item->logCount;
     int count = mDb->counts();
     if(count > size) {
         refreshSlot();

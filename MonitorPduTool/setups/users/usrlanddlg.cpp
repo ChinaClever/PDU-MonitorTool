@@ -8,7 +8,7 @@
 #include "usrlanddlg.h"
 #include "ui_usrlanddlg.h"
 #include <QApplication>
-#include "configbase.h"
+#include "config.h"
 
 UsrLandDlg::UsrLandDlg(QWidget *parent) :
     QDialog(parent),
@@ -17,9 +17,7 @@ UsrLandDlg::UsrLandDlg(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(tr("用户登录"));
     groupBox_background_icon(this);
-
-    ConfigBase *con = ConfigBase::bulid();
-    QString name = con->getCurrentName();
+    QString name = Cfg::bulid()->getCurrentName();
 
     ui->nameLineEdit->setText(name);
     ui->pwdLineEdit->setText("admin");
@@ -73,7 +71,7 @@ int UsrLandDlg::selectWork(void)
  */
 bool UsrLandDlg::quitWidget(void)
 {
-    QString name = LandingUser::get()->user.name;    
+    QString name = LandingUser::get()->user.name;
     bool ret = MsgBox::question(this,tr("是否退出当前用户:%1").arg(name));
     if(ret) {
         LandingUser::get()->user.jur = false;
@@ -109,24 +107,12 @@ void UsrLandDlg::usrLand()
                     LandingUser::get()->sig();
                     this->accept();
                     emit sendUserNameSig(name);
-
-                    ConfigBase *con = ConfigBase::bulid();
-                    con->setCurrentName(name);
-                }
-                else
-                    str = tr("密码错误");
-            }
-            else
-                str = tr("密码不能为空");
-        }
-        else
-            str = tr("账号有误");
-    }
-    else
-        str = tr("账号不能为空");
-
+                    Cfg::bulid()->setCurrentName(name);
+                } else str = tr("密码错误");
+            } else str = tr("密码不能为空");
+        } else str = tr("账号有误");
+    } else str = tr("账号不能为空");
     ui->stateLabel->setText(str);
-
 }
 
 /**

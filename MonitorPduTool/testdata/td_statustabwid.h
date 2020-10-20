@@ -2,6 +2,7 @@
 #define TD_STATUSTABWID_H
 
 #include "comtablewid.h"
+#include "datapacket.h"
 
 class Td_StatusTabWid : public ComTableWid
 {
@@ -13,7 +14,13 @@ signals:
 
 protected:
     void initWid();
+    void appendItem();
 
+protected slots:
+    void timeoutDone();
+
+private:
+    sProgress *mPro;
 };
 
 #endif // TD_STATUSTABWID_H

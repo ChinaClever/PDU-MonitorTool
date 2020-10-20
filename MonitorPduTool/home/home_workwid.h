@@ -17,8 +17,17 @@ public:
     ~Home_WorkWid();
 
 protected:
+    void createWid();
     void initLayout();
-    void setInsertTextColor(const QColor &color);
+    void insertText();
+    void setTextColor();
+
+    QString getTime();
+    void updateWid();
+    void updateTime();
+    void updateResult();
+    void updateCnt();
+
 
 private slots:
     void timeoutDone();
@@ -29,6 +38,9 @@ private:
     Ui::Home_WorkWid *ui;
 
     QTimer *timer;
+    sDevData * mDev;
+    sProgress *mPro;
+    sCfgItem *mItem;
     Home_SetDlg *mSetDlg;
     Home_ManualDlg *mManualDlg;
 };

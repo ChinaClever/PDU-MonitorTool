@@ -1,7 +1,7 @@
 ﻿#ifndef BUILDJSON_H
 #define BUILDJSON_H
 #include "datapacket.h"
-#include "configbase.h"
+#include "config.h"
 
 #define SN_TOTAL_NUM 96
 #define PRODUCT_NUM 7

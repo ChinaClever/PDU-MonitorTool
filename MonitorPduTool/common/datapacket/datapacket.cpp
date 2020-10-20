@@ -7,6 +7,7 @@
 
 sDataPacket::sDataPacket()
 {
+    pro = new sProgress();
     for(int i=0; i<DEV_NUM; ++i) {
         dev[i] = new sDevData;
         clear(i);
@@ -16,7 +17,6 @@ sDataPacket::sDataPacket()
 void sDataPacket::clear(int id)
 {
     memset(dev[id], 0, sizeof(sDevData));
-    status.clear();
 }
 
 
@@ -26,4 +26,13 @@ sDataPacket *sDataPacket::bulid()
     if(sington == nullptr)
         sington = new sDataPacket();
     return sington;
+}
+
+void sDataPacket::init()
+{
+    clear();
+    pro->step = Test_Fun;
+    pro->pass = Test_Info;
+    pro->result = Test_Info;
+    pro->startTime = QTime::currentTime();
 }

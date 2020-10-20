@@ -87,7 +87,7 @@ struct sDevType
 
     uint devId;
     uchar devType; // 1 ZPDU执行板类型  2 MPDU执行板类型   3 RPDU执行板类型
-                   // 4 SI-PDU  5 IP-PDU  6 BM-PDU
+    // 4 SI-PDU  5 IP-PDU  6 BM-PDU
 
     uchar ac; // 1 交流 2 直流
     uchar series; // 1 A系列  2 B系列  3 C系列  4 D系列1
@@ -122,6 +122,34 @@ struct sDevData
 };
 
 
+enum {
+    Test_Fun, // 功能
+    Test_Start, // 开始
+    Test_Ading,
+    Test_vert, // 验证
+    Test_Over, // 终止
+    Test_End, // 完成
+    Collect_Start, // 数据采集
+
+    Test_Info=0,
+    Test_Pass=1,
+    Test_Fail=2,
+};
+
+struct sProgress
+{
+    sProgress() {step=0;}
+
+    uchar step; // 步骤
+    uchar pass;
+    QString time;
+    QStringList status, item;
+
+    uchar result;    // 最终结果
+    QTime startTime;
+};
+
+
 /**
  * 数据包
  */
@@ -131,14 +159,14 @@ class sDataPacket
 public:
     static sDataPacket *bulid();
 
-    void clear(int id=1);
+    void init();
+    sProgress *getPro() {return pro;}
     sDevData *getDev(int id=1) {return dev[id];}
 
-    QString status;
-    int pass;
-
 protected:
+    void clear(int id=1);
     sDevData *dev[DEV_NUM];
+    sProgress *pro;
 };
 
 

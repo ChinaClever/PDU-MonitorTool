@@ -4,11 +4,11 @@ INCLUDEPATH += $$PWD
 
 HEADERS += \
     $$PWD/cfgcom.h \
-    $$PWD/configbase.h
+    $$PWD/config.h
 	
 SOURCES += \
     $$PWD/cfgcom.cpp \
-    $$PWD/configbase.cpp
+    $$PWD/config.cpp
 
 FORMS += \
 

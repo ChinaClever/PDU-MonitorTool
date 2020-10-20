@@ -1,6 +1,6 @@
 #include "serialstatuswid.h"
 #include "ui_serialstatuswid.h"
-//#include "ad_config.h"
+#include "config.h"
 
 SerialStatusWid::SerialStatusWid(QWidget *parent) :
     QWidget(parent),
@@ -57,21 +57,20 @@ SerialPort *SerialStatusWid::initSerialPort(const QString &str)
     mSerialDlg = new SerialPortDlg(this);
     SerialPort *serial = getSerialPort();
 
-    //////////===============
-//    QString com = Ad_Config::bulid()->getSerialName(str);
-//    if(!com.isEmpty())
-//    {
-//        ret = serial->isContains(com);
-//        if(ret) {
-//            QString br = Ad_Config::bulid()->getSerialBr(com);
-//            if(!br.isEmpty()) {
-//                qint32 baudRate = br.toInt();
-//                ret = serial->open(com, baudRate);
-//                mSerialDlg->updateBaudRate(baudRate);
-//                updateSerialWid();
-//            }
-//        }
-//    }
+    QString com = Cfg::bulid()->getSerialName(str);
+    if(!com.isEmpty())
+    {
+        ret = serial->isContains(com);
+        if(ret) {
+            QString br = Cfg::bulid()->getSerialBr(com);
+            if(!br.isEmpty()) {
+                qint32 baudRate = br.toInt();
+                ret = serial->open(com, baudRate);
+                mSerialDlg->updateBaudRate(baudRate);
+                updateSerialWid();
+            }
+        }
+    }
 
     return serial;
 }
@@ -88,8 +87,7 @@ void SerialStatusWid::updateSerialWid()
     QString str = serial->getSerialName();
     if(serial->isOpened()) {
         QString com = ui->comBtn->text();
-        ////////////=============
-//        Ad_Config::bulid()->setSerialName(str, com);
+        Cfg::bulid()->setSerialName(com, str);
         str += tr(" 已打开");
         pe.setColor(QPalette::WindowText,Qt::black);
     } else {

@@ -13,6 +13,7 @@ signals:
 
 protected:
     void initWid();
+    void setDataUnit(int id, sDataUnit &unit);
     void appendItem(sObjData *dev);
 
 protected slots:

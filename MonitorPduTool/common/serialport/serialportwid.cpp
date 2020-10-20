@@ -7,7 +7,7 @@
 #include "serialportwid.h"
 #include "ui_serialportwid.h"
 #include "msgbox.h"
-//#include "ad_config.h"
+#include "config.h"
 
 
 SerialPortWid::SerialPortWid(QWidget *parent) :
@@ -74,8 +74,7 @@ void SerialPortWid::openSerialSlot()
         bool ret = mSerialPort->open(com, baudRate);
         if(ret) {
             QString br = ui->baudComBox->currentText();
-            //////////////========
-//            Ad_Config::bulid()->setSerialBr(com, br);
+            Cfg::bulid()->setSerialBr(com, br);
         } else {
             MsgBox::critical(this, tr("打开%1失败").arg(com));
         }

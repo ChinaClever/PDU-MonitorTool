@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 #include "msgbox.h"
-#include "configbase.h"
+#include "config.h"
 
 bool cm_checkIp(const QString& ip);
 bool cm_isDigitStr(const QString &src);
