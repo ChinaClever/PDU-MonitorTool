@@ -2,15 +2,20 @@
 #define RTU_MODBUS_H
 
 #include "rtu_write.h"
+#include "config.h"
+#define RTU_RW_SIZE 3
 
-class Rtu_Modbus : public Rtu_Write
+
+class Rtu_Modbus : public QObject
 {
     Q_OBJECT
-public:
     explicit Rtu_Modbus(QObject *parent = nullptr);
+public:
+    static Rtu_Modbus *bulid(QObject *parent = nullptr);
+    RtuRw *get(int id);
 
-signals:
-
+private:
+    RtuRw *mRtuRw[RTU_RW_SIZE];
 };
 
 #endif // RTU_MODBUS_H

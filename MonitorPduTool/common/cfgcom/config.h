@@ -3,6 +3,23 @@
 #include "cfgcom.h"
 #include "serialstatuswid.h"
 
+enum eDevTypes {
+    PDU=0,
+    ZPDU,
+    MPDU,
+    RPDU,     // RPDU 执行板
+    RPDU_Mc, // RPDU 主控
+    SI_PDU,
+    IP_PDU,
+    BM_PDU,
+
+    AC = 1, // 交流
+    DC,     // 直流
+
+    Sum=0,
+    Transformer, // 互感器
+    Mn    // 锰铜
+};
 
 struct sCfgTh {
     uchar repair_en;

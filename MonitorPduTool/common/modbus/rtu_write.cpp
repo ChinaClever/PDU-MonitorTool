@@ -14,7 +14,7 @@ Rtu_Write::Rtu_Write(QObject *parent) : Rtu_Read(parent)
 bool Rtu_Write::writes(sRtuSetItems &pkt)
 {
     bool ret = false;
-    static uchar sendBuf[256]={0}, recvBuf[128]={0};
+    uchar sendBuf[256]={0}, recvBuf[128]={0};
     int rtn = rtu_write_packets(&pkt, sendBuf);
     rtn = transmit(sendBuf, rtn, recvBuf, 2);
     if(rtn > 0) {
@@ -32,7 +32,7 @@ bool Rtu_Write::writes(sRtuSetItems &pkt)
 bool Rtu_Write::write(sRtuSetItem &pkt)
 {
     bool ret = false;
-    static uchar sendBuf[256]={0}, recvBuf[128]={0};
+    uchar sendBuf[256]={0}, recvBuf[128]={0};
     int rtn = rtu_write_packet(&pkt, sendBuf);
     rtn = transmit(sendBuf, rtn, recvBuf, 2);
     if(rtn > 0) {

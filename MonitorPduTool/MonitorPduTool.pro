@@ -17,9 +17,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(logs/logs.pri)
 include(home/home.pri)
-include(common/common.pri)
-include(testdata/testdata.pri)
 include(setups/setups.pri)
+include(common/common.pri)
+include(devices/devices.pri)
+include(testdata/testdata.pri)
 
 
 SOURCES += \

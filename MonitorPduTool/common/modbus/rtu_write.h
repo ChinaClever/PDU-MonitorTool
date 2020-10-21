@@ -45,4 +45,6 @@ protected:
     int rtu_write_packets(sRtuSetItems *pkt, uchar *ptr);
 };
 
+typedef Rtu_Write RtuRw;
+
 #endif // RTU_WRITE_H

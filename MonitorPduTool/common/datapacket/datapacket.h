@@ -47,14 +47,14 @@ struct sObjData
     sDataUnit vol; // 电压
     sDataUnit cur; // 电流
 
-    uint pow[PACK_ARRAY_SIZE]; // 功率
+    ushort pow[PACK_ARRAY_SIZE]; // 功率
     uint ele[PACK_ARRAY_SIZE]; // 电能
 
-    ushort pf[PACK_ARRAY_SIZE]; // 功率因数
+    uchar pf[PACK_ARRAY_SIZE]; // 功率因数
     uchar sw[PACK_ARRAY_SIZE]; // 开关状态 0 表示未启用
 
-    uchar hz[PACK_ARRAY_SIZE]; // 电压频率
-    uint aPow[PACK_ARRAY_SIZE]; // 视在功率值
+    ushort hz[PACK_ARRAY_SIZE]; // 电压频率
+    ushort aPow[PACK_ARRAY_SIZE]; // 视在功率值
 
     uint powStatus[PACK_ARRAY_SIZE]; // 功率
     uint ratedCur[PACK_ARRAY_SIZE]; // 额定电流
@@ -97,6 +97,7 @@ struct sDevType
     uchar specs; // 1 互感器  2锰铜
     uchar version; // 版本号
 
+    uchar ip[18];
     char sn[NAME_SIZE];
     char dev_type[NAME_SIZE];
 };
@@ -119,6 +120,8 @@ struct sDevData
 
     uchar hz; // 电压频率
     ushort br;  // 00	表示波特率9600(00默认9600，01为4800，02为9600，03为19200，04为38400)
+    ushort version;
+    ushort reserve;
 };
 
 

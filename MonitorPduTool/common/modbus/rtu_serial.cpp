@@ -52,3 +52,46 @@ int Rtu_Serial::transmit(uchar *sent, int len, uchar *recv, int secs)
 
     return rtn;
 }
+
+
+ushort Rtu_Serial::calccrc (ushort crc, uchar crcbuf)
+{
+    uchar x, kkk=0;
+    crc = crc^crcbuf;
+    for(x=0;x<8;x++)
+    {
+        kkk = crc&1;
+        crc >>= 1;
+        crc &= 0x7FFF;
+        if(kkk == 1)
+            crc = crc^0xa001;
+        crc=crc&0xffff;
+    }
+    return crc;
+}
+
+/**
+  * 功　能：CRC校验
+  * 入口参数：buf -> 缓冲区  len -> 长度
+  * 返回值：CRC
+  */
+ushort Rtu_Serial::rtu_crc(uchar *buf, int len)
+{
+    ushort crc = 0xffff;
+    for(int i=0; i<len; i++)
+        crc = calccrc(crc, buf[i]);
+    return crc;
+}
+
+/**
+  * 功　能：XOR和校验
+  * 入口参数：buf -> 缓冲区  len -> 长度
+  * 返回值：XOR
+  */
+uchar Rtu_Serial::xorNum(uchar *buf, int len)
+{
+    uchar xorsum = 0x00;
+    for(int i=0; i<len; i++)
+        xorsum ^= buf[i];
+    return xorsum;
+}
