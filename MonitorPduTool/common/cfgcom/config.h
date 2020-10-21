@@ -58,6 +58,7 @@ struct sCfgItem
     sCount cnt;
     int logCount;
 
+    uchar pcNum;
     QString user; // 客户名称
     sSerial coms;
 };
@@ -85,14 +86,14 @@ public:
     void writeThreshold();
     void setAddr(int addr);
 
+    void write(const QString &key, const QVariant& v, const QString &g="Cfg");
+    QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="Cfg");
+
 protected:
     int initAddr();
     void initCnt();
     void initErrData();
     void initThreshold();
-
-    void write(const QString &key, const QVariant& v, const QString &g="Cfg");
-    QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="Cfg");
 
 private:
     CfgCom *mCfg;

@@ -165,7 +165,6 @@ void Home_WorkWid::timeoutDone()
         insertText();
         updateWid();
         updateCnt();
-        updateCnt();
     }
 }
 

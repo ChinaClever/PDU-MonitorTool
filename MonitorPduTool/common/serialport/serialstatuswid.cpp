@@ -10,7 +10,7 @@ SerialStatusWid::SerialStatusWid(QWidget *parent) :
     mEnable = false;
 
     QGridLayout *gridLayout = new QGridLayout(parent);
-    gridLayout->setContentsMargins(0, 10, 0, 0);
+    gridLayout->setContentsMargins(0, 0, 0, 0);
     gridLayout->addWidget(this);
 }
 

@@ -16,12 +16,32 @@ public:
     explicit Setup_MainWid(QWidget *parent = nullptr);
     ~Setup_MainWid();
 
+protected:
+    void initSerial();
+    void initErrData();
+    void updateErrData();
+    void initLogCount();
+    void writeLogCount();
+    void initPcNum();
+    void writePcNum();
+
 protected slots:
     void initFunSlot();
+    void on_saveBtn_clicked();
+    void on_pcBtn_clicked();
+
+private slots:
+
+    void on_verBtn_clicked();
 
 private:
     Ui::Setup_MainWid *ui;
+
+    sCfgItem *mItem;
     UserMainWid *mUserWid;
+    SerialStatusWid *mSer1Wid;
+    SerialStatusWid *mSer2Wid;
+    SerialStatusWid *mSourceWid;
 };
 
 #endif // SETUP_MAINWID_H
