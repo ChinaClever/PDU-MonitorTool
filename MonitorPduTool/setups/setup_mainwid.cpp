@@ -12,9 +12,10 @@ Setup_MainWid::Setup_MainWid(QWidget *parent) :
     ui(new Ui::Setup_MainWid)
 {
     ui->setupUi(this);
-    mItem = Cfg::bulid()->item;
     groupBox_background_icon(this);
     QTimer::singleShot(rand()%13,this,SLOT(initFunSlot()));
+    mItem = Cfg::bulid()->item;
+    initSerial();
 }
 
 Setup_MainWid::~Setup_MainWid()
@@ -24,7 +25,6 @@ Setup_MainWid::~Setup_MainWid()
 
 void Setup_MainWid::initFunSlot()
 {
-    initSerial();
     initLogCount();
     initErrData();
 

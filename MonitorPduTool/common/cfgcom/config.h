@@ -95,8 +95,8 @@ public:
     void setSerialBr(const QString &com, const QString &br);
     void setSerialName(const QString &key, const QString &v);
 
-    QString getCurrentName();
-    void setCurrentName(const QString &name);
+    QString getLoginName();
+    void setLoginName(const QString &name);
 
     void writeCnt();
     void writeErrData();

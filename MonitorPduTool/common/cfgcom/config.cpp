@@ -159,16 +159,16 @@ void Cfg::write(const QString &key, const QVariant& v, const QString &g)
  * @brief 获取当前用户名称
  * @return 用户名
  */
-QString Cfg::getCurrentName()
+QString Cfg::getLoginName()
 {
-    return mCfg->read("name", "admin", "User").toString();
+    return mCfg->read("name", "admin", "Login").toString();
 }
 
 /**
  * @brief 设置当前用户名
  * @param name
  */
-void Cfg::setCurrentName(const QString &name)
+void Cfg::setLoginName(const QString &name)
 {
-    mCfg->write("name", name, "User");
+    mCfg->write("name", name, "Login");
 }

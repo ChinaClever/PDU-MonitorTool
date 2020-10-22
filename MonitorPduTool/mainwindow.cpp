@@ -1,12 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     QTimer::singleShot(5,this,SLOT(initFunSlot())); //延时初始化
+
+    mSnmp = new Dev_IpSnmp(this);
+    mSnmp->start();
 }
 
 MainWindow::~MainWindow()

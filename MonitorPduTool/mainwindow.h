@@ -6,6 +6,7 @@
 #include "td_mainwid.h"
 #include "logmainwid.h"
 #include "setup_mainwid.h"
+#include "dev_ipsnmp.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +29,8 @@ protected slots:
 
 private:
     Ui::MainWindow *ui;
+
+    Dev_IpSnmp *mSnmp;
 
     LogMainWid *mLog;
     Td_MainWid *mTdWid;
