@@ -165,7 +165,8 @@ public:
     void init();
     sProgress *getPro() {return pro;}
     sDevData *getDev(int id=1) {return dev[id];}
-    void updatePro(bool pass, const QString &str);
+    bool updatePro(const QString &str, bool pass=true, int sec=1);
+    bool delay(int s=1);
 
 protected:
     void clear(int id=1);

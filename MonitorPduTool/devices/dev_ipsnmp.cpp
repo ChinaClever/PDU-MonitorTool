@@ -137,7 +137,7 @@ bool Dev_IpSnmp::readPduData()
         ret = devDataV1();
     }
     if(ret) str = tr("SNMP通讯测试成功");
-    mPacket->updatePro(ret, str);
+    mPacket->updatePro(str, ret);
 
     return ret;
 }
@@ -149,7 +149,7 @@ bool Dev_IpSnmp::checkNet()
     if(ret) {
         str = tr("网络测试成功");
     }
-    mPacket->updatePro(ret, str);
+    mPacket->updatePro(str, ret);
     return ret;
 }
 

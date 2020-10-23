@@ -1,0 +1,127 @@
+#include "dev_serialnum.h"
+
+Dev_SerialNum::Dev_SerialNum(QObject *parent) : QThread(parent)
+{
+    mItem = Cfg::bulid()->item;
+    mPacket = sDataPacket::bulid();
+    mPro = mPacket->getPro();
+    mDev = mPacket->getDev();
+    mTypeId = Dev_TypeId::bulid(this);
+    mModbus = Rtu_Modbus::bulid(this)->get();
+}
+
+
+Dev_SerialNum *Dev_SerialNum::bulid(QObject *parent)
+{
+    Dev_SerialNum* sington = nullptr;
+    if(sington == nullptr)
+        sington = new Dev_SerialNum(parent);
+    return sington;
+}
+
+
+void Dev_SerialNum::initReadCmd(sRtuItem &item)
+{
+    item.addr = mDev->id;
+    item.fn = 0x03;
+    item.reg = 0xA003;
+    item.num = 4;
+}
+
+bool Dev_SerialNum::checkSn(uchar *sn, int len)
+{
+    bool ret = false;
+    if((len == 8) && (sn[0] == 0)){
+        uchar exor = mModbus->xorNum(sn, len-1);//暂时注释下面的异或和校验不对
+        if(exor == sn[len-1]) {
+            ret = true;
+        }
+    } else {
+        qDebug() << "SN check err" << len << sn[0];
+    }
+    return ret;
+}
+
+void Dev_SerialNum::initDevType(sSnItem &it)
+{
+    uint id = mDev->devType.devId;
+    for(int i=3; i>=0; --i) {
+        it.devType[i] = (0xFF) & (id >> ((3-i)*8));
+    }
+    it.sn.clear();
+    mDev->devType.sn[0] = 0;
+}
+
+bool Dev_SerialNum::analySn(uchar *sn, int len, sSnItem &it)
+{
+    uchar *ptr = sn;
+    bool ret = checkSn(sn, len);
+    if(ret) {
+        for(int i=0; i<4; ++i) {
+            it.date[i] = *ptr++;
+        }
+        it.num = (*ptr++) << 8;
+        it.num += *ptr++;
+        it.pc = *ptr++;
+        it.exor = *ptr++;
+    }
+
+    return ret;
+}
+
+void Dev_SerialNum::toSnStr(sSnItem &it)
+{
+    QString cmd;
+    for(int i=0; i<11; ++i) cmd += "%" + QString::number(i+1);
+    QString sn  = QString(cmd)
+            .arg(it.devType[0], 2, 16, QLatin1Char('0'))
+            .arg(it.devType[1], 2, 16, QLatin1Char('0'))
+            .arg(it.devType[2], 2, 16, QLatin1Char('0'))
+            .arg(it.devType[3], 2, 16, QLatin1Char('0'))
+            .arg(it.date[0], 2, 10, QLatin1Char('0'))
+            .arg(it.date[1], 2, 10, QLatin1Char('0'))
+            .arg(it.date[2], 2, 10, QLatin1Char('0'))
+            .arg(it.date[3], 2, 10, QLatin1Char('0'))
+            .arg(it.num, 4, 10, QLatin1Char('0'))
+            .arg(it.pc, 2, 16, QLatin1Char('0'))
+            .arg(it.exor, 2, 16, QLatin1Char('0'));
+
+    it.sn = sn.toUpper();
+}
+
+bool Dev_SerialNum::readSn(sSnItem &itSn)
+{
+    sRtuItem itRtu;
+    bool ret = false;
+    initReadCmd(itRtu);
+    QString str = tr("序列号读取成功");
+
+    uchar buf[32] = {0};
+    int len = mModbus->read(itRtu, buf);
+    if(8 != len) len = mModbus->read(itRtu, buf);
+    if(len == 8) {
+        ret = analySn(buf, len, itSn);
+        if(ret) {
+            toSnStr(itSn);
+        } else {
+            str = tr("序列号分析错误");
+        }
+    } else {
+        str = tr("读序列号未返数据长度错误 %1").arg(len);
+    }
+
+    return mPacket->updatePro(str, ret);
+}
+
+bool Dev_SerialNum::snEnter()
+{
+    bool ret = mTypeId->readDevType();
+    if(ret) {
+        initDevType(mSnItem);
+        ret = readSn(mSnItem);
+        if(ret) strcpy(mDev->devType.sn, mSnItem.sn.toLatin1().data());
+    }
+
+    return ret;
+}
+

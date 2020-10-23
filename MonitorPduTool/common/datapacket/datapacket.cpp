@@ -36,16 +36,36 @@ void sDataPacket::init()
     pro->startTime = QTime::currentTime();
 }
 
-void sDataPacket::updatePro(bool pass, const QString &str)
+bool sDataPacket::updatePro(const QString &str, bool pass, int sec)
 {
-    if(!pass) {
-        pro->step = Test_Over;
-        pro->result = Test_Fail;
-    }
-
     pro->pass << pass;
     pro->itPass << pass;
 
     pro->item << str;
     pro->status << str;
+
+    if(pass && sec) {
+        pass = delay(sec);
+    } else {
+        pro->step = Test_Over;
+        pro->result = Test_Fail;
+    }
+
+    return pass;
+}
+
+
+bool sDataPacket::delay(int s)
+{
+    bool ret = true;
+    for(int i=0; i<10*s; ++i) {
+        if(pro->step < Test_Over) {
+            QThread::msleep(100);
+        } else {
+            ret = false;
+            break;
+        }
+    }
+
+    return ret;
 }

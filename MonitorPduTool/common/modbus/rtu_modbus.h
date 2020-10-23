@@ -11,7 +11,7 @@ class Rtu_Modbus : public QObject
     explicit Rtu_Modbus(QObject *parent = nullptr);
 public:
     static Rtu_Modbus *bulid(QObject *parent = nullptr);
-    RtuRw *get(int id);
+    RtuRw *get(int id=1);
 
 private:
     RtuRw *mRtuRw[RTU_RW_SIZE];
