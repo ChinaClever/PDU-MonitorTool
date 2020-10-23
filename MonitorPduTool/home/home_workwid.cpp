@@ -52,10 +52,8 @@ void Home_WorkWid::initLayout()
 void Home_WorkWid::setTextColor()
 {
     QColor color("black");
-    switch (mPro->pass) {
-    case Test_Fail:  color.setRed(1); break;
-    case Test_Pass:  color.setGreen(1); break;
-    }
+    bool pass = mPro->pass.first();
+    if(!pass) color.setRed(1);
     ui->textEdit->moveCursor(QTextCursor::Start);
 
     QTextCharFormat fmt;//文本字符格式
@@ -71,7 +69,8 @@ void Home_WorkWid::insertText()
         if(mPro->status.size()) {
             setTextColor();
             ui->textEdit->insertPlainText(mPro->status.first());
-            mPro->status.removeFirst();
+            mPro->status.removeFirst();            
+            mPro->pass.removeFirst();
         } else {
             ui->textEdit->clear();
         }

@@ -32,7 +32,20 @@ void sDataPacket::init()
 {
     clear();
     pro->step = Test_Fun;
-    pro->pass = Test_Info;
     pro->result = Test_Info;
     pro->startTime = QTime::currentTime();
+}
+
+void sDataPacket::updatePro(bool pass, const QString &str)
+{
+    if(!pass) {
+        pro->step = Test_Over;
+        pro->result = Test_Fail;
+    }
+
+    pro->pass << pass;
+    pro->itPass << pass;
+
+    pro->item << str;
+    pro->status << str;
 }

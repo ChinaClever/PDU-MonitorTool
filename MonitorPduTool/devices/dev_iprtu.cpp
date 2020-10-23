@@ -150,7 +150,7 @@ bool Dev_IpRtu::recvPacket(uchar *buf, int len)
 bool Dev_IpRtu::readPduData()
 {
     sRtuItem it;
-    uchar recv[MODBUS_RTU_SIZE] = {0};
+    uchar recv[MODBUS_RTU_SIZE] = {0};    
 
     initRtuItem(it);
     int len = mModbus->read(it, recv);

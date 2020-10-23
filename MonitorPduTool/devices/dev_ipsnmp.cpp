@@ -1,10 +1,26 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "dev_ipsnmp.h"
 
-Dev_IpSnmp::Dev_IpSnmp(QObject *parent) : Dev_Object(parent)
+Dev_IpSnmp::Dev_IpSnmp(QObject *parent) : QThread(parent)
 {
+    mPacket = sDataPacket::bulid();
+    mItem = Cfg::bulid()->item;
+    mPro = mPacket->getPro();
+    mDev = mPacket->getDev();
     mSnmp = SnmpClient::bulid(this);
 }
 
+Dev_IpSnmp *Dev_IpSnmp::bulid(QObject *parent)
+{
+    static Dev_IpSnmp* sington = nullptr;
+    if(sington == nullptr)
+        sington = new Dev_IpSnmp(parent);
+    return sington;
+}
 
 int Dev_IpSnmp::getItemByOid(const QString &oid, int id)
 {
@@ -29,7 +45,6 @@ bool Dev_IpSnmp::lineNumV3()
 
     return ret;
 }
-
 
 bool Dev_IpSnmp::devDataV3()
 {
@@ -78,17 +93,15 @@ bool Dev_IpSnmp::devDataV3()
     return values.size();
 }
 
-
 bool Dev_IpSnmp::devDataV1()
 {
-    bool ret;
-    QStringList oids;
+    bool ret; QStringList oids;
     for(int k=1; k<12; k++)  oids << IP_MIB_OID + QString(".%1").arg(k);
     QtSnmpDataList values = mSnmp->requestValue(oids);
 
     for(const auto& value : values) {
         sObjData *obj = &(mDev->line);
-        obj->vol.size = obj->cur.size = obj->size = 3;
+        // obj->vol.size = obj->cur.size = obj->size = 3;
 
         int res = value.data().toHex().toInt(&ret,16);
         int id = getItemByOid(value.address(), 1);
@@ -116,17 +129,39 @@ bool Dev_IpSnmp::devDataV1()
 
 bool Dev_IpSnmp::readPduData()
 {
-    return devDataV1();
+    bool ret = true;
+    QString str = tr("SNMP通讯测试失败");
+    if(mDev->devType.version == 3) {
+        ret = devDataV3();
+    } else {
+        ret = devDataV1();
+    }
+    if(ret) str = tr("SNMP通讯测试成功");
+    mPacket->updatePro(ret, str);
+
+    return ret;
 }
 
+bool Dev_IpSnmp::checkNet()
+{
+    QString str = tr("网络测试失败");
+    bool ret = cm_checkIp("192.1681.1163");
+    if(ret) {
+        str = tr("网络测试成功");
+    }
+    mPacket->updatePro(ret, str);
+    return ret;
+}
+
+void Dev_IpSnmp::workDone()
+{
+    bool ret = checkNet();
+    if(ret) {
+        readPduData();
+    }
+}
 
 void Dev_IpSnmp::run()
 {
-    for(int i=0; i< 10; ++i) {
-        qDebug() << i << QTime::currentTime().toString("hh:mm:ss zzz");
-        readPduData();
-
-        qDebug() << i << QTime::currentTime().toString("hh:mm:ss zzz");
-        sleep(1);
-    }
+    workDone();
 }

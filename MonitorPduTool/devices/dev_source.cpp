@@ -31,13 +31,8 @@ bool Dev_Source::read()
 {
     bool ret = readPduData();
     if(!ret) {
-        mPro->step = Test_Over;
-        mPro->pass = Test_Fail;
-        mPro->result = Test_Fail;
-
         QString str = tr("比对源IP-PDU数据读取失败，结束测试");
-        mPro->status << str;
-        mPro->item << str;
+        mPacket->updatePro(ret, str);
     }
 
     return ret;

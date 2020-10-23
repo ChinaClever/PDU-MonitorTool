@@ -31,18 +31,19 @@ void Td_StatusTabWid::appendItem()
 {
     QStringList listStr;
     listStr << mPro->time;
-    switch (mPro->pass) {
-    case Test_Fail: listStr << "×"; break;
-    case Test_Pass: listStr << "√"; break;
-    default: listStr << " "; break;
+    bool pass = mPro->pass.first();
+    if(pass){
+        listStr << "√";
+    } else {
+        listStr << "×";
     }
 
     listStr << mPro->item.first();
     insertRow(0, listStr);
 
+    if(!pass) setAlarmBackgroundColor(0);
     mPro->item.removeFirst();
-    if(mPro->pass == Test_Fail)
-        setAlarmBackgroundColor(0);
+    mPro->pass.removeFirst();
 }
 
 void Td_StatusTabWid::timeoutDone()

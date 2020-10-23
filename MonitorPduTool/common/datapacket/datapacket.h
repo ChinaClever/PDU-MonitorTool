@@ -11,13 +11,13 @@
 #define PACK_ARRAY_SIZE LINE_NUM
 
 // 倍率定义
-#define COM_RATE_VOL	10.0    // 电压
-#define COM_RATE_CUR	100.0    // 电流
+#define COM_RATE_VOL	1.0    // 电压
+#define COM_RATE_CUR	10.0    // 电流
 #define COM_RATE_POW	1000.0  // 功率
 #define COM_RATE_ELE	10.0    // 电能
 #define COM_RATE_PF     100.0   // 功率因数
-#define COM_RATE_TEM	10.0    // 温度
-#define COM_RATE_HUM	10.0    // 湿度
+#define COM_RATE_TEM	1.0    // 温度
+#define COM_RATE_HUM	1.0    // 湿度
 
 
 /**
@@ -144,8 +144,8 @@ struct sProgress
     sProgress() {step=0;}
 
     uchar step; // 步骤
-    uchar pass;
     QString time;
+    QList<bool> pass, itPass;
     QStringList status, item;
 
     uchar result;    // 最终结果
@@ -165,6 +165,7 @@ public:
     void init();
     sProgress *getPro() {return pro;}
     sDevData *getDev(int id=1) {return dev[id];}
+    void updatePro(bool pass, const QString &str);
 
 protected:
     void clear(int id=1);

@@ -7,9 +7,10 @@
 
 Dev_Object::Dev_Object(QObject *parent) : QThread(parent)
 {
+    mPacket = sDataPacket::bulid();
     mItem = Cfg::bulid()->item;
-    mPro = sDataPacket::bulid()->getPro();
-    mDev = sDataPacket::bulid()->getDev();
+    mPro = mPacket->getPro();
+    mDev = mPacket->getDev();
     mModbus = Rtu_Modbus::bulid(this)->get(1);
 }
 

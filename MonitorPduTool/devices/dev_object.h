@@ -27,6 +27,7 @@ protected:
     RtuRw *mModbus;
     sCfgItem *mItem;
     sProgress *mPro;
+    sDataPacket *mPacket;
 };
 
 #endif // DEV_OBJECT_H

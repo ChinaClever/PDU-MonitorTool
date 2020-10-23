@@ -15,7 +15,7 @@ SnmpClient::SnmpClient(QObject *parent) : QThread(parent)
     connect( m_snmp_client, SIGNAL(requestFailed(qint32)), this, SLOT(onRequestFailed(qint32)));
 
     timer =  new QTimer(this);
-    timer->start(45);
+    timer->start(55);
     connect(timer, SIGNAL(timeout()), SLOT(timeoutDone()));
     setAddress("192.168.1.163");
 }
