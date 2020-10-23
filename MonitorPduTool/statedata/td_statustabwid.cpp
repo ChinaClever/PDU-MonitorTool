@@ -31,7 +31,7 @@ void Td_StatusTabWid::appendItem()
 {
     QStringList listStr;
     listStr << mPro->time;
-    bool pass = mPro->pass.first();
+    bool pass = mPro->itPass.first();
     if(pass){
         listStr << "√";
     } else {
@@ -43,7 +43,7 @@ void Td_StatusTabWid::appendItem()
 
     if(!pass) setAlarmBackgroundColor(0);
     mPro->item.removeFirst();
-    mPro->pass.removeFirst();
+    mPro->itPass.removeFirst();
 }
 
 void Td_StatusTabWid::timeoutDone()

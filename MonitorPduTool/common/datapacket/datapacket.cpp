@@ -16,7 +16,10 @@ sDataPacket::sDataPacket()
 
 void sDataPacket::clear(int id)
 {
-    memset(dev[id], 0, sizeof(sDevData));
+    sDevData *d = dev[id];
+    int addr = d->id;
+    memset(d, 0, sizeof(sDevData));
+    d->id = addr;
 }
 
 
@@ -59,7 +62,7 @@ bool sDataPacket::delay(int s)
 {
     bool ret = true;
     for(int i=0; i<10*s; ++i) {
-        if(pro->step < Test_Over) {
+        if((pro->step < Test_Over)  || (pro->step > Test_End)){
             QThread::msleep(100);
         } else {
             ret = false;

@@ -10,6 +10,8 @@ class Dev_IpSnmp : public QThread
     explicit Dev_IpSnmp(QObject *parent = nullptr);
 public:
     static Dev_IpSnmp *bulid(QObject *parent = nullptr);
+    ~Dev_IpSnmp();
+
     bool readPduData();
 
 protected:
@@ -22,6 +24,7 @@ protected:
     void workDone();
 
 private:
+    bool isRun;
     sDevData *mDev;
     sCfgItem *mItem;
     sProgress *mPro;    

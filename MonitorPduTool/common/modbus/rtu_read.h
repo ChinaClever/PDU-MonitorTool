@@ -30,7 +30,6 @@ class Rtu_Read : public Rtu_Serial
 public:
     explicit Rtu_Read(QObject *parent = nullptr);
 
-
     int read(sRtuItem &pkt, uchar *recv);
 
 protected:

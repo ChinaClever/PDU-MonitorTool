@@ -18,7 +18,7 @@ int Rtu_Serial::readSerial(quint8 *cmd, int secs)
 
     sProgress *pro = sDataPacket::bulid()->getPro();
     for(int i=0; i<=secs; ++i) {
-        if(pro->step < Test_Over) {
+        if((pro->step < Test_Over)  || (pro->step > Test_End)){
             rtn = mSerial->read(cmd, 1);
             if(rtn > 0) break;
         }
@@ -37,6 +37,8 @@ bool Rtu_Serial::writeSerial(quint8 *cmd, int len)
         } else {
             qDebug() << "Rtu_Serial writeSerial err !" << ret;
         }
+    } else {
+        qDebug() << "Rtu_Serial is nullptr !" ;
     }
 
     return ret;
@@ -94,4 +96,16 @@ uchar Rtu_Serial::xorNum(uchar *buf, int len)
     for(int i=0; i<len; i++)
         xorsum ^= buf[i];
     return xorsum;
+}
+
+
+bool Rtu_Serial::changeBaudRate()
+{
+    int br = mSerial->baudRate();
+    switch (br) {
+    case 9600: br = 19200; break;
+    case 19200: br = 9600; break;
+    default: return false;
+    }
+    return mSerial->setBaudRate(br);;
 }

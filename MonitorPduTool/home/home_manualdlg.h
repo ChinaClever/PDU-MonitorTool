@@ -16,6 +16,12 @@ public:
     explicit Home_ManualDlg(QWidget *parent = nullptr);
     ~Home_ManualDlg();
 
+protected:
+    bool inputCheck();
+
+private slots:
+    void on_okBtn_clicked();
+
 private:
     Ui::Home_ManualDlg *ui;
 };

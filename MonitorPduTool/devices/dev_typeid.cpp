@@ -47,7 +47,7 @@ bool Dev_TypeId::analysDevType(uchar *buf, int len)
 
     ret = mTypeDef->analysDevType(id);
     if(!ret){
-        str = tr("不支持此设备类型 ID是%1").arg(id);
+        str = tr("不支持此设备类型 ID：%1").arg(id);
     }
 
     return mPacket->updatePro(str, ret);
@@ -60,9 +60,11 @@ bool Dev_TypeId::readDevId()
 
     uchar recv[8] = {0};
     int len = mModbus->read(it, recv);
-    if(!len){
-        mPacket->delay(1);
-        len = mModbus->read(it, recv);
+    if(!len){ mPacket->delay(1); len = mModbus->read(it, recv); }
+    if(0 == len){
+        bool ret = mModbus->changeBaudRate(); // 自动转变波特泫
+        if(!ret) len = mModbus->read(it, recv);
+        if(!len) mModbus->changeBaudRate();
     }
 
     return analysDevType(recv, len);
@@ -71,7 +73,7 @@ bool Dev_TypeId::readDevId()
 bool Dev_TypeId::readDevType()
 {
     mDev->devType.dev_type[0] = 0;
-    QString str = tr("开始识别模块类型！");
+    QString str = tr("开始识别设备类型！");
     bool ret = mPacket->updatePro(str, true, 3);
     if(ret) {
         ret = readDevId();

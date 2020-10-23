@@ -10,7 +10,6 @@ Dev_SerialNum::Dev_SerialNum(QObject *parent) : QThread(parent)
     mModbus = Rtu_Modbus::bulid(this)->get();
 }
 
-
 Dev_SerialNum *Dev_SerialNum::bulid(QObject *parent)
 {
     Dev_SerialNum* sington = nullptr;
@@ -18,7 +17,6 @@ Dev_SerialNum *Dev_SerialNum::bulid(QObject *parent)
         sington = new Dev_SerialNum(parent);
     return sington;
 }
-
 
 void Dev_SerialNum::initReadCmd(sRtuItem &item)
 {
@@ -93,19 +91,15 @@ bool Dev_SerialNum::readSn(sSnItem &itSn)
 {
     sRtuItem itRtu;
     bool ret = false;
-    initReadCmd(itRtu);
+    uchar buf[32] = {0};
     QString str = tr("序列号读取成功");
 
-    uchar buf[32] = {0};
+    initReadCmd(itRtu);
     int len = mModbus->read(itRtu, buf);
     if(8 != len) len = mModbus->read(itRtu, buf);
     if(len == 8) {
         ret = analySn(buf, len, itSn);
-        if(ret) {
-            toSnStr(itSn);
-        } else {
-            str = tr("序列号分析错误");
-        }
+        if(ret) toSnStr(itSn); else str = tr("序列号分析错误");
     } else {
         str = tr("读序列号未返数据长度错误 %1").arg(len);
     }

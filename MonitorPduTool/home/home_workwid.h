@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "home_manualdlg.h"
+#include "test_corethread.h"
 
 namespace Ui {
 class Home_WorkWid;
@@ -28,11 +29,16 @@ protected:
     void updateResult();
     void updateCnt();
 
+    bool initSerial();
+    bool initWid();
+
 
 private slots:
     void timeoutDone();
     void on_setBtn_clicked();
     void on_startBtn_clicked();
+
+    void on_readBtn_clicked();
 
 private:
     Ui::Home_WorkWid *ui;

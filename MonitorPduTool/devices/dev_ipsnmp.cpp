@@ -7,12 +7,21 @@
 
 Dev_IpSnmp::Dev_IpSnmp(QObject *parent) : QThread(parent)
 {
+    isRun = false;
     mPacket = sDataPacket::bulid();
     mItem = Cfg::bulid()->item;
     mPro = mPacket->getPro();
     mDev = mPacket->getDev();
     mSnmp = SnmpClient::bulid(this);
 }
+
+Dev_IpSnmp::~Dev_IpSnmp()
+{
+    isRun = false;
+    mPro->step = Test_End;
+    wait();
+}
+
 
 Dev_IpSnmp *Dev_IpSnmp::bulid(QObject *parent)
 {
@@ -163,5 +172,9 @@ void Dev_IpSnmp::workDone()
 
 void Dev_IpSnmp::run()
 {
+    if(isRun) return;
+    isRun = true;
+
     workDone();
+    isRun = false;
 }

@@ -10,7 +10,6 @@ Cfg::Cfg()
 {
     mCfg = CfgCom::bulid();
     item = new sCfgItem();
-    item->addr = initAddr();
 
     initCnt();
     initErrData();

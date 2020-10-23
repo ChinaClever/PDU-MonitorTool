@@ -17,6 +17,7 @@ public:
     int readSerial(quint8 *cmd, int secs);
     bool writeSerial(quint8 *cmd, int len);
     int transmit(uchar *sent, int len, uchar *recv, int secs);
+    bool changeBaudRate();
 
 protected:
     ushort calccrc (ushort crc, uchar crcbuf);

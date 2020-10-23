@@ -8,6 +8,7 @@
 #include <QSerialPortInfo>
 #include <QApplication>
 #define SERIAL_TIMEOUT  100  // 100MS
+#include "common.h"
 
 SerialPort::SerialPort(QObject *parent) : QThread(parent)
 {
@@ -132,6 +133,7 @@ int SerialPort::send(const QByteArray &array)
         len = mSerial->write(array);
         if(len > 0) {
             mSerial->flush();
+            // qDebug() << cm_ByteArrayToHexStr(array);
         }
     }
 

@@ -13,3 +13,24 @@ Home_ManualDlg::~Home_ManualDlg()
 {
     delete ui;
 }
+
+bool Home_ManualDlg::inputCheck()
+{
+    bool ret = ui->shellRadio->isChecked();
+    if(ret) ret = ui->screenRadio->isChecked();
+    if(ret) ret = ui->beepRradio->isChecked();
+    if(ret) ret = ui->ledRadio->isChecked();
+    if(ret) ret = ui->keyRadio->isChecked();
+
+    return ret;
+}
+
+void Home_ManualDlg::on_okBtn_clicked()
+{
+    bool ret = inputCheck();
+    if(ret) {
+        this->accept();
+    } else {
+        this->close();
+    }
+}

@@ -22,6 +22,9 @@ protected:
     uchar *toThreshold(uchar *ptr, int line, sDataUnit &unit);
     uchar *toEnvTh(uchar *ptr, sDataUnit &unit);
 
+protected slots:
+    virtual void initFunSlot();
+
 protected:
     sDevData *mDev;
     RtuRw *mModbus;

@@ -14,6 +14,9 @@ public:
 protected:
     void init();
 
+protected slots:
+    void initFunSlot();
+
 };
 
 #endif // DEV_SOURCETHREAD_H

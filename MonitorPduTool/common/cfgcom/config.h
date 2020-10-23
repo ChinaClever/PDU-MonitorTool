@@ -68,7 +68,6 @@ struct sSerial
 
 struct sCfgItem
 {
-    uchar addr;
     sErrRange err; // 电流误差
     sCfgTh cTh;
 

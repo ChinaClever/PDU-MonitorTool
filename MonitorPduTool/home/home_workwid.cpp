@@ -30,6 +30,7 @@ void Home_WorkWid::createWid()
     mDev = packet->getDev();
     mPro = packet->getPro();
     mItem = Cfg::bulid()->item;
+    mPro->step = Test_End;
 
     timer = new QTimer(this);
     timer->start(500);
@@ -53,7 +54,7 @@ void Home_WorkWid::setTextColor()
 {
     QColor color("black");
     bool pass = mPro->pass.first();
-    if(!pass) color.setRed(1);
+    if(!pass) color = QColor("red");
     ui->textEdit->moveCursor(QTextCursor::Start);
 
     QTextCharFormat fmt;//文本字符格式
@@ -65,15 +66,11 @@ void Home_WorkWid::setTextColor()
 
 void Home_WorkWid::insertText()
 {
-    if(mPro->step) {
-        if(mPro->status.size()) {
-            setTextColor();
-            ui->textEdit->insertPlainText(mPro->status.first());
-            mPro->status.removeFirst();            
-            mPro->pass.removeFirst();
-        } else {
-            ui->textEdit->clear();
-        }
+    if(mPro->status.size()) {
+        setTextColor();
+        ui->textEdit->insertPlainText(mPro->status.first() +"\n");
+        mPro->status.removeFirst();
+        mPro->pass.removeFirst();
     }
 }
 
@@ -111,6 +108,7 @@ void Home_WorkWid::updateTime()
 
     str = mPro->startTime.toString("hh:mm:ss");
     ui->startLab->setText(str);
+    ui->startBtn->setText(tr("结束测试"));
 }
 
 void Home_WorkWid::updateResult()
@@ -135,6 +133,8 @@ void Home_WorkWid::updateResult()
     str = QTime::currentTime().toString("hh:mm:ss");
     ui->endLab->setText(str);
     mPro->step = Test_End;
+
+    ui->startBtn->setText(tr("开始测试"));
 }
 
 void Home_WorkWid::updateWid()
@@ -167,7 +167,54 @@ void Home_WorkWid::timeoutDone()
     }
 }
 
+bool Home_WorkWid::initSerial()
+{
+    QString str;
+    sSerial *coms = &(mItem->coms);
+    mDev->id = ui->addrSpin->value();
+
+    bool ret = coms->source->isOpened();
+    if(!ret){MsgBox::critical(this, tr("请先打开标准源串口")); return ret;}
+
+    ret = coms->ser1->isOpened();
+    if(!ret){MsgBox::critical(this, tr("请先打级联串口 1")); return ret;}
+
+    //    ret = coms->ser2->isOpened();
+    //    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
+
+    return ret;
+}
+
+bool Home_WorkWid::initWid()
+{
+    ui->textEdit->clear();
+    bool ret = initSerial();
+    if(ret) ret = mManualDlg->exec();
+    if(!ret) {
+        MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));
+    }
+
+    return ret;
+}
+
 void Home_WorkWid::on_startBtn_clicked()
 {
-    mManualDlg->exec();
+    if(mPro->step == Test_End) {
+        if(initWid()) {
+
+        }
+    } else {
+        mPro->result = Test_Fail;
+        updateResult();
+    }
+}
+
+void Home_WorkWid::on_readBtn_clicked()
+{
+    bool ret = initSerial();
+    if(ret) {
+        ui->textEdit->clear();
+        Test_DataRead::bulid(this)->start();
+        MsgBox::information(this, tr("已开始读取设备数据，请等待5抄！！！"));
+    }
 }

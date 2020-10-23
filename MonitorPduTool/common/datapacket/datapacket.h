@@ -109,7 +109,7 @@ struct sDevType
  */
 struct sDevData
 {
-    sDevData() {id=0; en=0;}
+    sDevData() {id=1; en=0;}
 
     uchar id, en;  // 设备号
     sDevType devType; //设备类型
