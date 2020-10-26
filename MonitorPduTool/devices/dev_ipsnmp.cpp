@@ -7,21 +7,12 @@
 
 Dev_IpSnmp::Dev_IpSnmp(QObject *parent) : QThread(parent)
 {
-    isRun = false;
     mPacket = sDataPacket::bulid();
     mItem = Cfg::bulid()->item;
     mPro = mPacket->getPro();
     mDev = mPacket->getDev();
     mSnmp = SnmpClient::bulid(this);
 }
-
-Dev_IpSnmp::~Dev_IpSnmp()
-{
-    isRun = false;
-    mPro->step = Test_End;
-    wait();
-}
-
 
 Dev_IpSnmp *Dev_IpSnmp::bulid(QObject *parent)
 {
@@ -139,42 +130,12 @@ bool Dev_IpSnmp::devDataV1()
 bool Dev_IpSnmp::readPduData()
 {
     bool ret = true;
-    QString str = tr("SNMP通讯测试失败");
     if(mDev->devType.version == 3) {
         ret = devDataV3();
     } else {
         ret = devDataV1();
     }
-    if(ret) str = tr("SNMP通讯测试成功");
-    mPacket->updatePro(str, ret);
 
     return ret;
 }
 
-bool Dev_IpSnmp::checkNet()
-{
-    QString str = tr("网络测试失败");
-    bool ret = cm_checkIp("192.1681.1163");
-    if(ret) {
-        str = tr("网络测试成功");
-    }
-    mPacket->updatePro(str, ret);
-    return ret;
-}
-
-void Dev_IpSnmp::workDone()
-{
-    bool ret = checkNet();
-    if(ret) {
-        readPduData();
-    }
-}
-
-void Dev_IpSnmp::run()
-{
-    if(isRun) return;
-    isRun = true;
-
-    workDone();
-    isRun = false;
-}

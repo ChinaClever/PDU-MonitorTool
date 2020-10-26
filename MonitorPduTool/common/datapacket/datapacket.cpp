@@ -16,10 +16,20 @@ sDataPacket::sDataPacket()
 
 void sDataPacket::clear(int id)
 {
-    sDevData *d = dev[id];
-    int addr = d->id;
-    memset(d, 0, sizeof(sDevData));
-    d->id = addr;
+    sDevData *ptr = dev[id];
+    ptr->devType.ac = 1;
+    ptr->devType.ip[0] = 0;
+    ptr->devType.devType = 0;
+    ptr->devType.sn.clear();
+    ptr->devType.dev_type.clear();
+    memset(&(ptr->line), 0, sizeof(sObjData));
+    memset(&(ptr->env), 0, sizeof(sEnvData));
+
+    pro->step = 0;
+    pro->result = 0;
+    pro->item.clear();
+    pro->status.clear();
+    pro->startTime = QTime::currentTime();
 }
 
 
@@ -41,6 +51,7 @@ void sDataPacket::init()
 
 bool sDataPacket::updatePro(const QString &str, bool pass, int sec)
 {
+    pro->time = QTime::currentTime().toString("hh:mm:ss");
     pro->pass << pass;
     pro->itPass << pass;
 

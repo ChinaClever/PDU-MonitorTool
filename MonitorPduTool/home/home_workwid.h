@@ -37,18 +37,20 @@ private slots:
     void timeoutDone();
     void on_setBtn_clicked();
     void on_startBtn_clicked();
-
     void on_readBtn_clicked();
 
 private:
     Ui::Home_WorkWid *ui;
 
+    int mId;
     QTimer *timer;
     sDevData * mDev;
     sProgress *mPro;
     sCfgItem *mItem;
-    Home_SetDlg *mSetDlg;
+    sDataPacket *mPacket;
+    Home_SetDlg *mSetDlg;    
     Home_ManualDlg *mManualDlg;
+    Test_CoreThread *mCoreThread;
 };
 
 #endif // HOME_WORKWID_H

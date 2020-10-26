@@ -113,7 +113,7 @@ bool Dev_SerialNum::snEnter()
     if(ret) {
         initDevType(mSnItem);
         ret = readSn(mSnItem);
-        if(ret) strcpy(mDev->devType.sn, mSnItem.sn.toLatin1().data());
+        if(ret) mDev->devType.sn = mSnItem.sn;
     }
 
     return ret;

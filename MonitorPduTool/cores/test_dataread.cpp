@@ -5,6 +5,7 @@ Test_DataRead::Test_DataRead(QObject *parent) : QThread(parent)
     isRun = false;
     mSiRtu = new Dev_SiRtu(this);
     mIpRtu = new Dev_IpRtu(this);
+    mLogs = Test_Logs::bulid(this);
     mSn = Dev_SerialNum::bulid(this);
     mIpSnmp = Dev_IpSnmp::bulid(this);
     mSource = Dev_Source::bulid(this);
@@ -28,14 +29,7 @@ Test_DataRead *Test_DataRead::bulid(QObject *parent)
 
 bool Test_DataRead::readSn()
 {
-    bool ret = mSn->snEnter();
-    if(ret) {
-        if(IP_PDU == mDt->devType) {
-            mIpSnmp->start();
-        }
-    }
-
-    return ret;
+    return mSn->snEnter();
 }
 
 bool Test_DataRead::readDev()
@@ -45,6 +39,39 @@ bool Test_DataRead::readDev()
     return ret;
 }
 
+bool Test_DataRead::checkNet()
+{
+    QString str = tr("网络测试失败");
+    bool ret = cm_checkIp("192.168.1.163");
+    if(ret) {
+        str = tr("网络测试成功");
+    }
+
+    return mLogs->updatePro(str, ret);
+}
+
+bool Test_DataRead::readSnmp()
+{
+    bool ret = true;
+    QString str = tr("SNMP通讯");
+    ret = mIpSnmp->readPduData();
+    if(ret) str += tr("成功");
+    else str += tr("失败");
+
+    return mLogs->updatePro(str, ret);
+}
+
+
+bool Test_DataRead::readNet()
+{
+    bool ret = true;
+    if(IP_PDU == mDt->devType) {
+        ret = checkNet();
+        if(ret)  ret = readSnmp();
+    }
+
+    return ret;
+}
 
 bool Test_DataRead::readPdu()
 {
@@ -69,12 +96,14 @@ void Test_DataRead::run()
     sProgress *pro = sDataPacket::bulid()->getPro();
     pro->step = Collect_Start;
 
-    /////=======
-//    bool ret = true;
-    mDt->devType = IP_PDU;
-
     bool ret  = readSn();
-    if(ret) readPdu();
+    if(ret) {
+        QString str = tr("设备数据读取");
+        ret = readPdu();
+        if(ret) str += tr("成功");
+        else str += tr("失败");
+        sDataPacket::bulid()->updatePro(str, ret);
+    }
     pro->step = Test_End;
 
     isRun = false;

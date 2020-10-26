@@ -34,9 +34,9 @@ void Dev_TypeId::initReadType(sRtuItem &it)
 bool Dev_TypeId::analysDevType(uchar *buf, int len)
 {
     bool ret = false;
-    QString str = tr("读取设备序列号成功");
+    QString str = tr("读取设备类型成功");
     if(len != 4) {
-        str = tr("读取设备序列号失败：返回长度为%1").arg(len);
+        str = tr("读取设备类型失败：返回长度为%1").arg(len);
         return mPacket->updatePro(str, ret);
     }
 
@@ -74,7 +74,7 @@ bool Dev_TypeId::readDevType()
 {
     mDev->devType.dev_type[0] = 0;
     QString str = tr("开始识别设备类型！");
-    bool ret = mPacket->updatePro(str, true, 3);
+    bool ret = mPacket->updatePro(str, true, 1);
     if(ret) {
         ret = readDevId();
     }

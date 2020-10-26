@@ -9,7 +9,7 @@ class Dev_IpRtu : public Dev_Object
 public:
     explicit Dev_IpRtu(QObject *parent = nullptr);
 
-    bool readPduData();    
+    bool readPduData();
 
 protected:
     int recvLine(int len);

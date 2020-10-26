@@ -25,15 +25,16 @@ void Home_WorkWid::createWid()
 {
     mSetDlg = new Home_SetDlg(this);
     mManualDlg = new Home_ManualDlg(this);
+    mCoreThread = new Test_CoreThread(this);
 
-    sDataPacket *packet = sDataPacket::bulid();
-    mDev = packet->getDev();
-    mPro = packet->getPro();
+    mPacket = sDataPacket::bulid();
+    mDev = mPacket->getDev();
+    mPro = mPacket->getPro();
     mItem = Cfg::bulid()->item;
     mPro->step = Test_End;
 
     timer = new QTimer(this);
-    timer->start(500);
+    timer->start(800);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutDone()));
 }
 
@@ -68,7 +69,8 @@ void Home_WorkWid::insertText()
 {
     if(mPro->status.size()) {
         setTextColor();
-        ui->textEdit->insertPlainText(mPro->status.first() +"\n");
+        QString str = QString::number(mId++) + "、"+ mPro->status.first() + "\n";
+        ui->textEdit->insertPlainText(str);
         mPro->status.removeFirst();
         mPro->pass.removeFirst();
     }
@@ -115,15 +117,12 @@ void Home_WorkWid::updateResult()
 {
     QString style;
     QString str = tr("---");
-    switch (mPro->result) {
-    case Test_Pass:
-        str = tr("成功");
-        style = "background-color:green; color:rgb(255, 255, 255);";
-        break;
-    case Test_Fail:
+    if (Test_Fail == mPro->result) {
         str = tr("失败");
         style = "background-color:red; color:rgb(255, 255, 255);";
-        break;
+    } else {
+        str = tr("成功");
+        style = "background-color:green; color:rgb(255, 255, 255);";
     }
     style += "font:100 34pt \"微软雅黑\";";
 
@@ -134,16 +133,17 @@ void Home_WorkWid::updateResult()
     ui->endLab->setText(str);
     mPro->step = Test_End;
 
+    ui->groupBox_4->setEnabled(true);
     ui->startBtn->setText(tr("开始测试"));
 }
 
 void Home_WorkWid::updateWid()
 {
-    char *ptr = mDev->devType.sn;
-    ui->snLab->setText(ptr);
+    QString str = mDev->devType.sn;
+    ui->snLab->setText(str);
 
-    ptr = mDev->devType.dev_type;
-    ui->devLab->setText(ptr);
+    str = mDev->devType.dev_type;
+    ui->devLab->setText(str);
     ui->userLab->setText(mItem->user);
 
     if(mPro->step < Test_Over) {
@@ -190,7 +190,11 @@ bool Home_WorkWid::initWid()
     ui->textEdit->clear();
     bool ret = initSerial();
     if(ret) ret = mManualDlg->exec();
-    if(!ret) {
+    if(ret) {
+        mId = 1;
+        mPacket->init();
+        ui->groupBox_4->setEnabled(false);
+    } else {
         MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));
     }
 
@@ -201,11 +205,14 @@ void Home_WorkWid::on_startBtn_clicked()
 {
     if(mPro->step == Test_End) {
         if(initWid()) {
-
+            mCoreThread->start();
         }
     } else {
-        mPro->result = Test_Fail;
-        updateResult();
+        bool ret = MsgBox::question(this, tr("确定需要提前结束？"));
+        if(ret) {
+            mPro->result = Test_Fail;
+            updateResult();
+        }
     }
 }
 
@@ -215,6 +222,6 @@ void Home_WorkWid::on_readBtn_clicked()
     if(ret) {
         ui->textEdit->clear();
         Test_DataRead::bulid(this)->start();
-        MsgBox::information(this, tr("已开始读取设备数据，请等待5抄！！！"));
+        //MsgBox::information(this, tr("已开始读取设备数据，请等待5抄！！！"));
     }
 }

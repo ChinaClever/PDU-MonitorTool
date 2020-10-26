@@ -27,14 +27,8 @@ Dev_TypeDef * Dev_TypeDef::bulid()
 
 QString Dev_TypeDef::getDevStr(uint id)
 {
-    QString  str = Json_Recv::bulid()->getDevTypeByID(id);
-    if(!str.isEmpty()) {
-        strcpy(mDt->dev_type, str.toLatin1().data());
-    } else {
-        mDt->dev_type[0] = 0;
-    }
-
-    return str;
+    mDt->dev_type = Json_Recv::bulid()->getDevTypeByID(id);
+    return mDt->dev_type;
 }
 
 int Dev_TypeDef::getDevType(const QString &str)

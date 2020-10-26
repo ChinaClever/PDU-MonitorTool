@@ -22,9 +22,11 @@ void Home_ThresholdTabWid::initWid()
 
 void Home_ThresholdTabWid::setDataUnit(int id, sDataUnit &unit)
 {
+    double rate = COM_RATE_CUR;
     QString suffix = "A";
     QString str = tr("电流");
     if(id < 3) {
+        rate = 1;
         suffix = "V";
         str = tr("电压");
     }
@@ -33,9 +35,9 @@ void Home_ThresholdTabWid::setDataUnit(int id, sDataUnit &unit)
         QStringList listStr;
 
         listStr << str;
-        listStr << QString::number(unit.value[i]/COM_RATE_CUR,'f',2)+suffix;
-        listStr << QString::number(unit.min[i]/COM_RATE_CUR,'f',2)+suffix;
-        listStr << QString::number(unit.max[i]/COM_RATE_CUR,'f',2)+suffix;
+        listStr << QString::number(unit.value[i]/rate,'f',2)+suffix;
+        listStr << QString::number(unit.min[i]/rate,'f',2)+suffix;
+        listStr << QString::number(unit.max[i]/rate,'f',2)+suffix;
         setTableRow(id+i, listStr);
 
         if((unit.value[i] < unit.min[i]) || (unit.value[i] > unit.max[i])) {

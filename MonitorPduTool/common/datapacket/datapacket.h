@@ -98,8 +98,8 @@ struct sDevType
     uchar version; // 版本号
 
     uchar ip[18];
-    char sn[NAME_SIZE];
-    char dev_type[NAME_SIZE];
+    QString sn;
+    QString dev_type;
 };
 
 
