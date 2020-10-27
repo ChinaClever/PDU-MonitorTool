@@ -21,7 +21,7 @@ Dev_Source *Dev_Source::bulid(QObject *parent)
 
 void Dev_Source::initFunSlot()
 {
-    mModbus = Rtu_Modbus::bulid(this)->get(0);
+    setModbus(0);
 }
 
 

@@ -21,17 +21,10 @@ void Test_CoreThread::initFunSlot()
 
 bool Test_CoreThread::hubPort()
 {
-    bool ret = false;
-    QByteArray array;
     QString str = tr("设备级联口连接");
-    SerialPort *ser = mItem->coms.ser2;
-    int rtn = ser->read(array);
-    if(rtn > 20) {
-        str += tr("正常");
-        ret = true;
-    } else {
-        str += tr("错误");
-    }
+    bool ret = mRead->readHub();
+    if(ret) str += tr("正常");
+    else str += tr("错误");
 
     return mLogs->updatePro(str, ret);
 }
@@ -41,7 +34,6 @@ bool Test_CoreThread::initDev()
 {
     bool ret  = mRead->readSn();
     if(ret) {
-        mItem->coms.ser2->reflush();
         QString str = tr("设备数据读取");
         ret = mRead->readDev();
         if(ret) str += tr("成功");

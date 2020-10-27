@@ -13,6 +13,7 @@ public:
 
     bool readSn();
     bool readDev();
+    bool readHub();
     bool readNet();
 
 protected:
@@ -25,6 +26,7 @@ protected slots:
     void initFunSlot();
 
 private:
+    Dev_Object *mRtu;
     Dev_SiRtu *mSiRtu;
     Dev_IpRtu *mIpRtu;
     Dev_SerialNum *mSn;

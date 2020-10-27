@@ -10,6 +10,7 @@ public:
     explicit Dev_Object(QObject *parent = nullptr);
 
     virtual bool readPduData()=0;
+    void setModbus(int id);
 
 protected:
     uchar *toInt(uchar *ptr, int line, uint *value);

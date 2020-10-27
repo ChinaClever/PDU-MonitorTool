@@ -12,6 +12,7 @@ Test_DataRead::Test_DataRead(QObject *parent) : Test_Object(parent)
 
 void Test_DataRead::initFunSlot()
 {
+    mRtu = nullptr;
     mSiRtu = Dev_SiRtu::bulid(this);
     mIpRtu = Dev_IpRtu::bulid(this);
     mLogs = Test_Logs::bulid(this);
@@ -77,16 +78,27 @@ bool Test_DataRead::readNet()
 bool Test_DataRead::readPdu()
 {
     bool ret = false;
-    Dev_Object *dev = nullptr;
     switch (mDt->devType) {
-    case SI_PDU:  dev = mSiRtu; break;
-    case IP_PDU:  dev = mIpRtu; break;
+    case SI_PDU:  mRtu = mSiRtu; break;
+    case IP_PDU:  mRtu = mIpRtu; break;
     }
-    if(dev) ret = dev->readPduData();
+    ret = mRtu->readPduData();
 
     return ret;
 }
 
+bool Test_DataRead::readHub()
+{
+    mRtu->setModbus(2);
+    mItem->coms.ser2->reflush();
+    bool ret = readPdu();
+    if(ret){
+        mRtu->setModbus(1);
+        mItem->coms.ser1->reflush();
+    }
+
+    return ret;
+}
 
 void Test_DataRead::run()
 {

@@ -17,9 +17,13 @@ Dev_Object::Dev_Object(QObject *parent) : QThread(parent)
 
 void Dev_Object::initFunSlot()
 {
-    mModbus = Rtu_Modbus::bulid(this)->get(1);
+    setModbus(1);
 }
 
+void Dev_Object::setModbus(int id)
+{
+    mModbus = Rtu_Modbus::bulid(this)->get(id);
+}
 
 uchar *Dev_Object::toInt(uchar *ptr, int line, uint *value)
 {
