@@ -13,6 +13,8 @@ public:
     bool funClearEle();
     bool setModel();
 
+    bool setAcTh();
+
 
 protected:
     bool sentRtuCmd(ushort reg, ushort value);
