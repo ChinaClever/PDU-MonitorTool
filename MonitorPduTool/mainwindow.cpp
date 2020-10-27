@@ -9,8 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QTimer::singleShot(5,this,SLOT(initFunSlot())); //延时初始化
 
-//    mSnmp = new Dev_IpSnmp(this);
-//    mSnmp->start();
+    //    mSnmp = new Dev_IpSnmp(this);
+    //    mSnmp->start();
 }
 
 MainWindow::~MainWindow()
@@ -31,7 +31,7 @@ void MainWindow::initWid()
 
     mTdWid = new Td_MainWid(ui->stackedWid);
     ui->stackedWid->addWidget(mTdWid);
-//    connect(mHomeWid, SIGNAL(startSig()), mStatusWid, SLOT(startSlot()));
+    connect(mHomeWid, SIGNAL(startSig()), mTdWid, SIGNAL(startSig()));
 
     mSetupWid = new Setup_MainWid(ui->stackedWid);
     ui->stackedWid->addWidget(mSetupWid);

@@ -1,16 +1,13 @@
 #ifndef TEST_CORETHREAD_H
 #define TEST_CORETHREAD_H
 
-#include "test_dataread.h"
-#include "test_logs.h"
+#include "test_errrange.h"
 
-class Test_CoreThread : public QThread
+class Test_CoreThread : public Test_Object
 {
     Q_OBJECT
 public:
     explicit Test_CoreThread(QObject *parent = nullptr);
-    ~Test_CoreThread();
-
 
 protected slots:
     void initFunSlot();
@@ -21,16 +18,21 @@ protected:
 
     bool initDev();
     bool hubPort();
-    void workResult();
+    bool volErrRange(int i);
+    bool curErrRange(int i);
+    bool powErrRange(int i);
+    bool envErrRange();
+    bool checkErrRange();
+
+    bool volAlarmErr(int i);
+    bool curAlarmErr(int i);
+    bool checkAlarmErr();
+    void workResult(bool res);
 
 private:
-    bool isRun;
-    sDevData *mDev;
-    sCfgItem *mItem;
-    sProgress *mPro;
-    sDataPacket *mPacket;
-    Test_DataRead *mRead;
     Test_Logs *mLogs;
+    Test_ErrRange *mErr;
+    Test_DataRead *mRead;
 };
 
 #endif // TEST_CORETHREAD_H

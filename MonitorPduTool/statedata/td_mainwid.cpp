@@ -13,6 +13,7 @@ Td_MainWid::Td_MainWid(QWidget *parent) :
     ui->setupUi(this);
     groupBox_background_icon(this);
     mStatusTabWid = new Td_StatusTabWid(ui->groupBox);
+    connect(this, SIGNAL(startSig()), mStatusTabWid, SLOT(startSlot()));
 }
 
 Td_MainWid::~Td_MainWid()

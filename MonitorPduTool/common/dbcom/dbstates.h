@@ -12,7 +12,7 @@ class DbStates : public SqlBasic<sStateItem>
     DbStates();
 public:
     static DbStates* bulid();
-    QString tableName(){return "cali_states";}
+    QString tableName(){return "MonitorPDU_states";}
     bool insertItem(const sStateItem& item);
 
 protected:

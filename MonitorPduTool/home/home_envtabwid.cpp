@@ -45,6 +45,7 @@ void Home_EnvTabWid::setDataUnit(int id, sDataUnit &unit)
         } else {
             unit.alarm[i] = 0;
             setNormalBackgroundColor(id+i);
+            setItemColor(i, 1, unit.status[i]);
         }
     }
 }

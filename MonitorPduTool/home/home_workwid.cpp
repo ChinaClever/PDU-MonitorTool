@@ -34,7 +34,7 @@ void Home_WorkWid::createWid()
     mPro->step = Test_End;
 
     timer = new QTimer(this);
-    timer->start(800);
+    timer->start(200);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutDone()));
 }
 
@@ -85,8 +85,8 @@ void Home_WorkWid::updateCnt()
 
     QString str = "0";
     if(cnt->all) {
-        double value = cnt->ok*1.0 / cnt->all;
-        str = QString::number(value,'f',1) +"%";
+        double value = cnt->ok*100.0 / cnt->all;
+        str = QString::number(value,'f',0) +"%";
     }
     ui->passLcd->display(str);
 }
@@ -179,8 +179,8 @@ bool Home_WorkWid::initSerial()
     ret = coms->ser1->isOpened();
     if(!ret){MsgBox::critical(this, tr("请先打级联串口 1")); return ret;}
 
-    //    ret = coms->ser2->isOpened();
-    //    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
+    ret = coms->ser2->isOpened();
+    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
 
     return ret;
 }
@@ -193,6 +193,7 @@ bool Home_WorkWid::initWid()
     if(ret) {
         mId = 1;
         mPacket->init();
+        emit startSig();
         ui->groupBox_4->setEnabled(false);
     } else {
         MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));

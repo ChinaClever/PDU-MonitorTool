@@ -1,12 +1,8 @@
 #include "test_logs.h"
 extern QString user_land_name();
 
-Test_Logs::Test_Logs(QObject *parent) : QThread(parent)
+Test_Logs::Test_Logs(QObject *parent) : Test_Object(parent)
 {
-    mPacket = sDataPacket::bulid();
-    mItem = Cfg::bulid()->item;
-    mPro = mPacket->getPro();
-    mDev = mPacket->getDev();
 }
 
 

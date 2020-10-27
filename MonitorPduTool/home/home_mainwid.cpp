@@ -14,9 +14,6 @@ Home_MainWid::Home_MainWid(QWidget *parent) :
     groupBox_background_icon(this);
 
     initWid();
-
-    //    mTableWid = new Home_DataTabWid(ui->tableWid);
-    //    connect(mModeWid, SIGNAL(startSig()), this, SIGNAL(startSig()));
 }
 
 Home_MainWid::~Home_MainWid()
@@ -24,12 +21,10 @@ Home_MainWid::~Home_MainWid()
     delete ui;
 }
 
-
-
-
 void Home_MainWid::initWid()
 {
     mWorkWid = new Home_WorkWid(ui->workWid);
+    connect(mWorkWid, SIGNAL(startSig()), this, SIGNAL(startSig()));
 
     mLineTabWid = new Home_LineTabWid(ui->tabWidget);
     ui->tabWidget->insertTab(0, mLineTabWid, tr("相监测数据列表"));

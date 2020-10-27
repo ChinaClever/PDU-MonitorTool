@@ -49,10 +49,11 @@ void Td_StatusTabWid::appendItem()
 
 void Td_StatusTabWid::timeoutDone()
 {
-    if(mPro->step) {
-        if(mPro->item.size())
-            appendItem();
-    } else {
-        delTable();
-    }
+    if(mPro->item.size())
+        appendItem();
+}
+
+void Td_StatusTabWid::startSlot()
+{
+    delTable();
 }

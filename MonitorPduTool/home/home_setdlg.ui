@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>513</width>
-    <height>506</height>
+    <height>428</height>
    </rect>
   </property>
   <property name="font">
@@ -25,7 +25,7 @@
      <x>10</x>
      <y>10</y>
      <width>491</width>
-     <height>171</height>
+     <height>71</height>
     </rect>
    </property>
    <property name="font">
@@ -35,147 +35,9 @@
     </font>
    </property>
    <property name="title">
-    <string> 设备设置</string>
+    <string>客户设置</string>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_12">
-      <property name="text">
-       <string>产品类型</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1" colspan="2">
-     <widget class="QComboBox" name="ipTypeBox">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>120</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <item>
-       <property name="text">
-        <string>SI-PDU</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>IP-PDU V1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>IP-PDU V3</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QLabel" name="label_7">
-      <property name="text">
-       <string>设备相数</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="4">
-     <widget class="QComboBox" name="lineBox">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>120</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <item>
-       <property name="text">
-        <string>单相</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>两路</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>三相</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_8">
-      <property name="text">
-       <string>交直流</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1" colspan="2">
-     <widget class="QComboBox" name="sBox">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>120</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <item>
-       <property name="text">
-        <string>交流</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>直流</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="2" column="3">
-     <widget class="QLabel" name="label_11">
-      <property name="text">
-       <string>软件版本</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="4">
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="maximumSize">
-       <size>
-        <width>120</width>
-        <height>16777215</height>
-       </size>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label_17">
       <property name="text">
@@ -186,7 +48,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" colspan="4">
+    <item row="0" column="1">
      <widget class="QLineEdit" name="userEdit"/>
     </item>
    </layout>
@@ -195,7 +57,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>190</y>
+     <y>100</y>
      <width>491</width>
      <height>161</height>
     </rect>
@@ -488,29 +350,13 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <widget class="QCheckBox" name="siCheck">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>错误自动修正</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="okBtn">
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>450</y>
+     <y>370</y>
      <width>131</width>
      <height>41</height>
     </rect>
@@ -529,7 +375,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>360</y>
+     <y>280</y>
      <width>491</width>
      <height>71</height>
     </rect>

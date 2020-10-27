@@ -17,6 +17,9 @@ public:
     explicit Td_MainWid(QWidget *parent = nullptr);
     ~Td_MainWid();
 
+signals:
+    void startSig();
+
 private:
     Ui::Td_MainWid *ui;
     Td_StatusTabWid *mStatusTabWid;

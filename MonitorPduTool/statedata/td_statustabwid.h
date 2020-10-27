@@ -16,6 +16,9 @@ protected:
     void initWid();
     void appendItem();
 
+public slots:
+    void startSlot();
+
 protected slots:
     void timeoutDone();
 

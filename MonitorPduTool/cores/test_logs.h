@@ -1,9 +1,9 @@
 #ifndef TEST_LOGS_H
 #define TEST_LOGS_H
 #include "dbstates.h"
-#include "datapacket.h"
+#include "test_object.h"
 
-class Test_Logs : public QThread
+class Test_Logs : public Test_Object
 {
     Q_OBJECT
     explicit Test_Logs(QObject *parent = nullptr);
@@ -19,10 +19,6 @@ protected:
     bool appendLogItem(const QString &str, bool pass);
 
 private:
-    sDevData *mDev;
-    sCfgItem *mItem;
-    sProgress *mPro;
-    sDataPacket *mPacket;
     QList<sStateItem> mLogItems;
 };
 

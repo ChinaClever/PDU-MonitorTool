@@ -1,17 +1,15 @@
 #ifndef TEST_DATAREAD_H
 #define TEST_DATAREAD_H
 
-#include "dev_serialnum.h"
 #include "test_logs.h"
 
 
-class Test_DataRead : public QThread
+class Test_DataRead : public Test_Object
 {
     Q_OBJECT
     explicit Test_DataRead(QObject *parent = nullptr);
 public:
     static Test_DataRead *bulid(QObject *parent = nullptr);
-    ~Test_DataRead();
 
     bool readSn();
     bool readDev();
@@ -23,9 +21,10 @@ protected:
     bool checkNet();
     bool readSnmp();
 
+protected slots:
+    void initFunSlot();
+
 private:
-    bool isRun;
-    sDevType *mDt;
     Dev_SiRtu *mSiRtu;
     Dev_IpRtu *mIpRtu;
     Dev_SerialNum *mSn;

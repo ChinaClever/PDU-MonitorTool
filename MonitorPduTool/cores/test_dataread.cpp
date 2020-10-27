@@ -1,22 +1,18 @@
 #include "test_dataread.h"
 
-Test_DataRead::Test_DataRead(QObject *parent) : QThread(parent)
+Test_DataRead::Test_DataRead(QObject *parent) : Test_Object(parent)
 {
-    isRun = false;
+
+}
+
+void Test_DataRead::initFunSlot()
+{
     mSiRtu = new Dev_SiRtu(this);
     mIpRtu = new Dev_IpRtu(this);
     mLogs = Test_Logs::bulid(this);
     mSn = Dev_SerialNum::bulid(this);
     mIpSnmp = Dev_IpSnmp::bulid(this);
     mSource = Dev_Source::bulid(this);
-    sDevData *dev = sDataPacket::bulid()->getDev();
-    mDt = &(dev->devType);
-}
-
-Test_DataRead::~Test_DataRead()
-{
-    isRun = false;
-    wait();
 }
 
 Test_DataRead *Test_DataRead::bulid(QObject *parent)
@@ -92,9 +88,8 @@ void Test_DataRead::run()
     if(isRun) return;
     isRun = true;
 
-    sDataPacket::bulid()->init();
-    sProgress *pro = sDataPacket::bulid()->getPro();
-    pro->step = Collect_Start;
+    mPacket->init();
+    mPro->step = Collect_Start;
 
     bool ret  = readSn();
     if(ret) {
@@ -102,9 +97,9 @@ void Test_DataRead::run()
         ret = readPdu();
         if(ret) str += tr("成功");
         else str += tr("失败");
-        sDataPacket::bulid()->updatePro(str, ret);
+        mPacket->updatePro(str, ret);
     }
-    pro->step = Test_End;
+    mPro->step = Test_End;
 
     isRun = false;
 }

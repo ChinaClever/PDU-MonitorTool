@@ -68,39 +68,22 @@ void Cfg::writeCnt()
 void Cfg::initThreshold()
 {
     item->user = read("user", "", "User").toString();
-    item->cTh.repair_en = read("repair_en", 0).toInt();
     item->cTh.type = read("cth_type", 1).toInt();
     item->cTh.vol_min = read("vol_min", 80).toInt();
     item->cTh.vol_max = read("vol_max", 276).toInt();
     item->cTh.cur_min = read("cur_min", 0).toInt();
     item->cTh.cur_max = read("cur_max", 320).toInt();
     item->cTh.si_mod = read("si_mod", 0).toInt();
-
-    item->cTh.ip_version = read("ip_version", 1).toInt();
-    item->cTh.ip_lines = read("ip_lines", 1).toInt();
-    item->cTh.ip_mod = read("ip_modbus", 0).toInt();
-    item->cTh.ip_log = read("log_en", 0).toInt();
-    item->cTh.ip_standard = read("ip_standard", 0).toInt();
-    item->cTh.ip_language = read("ip_language", 1).toInt();
 }
 
 void Cfg::writeThreshold()
 {
     write("user", item->user, "User");
-    write("repair_en", item->cTh.repair_en);
     write("cth_type", item->cTh.type);
     write("vol_min", item->cTh.vol_min);
     write("vol_max", item->cTh.vol_max);
     write("cur_min", item->cTh.cur_min);
     write("cur_max", item->cTh.cur_max);
-    write("si_mod", item->cTh.si_mod);
-
-    write("ip_version", item->cTh.ip_version);
-    write("ip_lines", item->cTh.ip_lines);
-    write("ip_modbus", item->cTh.ip_mod);
-    write("log_en", item->cTh.ip_log);
-    write("ip_standard", item->cTh.ip_standard);
-    write("ip_language", item->cTh.ip_language);
 }
 
 

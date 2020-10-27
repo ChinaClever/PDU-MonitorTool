@@ -17,8 +17,21 @@ public:
     explicit Home_SetDlg(QWidget *parent = nullptr);
     ~Home_SetDlg();
 
+protected:
+    void initCntLab();
+    bool getThresholdWid();
+    void setThresholdWid();
+    void initThresholdWid();
+
+private slots:
+    void initFunSlot();
+    void on_okBtn_clicked();
+    void on_resBtn_clicked();
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::Home_SetDlg *ui;
+    sCfgItem *mItem;
 };
 
 #endif // HOME_SETDLG_H

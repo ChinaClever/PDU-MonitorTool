@@ -326,7 +326,7 @@ QSqlDatabase BasicSql::initDb()
     if(!db.isOpen()){
         db = QSqlDatabase::addDatabase("QSQLITE");
         CfgCom *cfg = CfgCom::bulid();
-        db.setDatabaseName(cfg->pathOfData("cali_log.db"));
+        db.setDatabaseName(cfg->pathOfData("MonitorPDU_log.db"));
         if (!db.open()) { //打开数据库
             qDebug() << "init Db error !!!";
         }
