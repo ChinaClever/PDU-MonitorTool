@@ -2,7 +2,6 @@
 #define LOG_PDUALARMQUERYDLG_H
 
 #include <QDialog>
-//#include "log_macbtnbar.h"
 #include "logcomwid.h"
 #include "dblogs.h"
 

@@ -31,11 +31,6 @@ void LogMainWid::initFunSLot()
     str = tr("质检过程日志");
     mStatusWid = new LogComWid(ui->tabWidget);
     mStatusWid->initWid(DbStates::bulid(),new LogBtnBar(),  new Log_LogQueryDlg(this), str);
-    ui->tabWidget->addTab(mStatusWid, str);
-
-    str = tr("设备Mac记录");
-    mStatusWid = new LogComWid(ui->tabWidget);
-    mStatusWid->initWid(DbMacs::bulid(),new LogBtnBar(),  new Log_MacQueryDlg(this), str);
-    ui->tabWidget->addTab(mStatusWid, str);
+    ui->tabWidget->addTab(mStatusWid, str);   
 }
 
