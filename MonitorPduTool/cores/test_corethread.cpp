@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "test_corethread.h"
 
 Test_CoreThread::Test_CoreThread(QObject *parent) : Test_Object(parent)

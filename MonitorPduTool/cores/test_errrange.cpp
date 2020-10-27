@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "test_errrange.h"
 
 Test_ErrRange::Test_ErrRange(QObject *parent) : Test_Object(parent)

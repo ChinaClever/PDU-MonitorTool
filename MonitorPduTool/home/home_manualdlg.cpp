@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "home_manualdlg.h"
 #include "ui_home_manualdlg.h"
 

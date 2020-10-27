@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "test_object.h"
 
 Test_Object::Test_Object(QObject *parent) : QThread(parent)

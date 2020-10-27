@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "dev_serialnum.h"
 
 Dev_SerialNum::Dev_SerialNum(QObject *parent) : QThread(parent)

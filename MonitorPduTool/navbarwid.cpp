@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "navbarwid.h"
 #include "ui_navbarwid.h"
 #include "backcolourcom.h"
