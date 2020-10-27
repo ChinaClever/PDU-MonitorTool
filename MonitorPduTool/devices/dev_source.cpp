@@ -29,7 +29,7 @@ void Dev_Source::init()
 {
     mDev->id = 1;
     sDevType *dev = &(mDev->devType);
-    dev->version = 1; //
+    dev->version = 3; //
 }
 
 bool Dev_Source::read()
