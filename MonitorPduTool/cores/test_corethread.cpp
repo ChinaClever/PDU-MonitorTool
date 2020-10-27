@@ -56,14 +56,14 @@ bool Test_CoreThread::initDev()
 
 bool Test_CoreThread::volErrRange(int i)
 {
-    QString str = tr("电压 L%1 ").arg(i+1);
-    bool ret = mErr->volErr(i);
-    if(!ret) {
-        mRead->readDev();
+    bool ret = true;
+    for(int k=0; k<3; ++k) {
         ret = mErr->volErr(i);
+        if(ret) break; else  mRead->readDev();
     }
 
-    if(ret)  str += tr("正常");
+    QString str = tr("电压 L%1 ").arg(i+1);
+    if(ret) str += tr("正常");
     else str += tr("错误，电压=%1V").arg(mDev->line.vol.value[i]);
 
     return mLogs->updatePro(str, ret);
@@ -71,14 +71,14 @@ bool Test_CoreThread::volErrRange(int i)
 
 bool Test_CoreThread::curErrRange(int i)
 {
-    QString str = tr("电流 L%1 ").arg(i+1);
-    bool ret = mErr->curErr(i);
-    if(!ret) {
-        mRead->readDev();
+    bool ret = true;
+    for(int k=0; k<3; ++k) {
         ret = mErr->curErr(i);
+        if(ret) break; else  mRead->readDev();
     }
 
-    if(ret)  str += tr("正常");
+    QString str = tr("电流 L%1 ").arg(i+1);
+    if(ret) str += tr("正常");
     else str += tr("错误，电流=%1A").arg(mDev->line.cur.value[i]/COM_RATE_CUR);
 
     return mLogs->updatePro(str, ret);
@@ -86,14 +86,14 @@ bool Test_CoreThread::curErrRange(int i)
 
 bool Test_CoreThread::powErrRange(int i)
 {
-    QString str = tr("功率 L%1 ").arg(i+1);
-    bool ret = mErr->powErr(i);
-    if(!ret) {
-        mRead->readDev();
+    bool ret = true;
+    for(int k=0; k<3; ++k) {
         ret = mErr->powErr(i);
+        if(ret) break; else  mRead->readDev();
     }
 
-    if(ret)  str += tr("正常");
+    QString str = tr("功率 L%1 ").arg(i+1);
+    if(ret) str += tr("正常");
     else str += tr("错误，功率=%1Kw").arg(mDev->line.pow[i]/COM_RATE_POW);
 
     return mLogs->updatePro(str, ret);

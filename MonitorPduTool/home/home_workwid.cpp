@@ -114,6 +114,7 @@ void Home_WorkWid::updateTime()
     str = mPro->startTime.toString("hh:mm:ss");
     ui->startLab->setText(str);
     ui->startBtn->setText(tr("结束测试"));
+    ui->endLab->setText("---");
 }
 
 void Home_WorkWid::updateResult()
@@ -185,19 +186,19 @@ bool Home_WorkWid::initSerial()
 
     ret = coms->ser2->isOpened();
     if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
+    mId = 1;
 
     return ret;
 }
 
 bool Home_WorkWid::initWid()
 {
-    ui->textEdit->clear();
     bool ret = initSerial();
     if(ret) ret = mManualDlg->exec();
     if(ret) {
-        mId = 1;
         mPacket->init();
         emit startSig();
+        ui->textEdit->clear();
         ui->groupBox_4->setEnabled(false);
     } else {
         MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));

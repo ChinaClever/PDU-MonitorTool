@@ -104,6 +104,7 @@ void Test_DataRead::run()
         else str += tr("失败");
         mPacket->updatePro(str, ret);
     }
+    mPacket->updatePro(tr("已结束"), ret);
     mPro->step = Test_End;
 
     isRun = false;
