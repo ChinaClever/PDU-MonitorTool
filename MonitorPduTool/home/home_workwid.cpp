@@ -33,6 +33,9 @@ void Home_WorkWid::createWid()
     mItem = Cfg::bulid()->item;
     mPro->step = Test_End;
 
+    mDev->id = Cfg::bulid()->initAddr();
+    ui->addrSpin->setValue(mDev->id);
+
     timer = new QTimer(this);
     timer->start(200);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutDone()));
@@ -172,6 +175,7 @@ bool Home_WorkWid::initSerial()
     QString str;
     sSerial *coms = &(mItem->coms);
     mDev->id = ui->addrSpin->value();
+    Cfg::bulid()->setAddr(mDev->id);
 
     bool ret = coms->source->isOpened();
     if(!ret){MsgBox::critical(this, tr("请先打开标准源串口")); return ret;}

@@ -89,6 +89,7 @@ public:
     QString getLoginName();
     void setLoginName(const QString &name);
 
+    int initAddr();
     void writeCnt();
     void writeErrData();
     void writeThreshold();
@@ -98,7 +99,6 @@ public:
     QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="Cfg");
 
 protected:
-    int initAddr();
     void initCnt();
     void initErrData();
     void initThreshold();
