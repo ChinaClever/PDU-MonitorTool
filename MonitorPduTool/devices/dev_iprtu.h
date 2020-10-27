@@ -6,9 +6,10 @@
 class Dev_IpRtu : public Dev_Object
 {
     Q_OBJECT
-public:
+protected:
     explicit Dev_IpRtu(QObject *parent = nullptr);
-
+public:
+    static Dev_IpRtu *bulid(QObject *parent = nullptr);
     bool readPduData();
 
 protected:

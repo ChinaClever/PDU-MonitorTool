@@ -15,6 +15,14 @@ Dev_IpRtu::Dev_IpRtu(QObject *parent) : Dev_Object(parent)
 
 }
 
+Dev_IpRtu *Dev_IpRtu::bulid(QObject *parent)
+{
+    static Dev_IpRtu* sington = nullptr;
+    if(sington == nullptr)
+        sington = new Dev_IpRtu(parent);
+    return sington;
+}
+
 
 int Dev_IpRtu::recvLine(int len)
 {

@@ -13,6 +13,14 @@ Dev_SiRtu::Dev_SiRtu(QObject *parent) : Dev_Object(parent)
 
 }
 
+Dev_SiRtu *Dev_SiRtu::bulid(QObject *parent)
+{
+    static Dev_SiRtu* sington = nullptr;
+    if(sington == nullptr)
+        sington = new Dev_SiRtu(parent);
+    return sington;
+}
+
 
 void Dev_SiRtu::initRtuItem(sRtuItem &it)
 {

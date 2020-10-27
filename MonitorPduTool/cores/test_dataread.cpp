@@ -12,8 +12,8 @@ Test_DataRead::Test_DataRead(QObject *parent) : Test_Object(parent)
 
 void Test_DataRead::initFunSlot()
 {
-    mSiRtu = new Dev_SiRtu(this);
-    mIpRtu = new Dev_IpRtu(this);
+    mSiRtu = Dev_SiRtu::bulid(this);
+    mIpRtu = Dev_IpRtu::bulid(this);
     mLogs = Test_Logs::bulid(this);
     mSn = Dev_SerialNum::bulid(this);
     mIpSnmp = Dev_IpSnmp::bulid(this);

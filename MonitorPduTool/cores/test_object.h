@@ -1,7 +1,7 @@
 #ifndef TEST_OBJECT_H
 #define TEST_OBJECT_H
 
-#include "dev_serialnum.h"
+#include "ctrl_sirtu.h"
 
 class Test_Object : public QThread
 {
