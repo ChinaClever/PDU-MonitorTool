@@ -23,6 +23,7 @@ enum eDevTypes {
 
 struct sCfgTh {
     uchar type; // 0 不设置， 1 32安  2 16安， 3 63安  4 自定义
+    uchar enModify;
     ushort vol_min;
     ushort vol_max;
     ushort cur_min;

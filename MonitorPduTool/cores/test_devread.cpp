@@ -3,45 +3,45 @@
  *  Created on: 2021年1月1日
  *      Author: Lzy
  */
-#include "test_dataread.h"
+#include "test_devread.h"
 
-Test_DataRead::Test_DataRead(QObject *parent) : Test_Object(parent)
+Test_DevRead::Test_DevRead(QObject *parent) : Test_Object(parent)
 {
 
 }
 
-void Test_DataRead::initFunSlot()
+void Test_DevRead::initFunSlot()
 {
     mRtu = nullptr;
-    mSiRtu = Dev_SiRtu::bulid(this);
-    mIpRtu = Dev_IpRtu::bulid(this);
+    mSiRtu = Ctrl_SiRtu::bulid(this);
+    mIpRtu = Ctrl_IpRtu::bulid(this);
     mLogs = Test_Logs::bulid(this);
     mSn = Dev_SerialNum::bulid(this);
     mIpSnmp = Dev_IpSnmp::bulid(this);
     mSource = Dev_Source::bulid(this);
 }
 
-Test_DataRead *Test_DataRead::bulid(QObject *parent)
+Test_DevRead *Test_DevRead::bulid(QObject *parent)
 {
-    static Test_DataRead* sington = nullptr;
+    static Test_DevRead* sington = nullptr;
     if(sington == nullptr)
-        sington = new Test_DataRead(parent);
+        sington = new Test_DevRead(parent);
     return sington;
 }
 
-bool Test_DataRead::readSn()
+bool Test_DevRead::readSn()
 {
     return mSn->snEnter();
 }
 
-bool Test_DataRead::readDev()
+bool Test_DevRead::readDev()
 {
     bool ret = mSource->read();
     if(ret) ret = readPdu();
     return ret;
 }
 
-bool Test_DataRead::checkNet()
+bool Test_DevRead::checkNet()
 {
     QString str = tr("网络测试失败");
     bool ret = cm_checkIp("192.168.1.163");
@@ -52,7 +52,7 @@ bool Test_DataRead::checkNet()
     return mLogs->updatePro(str, ret);
 }
 
-bool Test_DataRead::readSnmp()
+bool Test_DevRead::readSnmp()
 {
     bool ret = true;
     QString str = tr("SNMP通讯");
@@ -63,8 +63,7 @@ bool Test_DataRead::readSnmp()
     return mLogs->updatePro(str, ret);
 }
 
-
-bool Test_DataRead::readNet()
+bool Test_DevRead::readNet()
 {
     bool ret = true;
     if(IP_PDU == mDt->devType) {
@@ -75,7 +74,7 @@ bool Test_DataRead::readNet()
     return ret;
 }
 
-bool Test_DataRead::readPdu()
+bool Test_DevRead::readPdu()
 {
     bool ret = false;
     switch (mDt->devType) {
@@ -87,7 +86,7 @@ bool Test_DataRead::readPdu()
     return ret;
 }
 
-bool Test_DataRead::readHub()
+bool Test_DevRead::readHub()
 {
     mRtu->setModbus(2);
     mItem->coms.ser2->reflush();
@@ -100,7 +99,9 @@ bool Test_DataRead::readHub()
     return ret;
 }
 
-void Test_DataRead::run()
+
+
+void Test_DevRead::run()
 {
     if(isRun) return;
     isRun = true;

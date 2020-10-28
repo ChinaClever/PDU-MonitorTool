@@ -34,6 +34,7 @@ void Home_SetDlg::initThresholdWid()
     sCfgTh *cth = &(mItem->cTh);
     ui->comboBox->setCurrentIndex(cth->type);
     on_comboBox_currentIndexChanged(cth->type);
+    ui->modifyCheck->setChecked(cth->enModify);
 }
 
 bool Home_SetDlg::getThresholdWid()
@@ -44,7 +45,9 @@ bool Home_SetDlg::getThresholdWid()
     cth->vol_max = ui->volMaxSpin->value();
     cth->cur_min = ui->curMinSpin->value()*10;
     cth->cur_max = ui->curMaxSpin->value()*10;
+
     mItem->user = ui->userEdit->text();
+    cth->enModify = ui->modifyCheck->isChecked()?1:0;
 
     return true;
 }

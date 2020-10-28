@@ -11,7 +11,7 @@ Dev_Object::Dev_Object(QObject *parent) : QThread(parent)
     mItem = Cfg::bulid()->item;
     mPro = mPacket->getPro();
     mDev = mPacket->getDev();
-
+    mDt = &(mDev->devType);
     QTimer::singleShot(850,this,SLOT(initFunSlot()));
 }
 

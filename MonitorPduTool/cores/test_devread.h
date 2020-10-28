@@ -1,15 +1,14 @@
 #ifndef TEST_DATAREAD_H
 #define TEST_DATAREAD_H
 
-#include "test_logs.h"
+#include "test_devctrl.h"
 
-
-class Test_DataRead : public Test_Object
+class Test_DevRead : public Test_Object
 {
     Q_OBJECT
-    explicit Test_DataRead(QObject *parent = nullptr);
+    explicit Test_DevRead(QObject *parent = nullptr);
 public:
-    static Test_DataRead *bulid(QObject *parent = nullptr);
+    static Test_DevRead *bulid(QObject *parent = nullptr);
 
     bool readSn();
     bool readDev();
@@ -27,8 +26,8 @@ protected slots:
 
 private:
     Dev_Object *mRtu;
-    Dev_SiRtu *mSiRtu;
-    Dev_IpRtu *mIpRtu;
+    Ctrl_SiRtu *mSiRtu;
+    Ctrl_IpRtu *mIpRtu;
     Dev_SerialNum *mSn;
     Dev_IpSnmp *mIpSnmp;
     Dev_Source *mSource;

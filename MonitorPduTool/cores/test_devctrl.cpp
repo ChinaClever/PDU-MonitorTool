@@ -1,0 +1,66 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
+#include "test_devctrl.h"
+
+Test_DevCtrl::Test_DevCtrl(QObject *parent) : Test_Object(parent)
+{
+
+}
+
+Test_DevCtrl *Test_DevCtrl::bulid(QObject *parent)
+{
+    static Test_DevCtrl* sington = nullptr;
+    if(sington == nullptr)
+        sington = new Test_DevCtrl(parent);
+    return sington;
+}
+
+
+void Test_DevCtrl::initFunSlot()
+{
+    mRtu = nullptr;
+    mSiRtu = Ctrl_SiRtu::bulid(this);
+    mIpRtu = Ctrl_IpRtu::bulid(this);
+}
+
+bool Test_DevCtrl::setCurTh(int i)
+{
+    bool ret = initDev();
+    if(ret) {
+        ret = mRtu->setCurTh(i);
+    }
+    return ret;
+}
+
+bool Test_DevCtrl::setVolTh(int i)
+{
+    bool ret = initDev();
+    if(ret) {
+        ret = mRtu->setVolTh(i);
+    }
+    return ret;
+}
+
+bool Test_DevCtrl::funClearEle()
+{
+    bool ret = initDev();
+    if(ret) {
+        ret = mRtu->funClearEle();
+    }
+    return ret;
+}
+
+bool Test_DevCtrl::initDev()
+{
+    bool ret = false;
+    switch (mDt->devType) {
+    case SI_PDU:  mRtu = mSiRtu; break;
+    case IP_PDU:  mRtu = mIpRtu; break;
+    default: ret = false; break;
+    }
+
+    return ret;
+}

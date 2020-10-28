@@ -227,7 +227,7 @@ void Home_WorkWid::on_readBtn_clicked()
     bool ret = initSerial();
     if(ret) {
         ui->textEdit->clear();
-        Test_DataRead::bulid(this)->start();
+        Test_DevRead::bulid(this)->start();
         //MsgBox::information(this, tr("已开始读取设备数据，请等待5抄！！！"));
     }
 }

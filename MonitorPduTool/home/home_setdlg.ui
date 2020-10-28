@@ -350,6 +350,13 @@
       </property>
      </widget>
     </item>
+    <item row="0" column="3">
+     <widget class="QCheckBox" name="modifyCheck">
+      <property name="text">
+       <string>阈值自动修改</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="okBtn">

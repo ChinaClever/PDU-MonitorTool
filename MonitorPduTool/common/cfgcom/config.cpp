@@ -73,6 +73,7 @@ void Cfg::initThreshold()
     item->cTh.vol_max = read("vol_max", 276).toInt();
     item->cTh.cur_min = read("cur_min", 0).toInt();
     item->cTh.cur_max = read("cur_max", 320).toInt();
+    item->cTh.enModify = read("en_modify", 0).toInt();
     item->cTh.si_mod = read("si_mod", 0).toInt();
 }
 
@@ -84,6 +85,7 @@ void Cfg::writeThreshold()
     write("vol_max", item->cTh.vol_max);
     write("cur_min", item->cTh.cur_min);
     write("cur_max", item->cTh.cur_max);
+    write("en_modify", item->cTh.enModify);
 }
 
 

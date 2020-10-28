@@ -27,6 +27,7 @@ protected slots:
     virtual void initFunSlot();
 
 protected:
+    sDevType *mDt;
     sDevData *mDev;
     RtuRw *mModbus;
     sCfgItem *mItem;

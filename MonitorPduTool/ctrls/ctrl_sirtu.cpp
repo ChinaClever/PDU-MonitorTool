@@ -5,61 +5,63 @@
  */
 #include "ctrl_sirtu.h"
 
-Ctrl_SiRtu::Ctrl_SiRtu(QObject *parent) : Dev_Object(parent)
+Ctrl_SiRtu::Ctrl_SiRtu(QObject *parent) : Ctrl_Object(parent)
 {
+    mRtu = Dev_SiRtu::bulid(this);
+}
 
+Ctrl_SiRtu *Ctrl_SiRtu::bulid(QObject *parent)
+{
+    static Ctrl_SiRtu* sington = nullptr;
+    if(sington == nullptr)
+        sington = new Ctrl_SiRtu(parent);
+    return sington;
 }
 
 bool Ctrl_SiRtu::readPduData()
 {
-    return Dev_SiRtu::bulid(this)->readPduData();
+    return mRtu->readPduData();
 }
 
-
-bool Ctrl_SiRtu::setAcTh()
+bool Ctrl_SiRtu::setCurTh(int i)
 {
     bool ret = true;
-    ushort reg = 0x1002;
+    ushort reg = 0x1008 + 2*i;
+    if(DC == mDt->ac) reg = 0x1016;
 
-//    for(int i=0; i<mData->size; ++i) {
+    sDataUnit *unit = &(mDev->line.cur);
+    ushort value = mItem->cTh.cur_max;
+    if(unit->max[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
 
-//        ushort value = mItem->cTh.vol_max;
-//        if(mData->volTh.max[i] != value) {
-
-//            ret = sentRtuCmd(reg++, value);
-//            if(!ret) return ret;
-//        } else reg++;
-
-//        value = mItem->cTh.vol_min;
-//        if(mData->volTh.min[i] != value) {
-
-
-//            ret = sentRtuCmd(reg++, value);
-//            if(!ret) return ret;
-//        } else reg++;
-//    }
-
-//    reg = 0x1008;
-//    for(int i=0; i<mData->size; ++i) {
-//        ushort value = mItem->cTh.cur_max;
-//        if(mData->curTh.max[0] != value) {
-
-
-//            ret = sentRtuCmd(reg++, value);
-//            if(!ret) return ret;
-//        } else reg++;
-
-//        value = mItem->cTh.cur_min;
-//        if(mData->curTh.min[0] != value) {
-//            ret = sentRtuCmd(reg++, value);
-//            if(!ret) return ret;
-//        } else reg++;
-//    }
+    value = mItem->cTh.cur_min;
+    if(unit->min[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
 
     return ret;
 }
 
+bool Ctrl_SiRtu::setVolTh(int i)
+{
+    bool ret = true;
+    ushort reg = 0x1002 + 2*i;
+    if(DC == mDt->ac) reg = 0x1014;
 
+    sDataUnit *unit = &(mDev->line.vol);
+    ushort value = mItem->cTh.vol_max;
+    if(unit->max[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
+
+    value = mItem->cTh.vol_min;
+    if(unit->min[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
+
+    return ret;
+}
 
 // 表示行业标准 Modbus RTU 模式
 bool Ctrl_SiRtu::setModel()
@@ -72,7 +74,6 @@ bool Ctrl_SiRtu::setModel()
 
     return mModbus->write(it);
 }
-
 
 bool Ctrl_SiRtu::funClearEle()
 {

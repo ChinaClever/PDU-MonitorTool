@@ -15,7 +15,8 @@ void Test_CoreThread::initFunSlot()
 {
     mLogs = Test_Logs::bulid(this);
     mErr = Test_ErrRange::bulid(this);
-    mRead = Test_DataRead::bulid(this);
+    mRead = Test_DevRead::bulid(this);
+    mCtrl = Test_DevCtrl::bulid(this);
 }
 
 
@@ -112,22 +113,20 @@ bool Test_CoreThread::envErrRange()
 
 bool Test_CoreThread::checkErrRange()
 {
-    bool ret = mRead->readDev();
-    if(ret) {
-        for(int i=0; i<mDev->line.size; ++i) {
-            ret = volErrRange(i); if(!ret) break;
-            ret = curErrRange(i); if(!ret) break;
-            ret = powErrRange(i); if(!ret) break;
-        }
-        ret = envErrRange();
+    bool ret = true;
+    for(int i=0; i<mDev->line.size; ++i) {
+        ret = volErrRange(i); if(!ret) break;
+        ret = curErrRange(i); if(!ret) break;
+        ret = powErrRange(i); if(!ret) break;
     }
+    ret = envErrRange();
 
     return ret;
 }
 
 bool Test_CoreThread::volAlarmErr(int i)
 {
-    QString str = tr("电压报警阈值 L%1 ").arg(i+1);
+    QString str = tr("电压报警阈值 L%1 检测").arg(i+1);
     bool ret = mErr->volAlarm(i);
     if(ret)  str += tr("正常");
     else str += tr("错误");
@@ -137,7 +136,7 @@ bool Test_CoreThread::volAlarmErr(int i)
 
 bool Test_CoreThread::curAlarmErr(int i)
 {
-    QString str = tr("电流报警阈值 L%1 ").arg(i+1);
+    QString str = tr("电流报警阈值 L%1 检测").arg(i+1);
     bool ret = mErr->curAlarm(i);
     if(ret) str += tr("正常");
     else str += tr("错误");
@@ -160,6 +159,61 @@ bool Test_CoreThread::checkAlarmErr()
 }
 
 
+
+bool Test_CoreThread::curAlarmWrite(int i)
+{
+    QString str = tr("电流报警阈值 L%1 写入").arg(i+1);
+    bool ret = mCtrl->setCurTh(i);
+    if(ret) str += tr("正常");
+    else str += tr("错误");
+
+    return mLogs->updatePro(str, ret);
+}
+
+bool Test_CoreThread::volAlarmWrite(int i)
+{
+    QString str = tr("电压报警阈值 L%1 写入").arg(i+1);
+    bool ret = mCtrl->setVolTh(i);
+    if(ret) str += tr("正常");
+    else str += tr("错误");
+
+    return mLogs->updatePro(str, ret);
+}
+
+bool Test_CoreThread::writeAlarmTh()
+{
+    bool ret = true;
+    sCfgTh *cth = &(mItem->cTh);
+    if(cth->type) {
+        for(int i=0; i<mDev->line.size; ++i) {
+            ret = curAlarmWrite(i); if(!ret) break;
+            ret = volAlarmWrite(i); if(!ret) break;
+        }
+    }
+
+    return ret;
+}
+
+bool Test_CoreThread::funClearEle()
+{
+    QString str = tr("设备电能清除");
+    bool ret = mCtrl->funClearEle();
+    if(ret) str += tr("成功");
+    else str += tr("失败");
+
+    return mLogs->updatePro(str, ret);
+}
+
+bool Test_CoreThread::factorySet()
+{
+    bool ret = true;
+    if(SI_PDU == mDt->devType) {
+        ret = funClearEle();
+    }
+
+    return ret;
+}
+
 void Test_CoreThread::workResult(bool res)
 {
     mLogs->saveLogs();
@@ -167,19 +221,21 @@ void Test_CoreThread::workResult(bool res)
     mPro->step = Test_Over;
 }
 
-
 void Test_CoreThread::workDown()
 {
     mPro->step = Test_Start;
     bool ret = initDev();
     if(ret) {
         ret = checkErrRange();
-        if(ret) ret = checkAlarmErr();
+        if(mItem->cTh.enModify) {
+            if(ret) ret = writeAlarmTh();
+        } else {
+            if(ret) ret = checkAlarmErr();
+        }
+        if(ret) ret = factorySet();
     }
-
     workResult(ret);
 }
-
 
 void Test_CoreThread::run()
 {

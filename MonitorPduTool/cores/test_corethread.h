@@ -27,12 +27,20 @@ protected:
     bool volAlarmErr(int i);
     bool curAlarmErr(int i);
     bool checkAlarmErr();
+
+    bool volAlarmWrite(int i);
+    bool curAlarmWrite(int i);
+    bool writeAlarmTh();
+
+    bool factorySet();
+    bool funClearEle();
     void workResult(bool res);
 
 private:
     Test_Logs *mLogs;
     Test_ErrRange *mErr;
-    Test_DataRead *mRead;
+    Test_DevRead *mRead;
+    Test_DevCtrl *mCtrl;
 };
 
 #endif // TEST_CORETHREAD_H
