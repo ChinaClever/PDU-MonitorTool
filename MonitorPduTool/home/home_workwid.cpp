@@ -184,8 +184,8 @@ bool Home_WorkWid::initSerial()
     ret = coms->ser1->isOpened();
     if(!ret){MsgBox::critical(this, tr("请先打级联串口 1")); return ret;}
 
-//    ret = coms->ser2->isOpened();
-//    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
+    ret = coms->ser2->isOpened();
+    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
     mId = 1;
 
     return ret;
@@ -200,6 +200,9 @@ bool Home_WorkWid::initWid()
         emit startSig();
         ui->textEdit->clear();
         ui->groupBox_4->setEnabled(false);
+
+        if(mItem->cTh.enModify)
+            ret = MsgBox::question(this, tr("测试软件会自动修改，设备报警阈值，请确认？"));
     } else {
         MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));
     }
