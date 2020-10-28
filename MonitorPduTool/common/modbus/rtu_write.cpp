@@ -10,7 +10,6 @@ Rtu_Write::Rtu_Write(QObject *parent) : Rtu_Read(parent)
 
 }
 
-
 bool Rtu_Write::writes(sRtuSetItems &pkt)
 {
     bool ret = false;

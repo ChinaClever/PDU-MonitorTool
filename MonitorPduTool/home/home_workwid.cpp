@@ -184,8 +184,8 @@ bool Home_WorkWid::initSerial()
     ret = coms->ser1->isOpened();
     if(!ret){MsgBox::critical(this, tr("请先打级联串口 1")); return ret;}
 
-    ret = coms->ser2->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
+//    ret = coms->ser2->isOpened();
+//    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
     mId = 1;
 
     return ret;

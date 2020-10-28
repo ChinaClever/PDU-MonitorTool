@@ -15,8 +15,9 @@ Rtu_Modbus::Rtu_Modbus(QObject *parent) : QObject(parent)
 Rtu_Modbus *Rtu_Modbus::bulid(QObject *parent)
 {
     static Rtu_Modbus* sington = nullptr;
-    if(sington == nullptr)
+    if(sington == nullptr) {
         sington = new Rtu_Modbus(parent);
+    }
     return sington;
 }
 

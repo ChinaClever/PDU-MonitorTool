@@ -13,8 +13,8 @@ Test_DevRead::Test_DevRead(QObject *parent) : Test_Object(parent)
 void Test_DevRead::initFunSlot()
 {
     mRtu = nullptr;
-    mSiRtu = Ctrl_SiRtu::bulid(this);
-    mIpRtu = Ctrl_IpRtu::bulid(this);
+    mSiRtu = Dev_SiRtu::bulid(this);
+    mIpRtu = Dev_IpRtu::bulid(this);
     mLogs = Test_Logs::bulid(this);
     mSn = Dev_SerialNum::bulid(this);
     mIpSnmp = Dev_IpSnmp::bulid(this);
@@ -31,13 +31,15 @@ Test_DevRead *Test_DevRead::bulid(QObject *parent)
 
 bool Test_DevRead::readSn()
 {
-    return mSn->snEnter();
+    bool ret = mSn->snEnter();
+    if(ret) ret = initDev();
+    return ret;
 }
 
 bool Test_DevRead::readDev()
 {
     bool ret = mSource->read();
-    if(ret) ret = readPdu();
+    if(ret) ret = mRtu->readPduData();
     return ret;
 }
 
@@ -74,14 +76,14 @@ bool Test_DevRead::readNet()
     return ret;
 }
 
-bool Test_DevRead::readPdu()
+bool Test_DevRead::initDev()
 {
-    bool ret = false;
+    bool ret = true;
     switch (mDt->devType) {
     case SI_PDU:  mRtu = mSiRtu; break;
     case IP_PDU:  mRtu = mIpRtu; break;
+    default: ret = false; break;
     }
-    ret = mRtu->readPduData();
 
     return ret;
 }
@@ -89,8 +91,9 @@ bool Test_DevRead::readPdu()
 bool Test_DevRead::readHub()
 {
     mRtu->setModbus(2);
+    mPacket->delay(10);
     mItem->coms.ser2->reflush();
-    bool ret = readPdu();
+    bool ret = mRtu->readPduData();
     if(ret){
         mRtu->setModbus(1);
         mItem->coms.ser1->reflush();
@@ -112,7 +115,7 @@ void Test_DevRead::run()
     bool ret  = readSn();
     if(ret) {
         QString str = tr("设备数据读取");
-        ret = readPdu();
+        ret = mRtu->readPduData();
         if(ret) str += tr("成功");
         else str += tr("失败");
         mPacket->updatePro(str, ret);

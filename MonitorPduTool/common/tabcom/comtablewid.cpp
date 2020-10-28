@@ -131,7 +131,7 @@ void ComTableWid::setTableItem(int id, int column, const QString &str)
 
 void ComTableWid::setAlignLeft(int row, int col)
 {
-    ui->tableWidget->item(row, col)->setTextAlignment(Qt::AlignLeft);
+    ui->tableWidget->item(row, col)->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 }
 
 int ComTableWid::currentRow()

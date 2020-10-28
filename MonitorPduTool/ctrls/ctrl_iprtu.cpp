@@ -7,7 +7,6 @@
 
 Ctrl_IpRtu::Ctrl_IpRtu(QObject *parent) : Ctrl_Object(parent)
 {
-    mRtu = Dev_IpRtu::bulid(this);
 }
 
 Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
@@ -16,11 +15,6 @@ Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
     if(sington == nullptr)
         sington = new Ctrl_IpRtu(parent);
     return sington;
-}
-
-bool Ctrl_IpRtu::readPduData()
-{
-    return mRtu->readPduData();
 }
 
 bool Ctrl_IpRtu::setCurTh(int i)

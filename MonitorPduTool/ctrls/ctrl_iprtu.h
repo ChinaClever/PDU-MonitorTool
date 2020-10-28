@@ -10,15 +10,11 @@ class Ctrl_IpRtu : public Ctrl_Object
 public:
     static Ctrl_IpRtu *bulid(QObject *parent = nullptr);
 
-    bool readPduData();
     bool setCurTh(int i);
     bool setVolTh(int i);
 
 protected:
     bool sentRtuCmd(ushort reg, ushort value);
-
-private:
-    Dev_IpRtu *mRtu;
 };
 
 #endif // CTRL_IPRTU_H

@@ -10,7 +10,6 @@ class Ctrl_SiRtu : public Ctrl_Object
 public:
     static Ctrl_SiRtu *bulid(QObject *parent = nullptr);
 
-    bool readPduData();
     bool funClearEle();
     bool setModel();
 
@@ -19,9 +18,6 @@ public:
 
 protected:
     bool sentRtuCmd(ushort reg, ushort value);
-
-private:
-    Dev_SiRtu *mRtu;
 };
 
 #endif // CTRL_SIRTU_H

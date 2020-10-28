@@ -10,7 +10,6 @@ Rtu_Serial::Rtu_Serial(QObject *parent) : QThread(parent)
     mSerial = nullptr;
 }
 
-
 int Rtu_Serial::readSerial(quint8 *cmd, int secs)
 {
     int rtn = 0;

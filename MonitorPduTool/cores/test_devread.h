@@ -17,17 +17,17 @@ public:
 
 protected:
     void run();
-    bool readPdu();
     bool checkNet();
     bool readSnmp();
+    bool initDev();
 
 protected slots:
     void initFunSlot();
 
 private:
     Dev_Object *mRtu;
-    Ctrl_SiRtu *mSiRtu;
-    Ctrl_IpRtu *mIpRtu;
+    Dev_SiRtu *mSiRtu;
+    Dev_IpRtu *mIpRtu;
     Dev_SerialNum *mSn;
     Dev_IpSnmp *mIpSnmp;
     Dev_Source *mSource;

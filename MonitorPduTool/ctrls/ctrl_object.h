@@ -12,6 +12,9 @@ public:
     virtual bool setCurTh(int i)=0;
     virtual bool setVolTh(int i)=0;
     virtual bool funClearEle(){return true;}
+
+protected:
+    bool readPduData(){return false;}
 };
 
 #endif // CTRL_OBJECT_H

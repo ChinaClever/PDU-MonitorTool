@@ -55,7 +55,7 @@ bool Test_DevCtrl::funClearEle()
 
 bool Test_DevCtrl::initDev()
 {
-    bool ret = false;
+    bool ret = true;
     switch (mDt->devType) {
     case SI_PDU:  mRtu = mSiRtu; break;
     case IP_PDU:  mRtu = mIpRtu; break;
