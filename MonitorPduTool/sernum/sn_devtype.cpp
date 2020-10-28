@@ -3,11 +3,11 @@
  *  Created on: 2021年1月1日
  *      Author: Lzy
  */
-#include "dev_typedef.h"
+#include "sn_devtype.h"
 #include "common/json/json_build.h"
 #include "common/json/json_recv.h"
 
-Dev_TypeDef::Dev_TypeDef()
+Sn_DevType::Sn_DevType()
 {
     sDevData *dev = sDataPacket::bulid()->getDev();
     mDt = &(dev->devType);
@@ -17,21 +17,21 @@ Dev_TypeDef::Dev_TypeDef()
     Json_Recv::bulid()->recv("PDU-CalibrateTool");
 }
 
-Dev_TypeDef * Dev_TypeDef::bulid()
+Sn_DevType * Sn_DevType::bulid()
 {
-    static  Dev_TypeDef* sington = nullptr;
+    static  Sn_DevType* sington = nullptr;
     if(sington == nullptr)
-        sington = new  Dev_TypeDef();
+        sington = new  Sn_DevType();
     return sington;
 }
 
-QString Dev_TypeDef::getDevStr(uint id)
+QString Sn_DevType::getDevStr(uint id)
 {
     mDt->dev_type = Json_Recv::bulid()->getDevTypeByID(id);
     return mDt->dev_type;
 }
 
-int Dev_TypeDef::getDevType(const QString &str)
+int Sn_DevType::getDevType(const QString &str)
 {
     int ret = 0;
     if(str.contains("ZPDU")) ret = ZPDU;
@@ -48,7 +48,7 @@ int Dev_TypeDef::getDevType(const QString &str)
     return ret;
 }
 
-int Dev_TypeDef::getAcType(const QString &str)
+int Sn_DevType::getAcType(const QString &str)
 {
     int ret = AC;
     if(str.contains("直流")) ret = DC;
@@ -56,7 +56,7 @@ int Dev_TypeDef::getAcType(const QString &str)
     return ret;
 }
 
-int Dev_TypeDef::getColMode(const QString &str)
+int Sn_DevType::getColMode(const QString &str)
 {
     int ret = Transformer;
     if(str.contains("锰铜")) ret = Mn;
@@ -65,7 +65,7 @@ int Dev_TypeDef::getColMode(const QString &str)
     return ret;
 }
 
-int Dev_TypeDef::getLineNum(const QString &str)
+int Sn_DevType::getLineNum(const QString &str)
 {
     int ret = 1;
     if(str.contains("三相")) ret = 3;
@@ -73,7 +73,7 @@ int Dev_TypeDef::getLineNum(const QString &str)
     return ret;
 }
 
-int Dev_TypeDef::getSerie(const QString &str)
+int Sn_DevType::getSerie(const QString &str)
 {
     int ret = 0;
     if(str.contains("A系列")) ret = 1;
@@ -84,7 +84,7 @@ int Dev_TypeDef::getSerie(const QString &str)
     return ret;
 }
 
-bool Dev_TypeDef::analysDevType(uint id)
+bool Sn_DevType::analysDevType(uint id)
 {
     bool ret = true;
     QString str = getDevStr(id);

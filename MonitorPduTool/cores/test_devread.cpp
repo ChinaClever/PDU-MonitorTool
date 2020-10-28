@@ -16,7 +16,7 @@ void Test_DevRead::initFunSlot()
     mSiRtu = Dev_SiRtu::bulid(this);
     mIpRtu = Dev_IpRtu::bulid(this);
     mLogs = Test_Logs::bulid(this);
-    mSn = Dev_SerialNum::bulid(this);
+    mSn = Sn_SerialNum::bulid(this);
     mIpSnmp = Dev_IpSnmp::bulid(this);
     mSource = Dev_Source::bulid(this);
 }
@@ -91,13 +91,8 @@ bool Test_DevRead::initDev()
 bool Test_DevRead::readHub()
 {
     mRtu->setModbus(2);
-    mPacket->delay(10);
-    mItem->coms.ser2->reflush();
     bool ret = mRtu->readPduData();
-    if(ret){
-        mRtu->setModbus(1);
-        mItem->coms.ser1->reflush();
-    }
+    if(ret) mRtu->setModbus(1);
 
     return ret;
 }

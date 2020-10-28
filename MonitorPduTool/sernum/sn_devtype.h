@@ -2,11 +2,11 @@
 #define DEV_DEFTYPE_H
 #include "dev_source.h"
 
-class Dev_TypeDef
+class Sn_DevType
 {
-    Dev_TypeDef();
+    Sn_DevType();
 public:
-    static Dev_TypeDef *bulid();
+    static Sn_DevType *bulid();
     bool analysDevType(uint id);
 
 protected:

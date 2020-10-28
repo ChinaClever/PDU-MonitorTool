@@ -3,27 +3,22 @@
  *  Created on: 2021年1月1日
  *      Author: Lzy
  */
-#include "dev_serialnum.h"
+#include "sn_serialnum.h"
 
-Dev_SerialNum::Dev_SerialNum(QObject *parent) : QThread(parent)
+Sn_SerialNum::Sn_SerialNum(QObject *parent) : Dev_Object(parent)
 {
-    mItem = Cfg::bulid()->item;
-    mPacket = sDataPacket::bulid();
-    mPro = mPacket->getPro();
-    mDev = mPacket->getDev();
-    mTypeId = Dev_TypeId::bulid(this);
-    mModbus = Rtu_Modbus::bulid(this)->get();
+    mTypeId = Sn_DevId::bulid(this);
 }
 
-Dev_SerialNum *Dev_SerialNum::bulid(QObject *parent)
+Sn_SerialNum *Sn_SerialNum::bulid(QObject *parent)
 {
-    Dev_SerialNum* sington = nullptr;
+    Sn_SerialNum* sington = nullptr;
     if(sington == nullptr)
-        sington = new Dev_SerialNum(parent);
+        sington = new Sn_SerialNum(parent);
     return sington;
 }
 
-void Dev_SerialNum::initReadCmd(sRtuItem &item)
+void Sn_SerialNum::initReadCmd(sRtuItem &item)
 {
     item.addr = mDev->id;
     item.fn = 0x03;
@@ -31,7 +26,7 @@ void Dev_SerialNum::initReadCmd(sRtuItem &item)
     item.num = 4;
 }
 
-bool Dev_SerialNum::checkSn(uchar *sn, int len)
+bool Sn_SerialNum::checkSn(uchar *sn, int len)
 {
     bool ret = false;
     if((len == 8) && (sn[0] == 0)){
@@ -45,7 +40,7 @@ bool Dev_SerialNum::checkSn(uchar *sn, int len)
     return ret;
 }
 
-void Dev_SerialNum::initDevType(sSnItem &it)
+void Sn_SerialNum::initDevType(sSnItem &it)
 {
     uint id = mDev->devType.devId;
     for(int i=3; i>=0; --i) {
@@ -55,7 +50,7 @@ void Dev_SerialNum::initDevType(sSnItem &it)
     mDev->devType.sn[0] = 0;
 }
 
-bool Dev_SerialNum::analySn(uchar *sn, int len, sSnItem &it)
+bool Sn_SerialNum::analySn(uchar *sn, int len, sSnItem &it)
 {
     uchar *ptr = sn;
     bool ret = checkSn(sn, len);
@@ -72,7 +67,7 @@ bool Dev_SerialNum::analySn(uchar *sn, int len, sSnItem &it)
     return ret;
 }
 
-void Dev_SerialNum::toSnStr(sSnItem &it)
+void Sn_SerialNum::toSnStr(sSnItem &it)
 {
     QString cmd;
     for(int i=0; i<11; ++i) cmd += "%" + QString::number(i+1);
@@ -92,7 +87,7 @@ void Dev_SerialNum::toSnStr(sSnItem &it)
     it.sn = sn.toUpper();
 }
 
-bool Dev_SerialNum::readSn(sSnItem &itSn)
+bool Sn_SerialNum::readSn(sSnItem &itSn)
 {
     sRtuItem itRtu;
     bool ret = false;
@@ -112,7 +107,7 @@ bool Dev_SerialNum::readSn(sSnItem &itSn)
     return mPacket->updatePro(str, ret);
 }
 
-bool Dev_SerialNum::snEnter()
+bool Sn_SerialNum::snEnter()
 {
     bool ret = mTypeId->readDevType();
     if(ret) {

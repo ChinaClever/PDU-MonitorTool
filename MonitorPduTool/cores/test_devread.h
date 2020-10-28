@@ -28,7 +28,7 @@ private:
     Dev_Object *mRtu;
     Dev_SiRtu *mSiRtu;
     Dev_IpRtu *mIpRtu;
-    Dev_SerialNum *mSn;
+    Sn_SerialNum *mSn;
     Dev_IpSnmp *mIpSnmp;
     Dev_Source *mSource;
     Test_Logs *mLogs;

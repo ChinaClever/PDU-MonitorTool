@@ -1,7 +1,7 @@
 #ifndef CTRL_OBJECT_H
 #define CTRL_OBJECT_H
 
-#include "dev_serialnum.h"
+#include "sn_serialnum.h"
 
 class Ctrl_Object : public Dev_Object
 {

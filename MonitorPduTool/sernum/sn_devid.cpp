@@ -3,27 +3,22 @@
  *  Created on: 2021年1月1日
  *      Author: Lzy
  */
-#include "dev_typeid.h"
+#include "sn_devid.h"
 
-Dev_TypeId::Dev_TypeId(QObject *parent) : QThread(parent)
+Sn_DevId::Sn_DevId(QObject *parent) : Dev_Object(parent)
 {
-    mItem = Cfg::bulid()->item;
-    mPacket = sDataPacket::bulid();
-    mPro = mPacket->getPro();
-    mDev = mPacket->getDev();
-    mTypeDef = Dev_TypeDef::bulid();
-    mModbus = Rtu_Modbus::bulid(this)->get();
+    mTypeDef = Sn_DevType::bulid();
 }
 
-Dev_TypeId *Dev_TypeId::bulid(QObject *parent)
+Sn_DevId *Sn_DevId::bulid(QObject *parent)
 {
-    static Dev_TypeId* sington = nullptr;
+    static Sn_DevId* sington = nullptr;
     if(sington == nullptr)
-        sington = new Dev_TypeId(parent);
+        sington = new Sn_DevId(parent);
     return sington;
 }
 
-void Dev_TypeId::initReadType(sRtuItem &it)
+void Sn_DevId::initReadType(sRtuItem &it)
 {
     it.addr = mDev->id;
     it.fn = 0x03;
@@ -31,7 +26,7 @@ void Dev_TypeId::initReadType(sRtuItem &it)
     it.num = 2;
 }
 
-bool Dev_TypeId::analysDevType(uchar *buf, int len)
+bool Sn_DevId::analysDevType(uchar *buf, int len)
 {
     bool ret = false;
     QString str = tr("读取设备类型成功");
@@ -53,7 +48,7 @@ bool Dev_TypeId::analysDevType(uchar *buf, int len)
     return mPacket->updatePro(str, ret);
 }
 
-bool Dev_TypeId::readDevId()
+bool Sn_DevId::readDevId()
 {
     sRtuItem it;
     initReadType(it);
@@ -70,7 +65,7 @@ bool Dev_TypeId::readDevId()
     return analysDevType(recv, len);
 }
 
-bool Dev_TypeId::readDevType()
+bool Sn_DevId::readDevType()
 {
     mDev->devType.dev_type[0] = 0;
     QString str = tr("开始识别设备类型！");
