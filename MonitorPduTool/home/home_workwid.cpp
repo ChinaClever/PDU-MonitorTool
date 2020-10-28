@@ -194,15 +194,16 @@ bool Home_WorkWid::initSerial()
 bool Home_WorkWid::initWid()
 {
     bool ret = initSerial();
+    if(mItem->cTh.enModify) {
+        ret = MsgBox::question(this, tr("测试软件会自动修改，设备报警阈值，请确认？"));
+    }
+
     if(ret) ret = mManualDlg->exec();
     if(ret) {
         mPacket->init();
         emit startSig();
         ui->textEdit->clear();
         ui->groupBox_4->setEnabled(false);
-
-        if(mItem->cTh.enModify)
-            ret = MsgBox::question(this, tr("测试软件会自动修改，设备报警阈值，请确认？"));
     } else {
         MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));
     }
@@ -213,9 +214,7 @@ bool Home_WorkWid::initWid()
 void Home_WorkWid::on_startBtn_clicked()
 {
     if(mPro->step == Test_End) {
-        if(initWid()) {
-            mCoreThread->start();
-        }
+        if(initWid()) mCoreThread->start();
     } else {
         bool ret = MsgBox::question(this, tr("确定需要提前结束？"));
         if(ret) {
