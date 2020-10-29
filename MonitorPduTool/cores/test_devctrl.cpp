@@ -18,7 +18,6 @@ Test_DevCtrl *Test_DevCtrl::bulid(QObject *parent)
     return sington;
 }
 
-
 void Test_DevCtrl::initFunSlot()
 {
     mRtu = nullptr;

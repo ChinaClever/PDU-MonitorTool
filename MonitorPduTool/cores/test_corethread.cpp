@@ -158,8 +158,6 @@ bool Test_CoreThread::checkAlarmErr()
     return ret;
 }
 
-
-
 bool Test_CoreThread::curAlarmWrite(int i)
 {
     QString str = tr("电流报警阈值 L%1 写入").arg(i+1);

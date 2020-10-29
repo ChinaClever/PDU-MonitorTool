@@ -97,8 +97,6 @@ bool Test_DevRead::readHub()
     return ret;
 }
 
-
-
 void Test_DevRead::run()
 {
     if(isRun) return;

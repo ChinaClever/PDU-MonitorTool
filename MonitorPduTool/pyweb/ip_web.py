@@ -26,7 +26,7 @@ class IpWeb:
 
     def initCfg(self):
         items = IpWeb.getCfg().items("Cfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs = {'ip_version':1, 'ip_addr': '192.168.1.163', 'log_en':1}
+        self.cfgs = {'ip_version':1, 'ip_addr': '192.168.1.163', 'log_en':0}
         for it in items:
             self.cfgs[it[0]] = it[1]
 
