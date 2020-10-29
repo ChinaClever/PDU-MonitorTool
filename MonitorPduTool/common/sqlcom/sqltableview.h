@@ -5,6 +5,9 @@
 #include <QMessageBox>
 #include <QGridLayout>
 #include "sqltablemodel.h"
+#include <QScrollBar>
+#include <QPropertyAnimation>
+#include <QDateTime>
 
 class SqlTableView : public QWidget
 {
@@ -26,7 +29,6 @@ signals:
     void modifySig(int);
     void delSig(int);
 
-
 public slots:
     void delSlot();
     void delSlot(int);
@@ -36,6 +38,10 @@ public slots:
     void submitSlot();
     void querySlot(const QString &);    
     void doubleSlot(QModelIndex);
+
+protected:
+    void initScrollArea();
+    bool eventFilter(QObject *obj, QEvent *event);
 
 protected slots:
     void autoDelSlot();
@@ -47,6 +53,7 @@ public:
 private:
     QTimer *timer;
     QTableView *tableView;
+    QScrollBar *m_scrollBarV;
 };
 
 #endif // SQLTABLEVIEW_H
