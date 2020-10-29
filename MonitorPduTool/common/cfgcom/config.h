@@ -31,6 +31,8 @@ struct sCfgDev {
     uchar si_mod;
 
     QString ip_addr;
+    uchar ip_version;
+    uchar ip_log;
 };
 
 

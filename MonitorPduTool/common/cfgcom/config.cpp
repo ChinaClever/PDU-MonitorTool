@@ -77,6 +77,8 @@ void Cfg::initCfgDev()
     item->cTh.cur_max = read("cur_max", 320).toInt();
     item->cTh.enModify = read("en_modify", 0).toInt();
     item->cTh.si_mod = read("si_mod", 0).toInt();
+    item->cTh.ip_version = read("ip_version", 1).toInt();
+    item->cTh.ip_log = read("log_en", 0).toInt();
 }
 
 void Cfg::writeCfgDev()
@@ -90,6 +92,8 @@ void Cfg::writeCfgDev()
     write("cur_min", item->cTh.cur_min);
     write("cur_max", item->cTh.cur_max);
     write("en_modify", item->cTh.enModify);
+    write("ip_version", item->cTh.ip_version);
+    write("log_en", item->cTh.ip_log);
 }
 
 

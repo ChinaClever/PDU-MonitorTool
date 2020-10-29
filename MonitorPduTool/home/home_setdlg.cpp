@@ -11,7 +11,7 @@ Home_SetDlg::Home_SetDlg(QWidget *parent) :
     ui(new Ui::Home_SetDlg)
 {
     ui->setupUi(this);
-    groupBox_background_icon(this);    
+    groupBox_background_icon(this);
     mItem = Cfg::bulid()->item;
     QTimer::singleShot(500,this,SLOT(initFunSlot()));
 }
@@ -26,6 +26,8 @@ void Home_SetDlg::initFunSlot()
     initCntLab();
     initThresholdWid();
     ui->userEdit->setText(mItem->user);
+    ui->ipEdit->setText(mItem->cTh.ip_addr);
+    ui->logCheck->setChecked(mItem->cTh.ip_log);
 }
 
 
@@ -48,6 +50,14 @@ bool Home_SetDlg::getThresholdWid()
 
     mItem->user = ui->userEdit->text();
     cth->enModify = ui->modifyCheck->isChecked()?1:0;
+    mItem->cTh.ip_log = ui->logCheck->isChecked()?1:0;
+
+    QString str = ui->ipEdit->text();
+    if(!str.isEmpty()) {
+        if(cm_isIPaddress(str))
+            mItem->cTh.ip_addr = str;
+        else return false;
+    }
 
     return true;
 }

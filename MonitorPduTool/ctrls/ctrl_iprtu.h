@@ -15,6 +15,8 @@ public:
     bool factorySet();
 
 protected:
+    void setIpVersion();
+    bool startProcess();
     bool sentRtuCmd(ushort reg, ushort value);
 };
 
