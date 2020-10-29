@@ -31,7 +31,7 @@ void Home_SetDlg::initFunSlot()
 
 void Home_SetDlg::initThresholdWid()
 {
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     ui->comboBox->setCurrentIndex(cth->type);
     on_comboBox_currentIndexChanged(cth->type);
     ui->modifyCheck->setChecked(cth->enModify);
@@ -39,7 +39,7 @@ void Home_SetDlg::initThresholdWid()
 
 bool Home_SetDlg::getThresholdWid()
 {
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     cth->type = ui->comboBox->currentIndex();
     cth->vol_min = ui->volMinSpin->value();
     cth->vol_max = ui->volMaxSpin->value();
@@ -55,7 +55,7 @@ bool Home_SetDlg::getThresholdWid()
 
 void Home_SetDlg::setThresholdWid()
 {
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     ui->volMinSpin->setValue(cth->vol_min);
     ui->volMaxSpin->setValue(cth->vol_max);
     ui->curMinSpin->setValue(cth->cur_min/10.0);
@@ -65,7 +65,7 @@ void Home_SetDlg::setThresholdWid()
 void Home_SetDlg::on_comboBox_currentIndexChanged(int index)
 {
     bool en = true;
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     cth->type = index;
     if(index) {
         cth->vol_min = 80;
@@ -92,7 +92,7 @@ void Home_SetDlg::on_okBtn_clicked()
     bool ret = getThresholdWid();
     if(ret) {
         this->close();
-        Cfg::bulid()->writeThreshold();
+        Cfg::bulid()->writeCfgDev();
     }
 }
 

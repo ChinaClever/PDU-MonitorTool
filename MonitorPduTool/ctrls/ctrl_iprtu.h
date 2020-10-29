@@ -12,6 +12,7 @@ public:
 
     bool setCurTh(int i);
     bool setVolTh(int i);
+    bool factorySet();
 
 protected:
     bool sentRtuCmd(ushort reg, ushort value);

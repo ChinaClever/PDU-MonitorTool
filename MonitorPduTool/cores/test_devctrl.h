@@ -12,7 +12,7 @@ public:
 
     bool setCurTh(int i);
     bool setVolTh(int i);
-    bool funClearEle();
+    bool factorySet();
 
 protected:
     bool initDev();

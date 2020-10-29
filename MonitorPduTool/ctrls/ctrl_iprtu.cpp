@@ -17,6 +17,13 @@ Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
     return sington;
 }
 
+bool Ctrl_IpRtu::factorySet()
+{
+
+
+    return true;
+}
+
 bool Ctrl_IpRtu::setCurTh(int i)
 {
     bool ret = true;

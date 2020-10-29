@@ -13,7 +13,7 @@ Cfg::Cfg()
 
     initCnt();
     initErrData();
-    initThreshold();
+    initCfgDev();
 }
 
 Cfg *Cfg::bulid()
@@ -65,9 +65,11 @@ void Cfg::writeCnt()
 
 
 
-void Cfg::initThreshold()
+void Cfg::initCfgDev()
 {
     item->user = read("user", "", "User").toString();
+    item->cTh.ip_addr = read("ip_addr", "192.168.1.163").toString();
+
     item->cTh.type = read("cth_type", 1).toInt();
     item->cTh.vol_min = read("vol_min", 80).toInt();
     item->cTh.vol_max = read("vol_max", 276).toInt();
@@ -77,9 +79,11 @@ void Cfg::initThreshold()
     item->cTh.si_mod = read("si_mod", 0).toInt();
 }
 
-void Cfg::writeThreshold()
+void Cfg::writeCfgDev()
 {
     write("user", item->user, "User");
+    write("ip_addr", item->cTh.ip_addr);
+
     write("cth_type", item->cTh.type);
     write("vol_min", item->cTh.vol_min);
     write("vol_max", item->cTh.vol_max);

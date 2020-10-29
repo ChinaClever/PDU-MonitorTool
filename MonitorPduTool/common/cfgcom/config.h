@@ -21,7 +21,7 @@ enum eDevTypes {
     Mn    // 锰铜
 };
 
-struct sCfgTh {
+struct sCfgDev {
     uchar type; // 0 不设置， 1 32安  2 16安， 3 63安  4 自定义
     uchar enModify;
     ushort vol_min;
@@ -29,6 +29,8 @@ struct sCfgTh {
     ushort cur_min;
     ushort cur_max;
     uchar si_mod;
+
+    QString ip_addr;
 };
 
 
@@ -62,7 +64,7 @@ struct sSerial
 struct sCfgItem
 {
     sErrRange err; // 电流误差
-    sCfgTh cTh;
+    sCfgDev cTh;
 
     sCount cnt;
     int logCount;
@@ -76,7 +78,6 @@ struct sCfgItem
 class Cfg
 {
     Cfg();
-
 public:
     static Cfg *bulid();
 
@@ -93,7 +94,7 @@ public:
     int initAddr();
     void writeCnt();
     void writeErrData();
-    void writeThreshold();
+    void writeCfgDev();
     void setAddr(int addr);
 
     void write(const QString &key, const QVariant& v, const QString &g="Cfg");
@@ -102,7 +103,7 @@ public:
 protected:
     void initCnt();
     void initErrData();
-    void initThreshold();
+    void initCfgDev();
 
 private:
     CfgCom *mCfg;

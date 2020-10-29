@@ -33,7 +33,6 @@ protected:
     bool writeAlarmTh();
 
     bool factorySet();
-    bool funClearEle();
     void workResult(bool res);
 
 private:

@@ -11,7 +11,7 @@ public:
 
     virtual bool setCurTh(int i)=0;
     virtual bool setVolTh(int i)=0;
-    virtual bool funClearEle(){return true;}
+    virtual bool factorySet()=0;
 
 protected:
     bool readPduData(){return false;}

@@ -99,7 +99,7 @@ bool Test_ErrRange::checkErrRange(int exValue, int value, int err)
 
 bool Test_ErrRange::volAlarm(int id)
 {
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     sDataUnit *unit = &(mDev->line.vol);
 
     bool ret = true;
@@ -111,7 +111,7 @@ bool Test_ErrRange::volAlarm(int id)
 
 bool Test_ErrRange::curAlarm(int id)
 {
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     sDataUnit *unit = &(mDev->line.cur);
 
     bool ret = true;

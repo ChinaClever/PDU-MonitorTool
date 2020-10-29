@@ -44,11 +44,11 @@ bool Test_DevCtrl::setVolTh(int i)
     return ret;
 }
 
-bool Test_DevCtrl::funClearEle()
+bool Test_DevCtrl::factorySet()
 {
     bool ret = initDev();
     if(ret) {
-        ret = mRtu->funClearEle();
+        ret = mRtu->factorySet();
     }
     return ret;
 }

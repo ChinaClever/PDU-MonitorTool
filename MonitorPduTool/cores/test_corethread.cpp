@@ -147,7 +147,7 @@ bool Test_CoreThread::curAlarmErr(int i)
 bool Test_CoreThread::checkAlarmErr()
 {
     bool ret = true;
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     if(cth->type) {
         for(int i=0; i<mDev->line.size; ++i) {
             ret = volAlarmErr(i); if(!ret) break;
@@ -183,7 +183,7 @@ bool Test_CoreThread::volAlarmWrite(int i)
 bool Test_CoreThread::writeAlarmTh()
 {
     bool ret = true;
-    sCfgTh *cth = &(mItem->cTh);
+    sCfgDev *cth = &(mItem->cTh);
     if(cth->type) {
         for(int i=0; i<mDev->line.size; ++i) {
             ret = curAlarmWrite(i); if(!ret) break;
@@ -194,24 +194,14 @@ bool Test_CoreThread::writeAlarmTh()
     return ret;
 }
 
-bool Test_CoreThread::funClearEle()
+bool Test_CoreThread::factorySet()
 {
-    QString str = tr("设备电能清除");
-    bool ret = mCtrl->funClearEle();
+    QString str = tr("恢复出厂设置");
+    bool ret = mCtrl->factorySet();
     if(ret) str += tr("成功");
     else str += tr("失败");
 
     return mLogs->updatePro(str, ret);
-}
-
-bool Test_CoreThread::factorySet()
-{
-    bool ret = true;
-    if(SI_PDU == mDt->devType) {
-        ret = funClearEle();
-    }
-
-    return ret;
 }
 
 void Test_CoreThread::workResult(bool res)
