@@ -25,6 +25,7 @@ bool Ctrl_SiRtu::setCurTh(int i)
 
     sDataUnit *unit = &(mDev->line.cur);
     ushort value = mItem->cTh.cur_max;
+    if((mDt->lines == 2) && i) value = (value/10 +1)/2 * 10; // 解决单项二路阈值问题
     if(unit->max[i] != value) {
         ret = sentRtuCmd(reg++, value); if(!ret) return ret;
     } else reg++;
