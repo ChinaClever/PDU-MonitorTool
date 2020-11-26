@@ -41,7 +41,7 @@ void Setup_MainWid::initSerial()
     mItem->coms.ser2 = mSer2Wid->initSerialPort(tr("级联口 2"));
 
     mSourceWid = new SerialStatusWid(ui->sourceWid);
-    mItem->coms.source = mSourceWid->initSerialPort(tr("标准源"));
+    mItem->coms.source = mSourceWid->initSerialPort(tr("参考源"));
 }
 
 
