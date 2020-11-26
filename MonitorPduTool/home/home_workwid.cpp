@@ -194,6 +194,8 @@ bool Home_WorkWid::initSerial()
 bool Home_WorkWid::initWid()
 {
     bool ret = initSerial();
+    if(!ret) return ret;
+
     if(mItem->cTh.enModify) {
         ret = MsgBox::question(this, tr("测试软件会自动修改，设备报警阈值，请确认？"));
     }

@@ -94,6 +94,9 @@ int Dev_IpRtu::recvDataV1(uchar *ptr)
     mDev->version = getShort(ptr); ptr +=2;
     mDev->br = getShort(ptr); ptr +=2;
     mDev->reserve = getShort(ptr); ptr +=2;
+
+    mDt->lines = obj->size;
+    if(obj->size == 2)  obj->size = 3;
     obj->vol.size = obj->cur.size = obj->size;
 
     return ptr-ret;
@@ -136,6 +139,9 @@ int Dev_IpRtu::recvDataV3(uchar *ptr)
     mDev->br = getShort(ptr); ptr +=2;
     ptr = toChar(ptr, 8, mDev->devType.ip);
     mDev->reserve = getShort(ptr); ptr +=2;
+
+    mDt->lines = obj->size;
+    if(obj->size == 2)  obj->size = 3;
     obj->vol.size = obj->cur.size = obj->size;
 
     return ptr-ret;

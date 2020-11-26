@@ -120,6 +120,7 @@ int Dev_SiRtu::recvAcData(uchar *ptr, int line)
     ptr += 3;
     mDev->hz = *(ptr++);
 
+    mDt->lines = obj->size;
     if(obj->size > 1)  obj->size = 3;
     obj->vol.size = obj->cur.size = obj->size;
 
