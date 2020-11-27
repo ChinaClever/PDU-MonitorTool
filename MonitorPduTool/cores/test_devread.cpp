@@ -46,7 +46,7 @@ bool Test_DevRead::readDev()
 bool Test_DevRead::checkNet()
 {
     QString str = tr("网络测试失败");
-    bool ret = cm_checkNet(mItem->cTh.ip_addr);
+    bool ret = cm_pingNet(mItem->cTh.ip_addr);
     if(ret) {
         str = tr("网络测试成功");
     }

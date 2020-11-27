@@ -45,8 +45,6 @@ class IpWeb:
         jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"        
         for num in range(0, 4):
             self.execJs(jsSheet.format(num))
-            time.sleep(1)
-        time.sleep(1)
 
     def setSelect(self, id, v):
         it = self.driver.find_element_by_id(id)
@@ -84,13 +82,15 @@ class IpWeb:
         
     def resetFactory(self):
         v = self.cfgs['ip_version']
-        if(1 == int(v)):
-            self.divClick(8)
-        else:
+        aj = 'ajaxget'
+        if(3 == int(v)):
+            aj += 's'
             self.divClick(10)
+        else:
+            self.divClick(8)
         self.setSelect("order",1)
-        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setsys?a=\" + {0} + \"&\");"
-        self.execJs(jsSheet.format(1))
+        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
+        self.execJs(jsSheet.format(aj))
         time.sleep(1)
 
 
