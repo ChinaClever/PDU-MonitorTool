@@ -87,7 +87,7 @@ bool Test_CoreThread::powErrRange(int i)
 
     QString str = tr("功率 L%1 ").arg(i+1);
     if(ret) str += tr("正常");
-    else str += tr("错误，功率=%1Kw").arg(mDev->line.pow[i]/COM_RATE_POW);
+    else str += tr("错误，功率=%1kW").arg(mDev->line.pow[i]/COM_RATE_POW);
 
     return mLogs->updatePro(str, ret);
 }

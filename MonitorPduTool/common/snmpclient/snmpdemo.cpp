@@ -49,7 +49,7 @@ void SnmpDemo::onResponseReceived(const qint32, const QtSnmpDataList& values )
 void SnmpDemo::onRequestFailed( const qint32 request_id )
 {
     qDebug() << m_address << request_id;
-    assert( !request_id );
+    //assert( !request_id );
 }
 
 void SnmpDemo::makeRequest() {
