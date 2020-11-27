@@ -29,9 +29,9 @@ void Home_LineTabWid::appendItem(sObjData *dev)
         if(1 == dev->sw[i]) listStr << tr("开"); else listStr << tr("关");
         listStr << QString::number(dev->cur.value[i]/COM_RATE_CUR,'f',2)+"A";
         listStr << QString::number(dev->vol.value[i]/COM_RATE_VOL,'f',1)+"V";
-        listStr << QString::number(dev->pow[i]/COM_RATE_POW,'f',3)+"Kw";
+        listStr << QString::number(dev->pow[i]/COM_RATE_POW,'f',3)+"kW";
         listStr << QString::number(dev->pf[i]/COM_RATE_PF,'f',2);
-        listStr << QString::number(dev->ele[i]/COM_RATE_ELE,'f',2)+"Kwh";
+        listStr << QString::number(dev->ele[i]/COM_RATE_ELE,'f',2)+"kWh";
         setTableRow(i, listStr);
 
         setItemColor(i, 1, dev->cur.status[i]);
