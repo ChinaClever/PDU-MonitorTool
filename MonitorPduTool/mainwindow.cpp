@@ -13,9 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     QTimer::singleShot(5,this,SLOT(initFunSlot())); //延时初始化
-
-    //    mSnmp = new Dev_IpSnmp(this);
-    //    mSnmp->start();
 }
 
 MainWindow::~MainWindow()

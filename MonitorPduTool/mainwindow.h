@@ -30,8 +30,6 @@ protected slots:
 private:
     Ui::MainWindow *ui;
 
-    Dev_IpSnmp *mSnmp;
-
     LogMainWid *mLog;
     Td_MainWid *mTdWid;
     NavBarWid *mNavBarWid;
