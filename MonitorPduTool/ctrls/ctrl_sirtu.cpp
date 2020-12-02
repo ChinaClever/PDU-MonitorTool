@@ -72,7 +72,7 @@ bool Ctrl_SiRtu::setModel()
 
 bool Ctrl_SiRtu::factorySet()
 {
-    return sentRtuCmd(0x1013, 0xFF00); // 清除电能
+    return sentRtuCmd(0x1013, 0x00F0); // 清除电能
 }
 
 bool Ctrl_SiRtu::sentRtuCmd(ushort reg, ushort value)
