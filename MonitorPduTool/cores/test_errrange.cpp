@@ -59,7 +59,9 @@ bool Test_ErrRange::powErr(int id)
     int err = exValue * mItem->err.powErr/1000.0;
 
     bool ret = checkErrRange(exValue, value, err);
+
     ret = true;//test
+
     if(ret) pass = Test_Pass;
     mDev->line.powStatus[id] = pass;
 
@@ -118,8 +120,13 @@ bool Test_ErrRange::curAlarm(int id)
     sDataUnit *unit = &(mDev->line.cur);
 
     bool ret = true;
-    if(unit->min[id] != cth->cur_min) ret = false;
-    if(unit->max[id] != cth->cur_max) ret = false;
+    if((mDt->lines == 2) && id){
+        if(unit->min[id] != cth->cur_min/2) ret = false;
+        if(unit->max[id] != cth->cur_max/2) ret = false;
+    }else{
+        if(unit->min[id] != cth->cur_min) ret = false;
+        if(unit->max[id] != cth->cur_max) ret = false;
+    }
 
     return ret;
 }
