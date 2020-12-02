@@ -24,6 +24,7 @@ bool Test_Logs::appendLogItem(const QString &str, bool pass)
     sStateItem it;
 
     it.dev = mDev->devType.dev_type.split("_").first();
+    it.user = mItem->user;
     it.sn = mDev->devType.sn;
     if(pass) {
         it.result = tr("通过");
