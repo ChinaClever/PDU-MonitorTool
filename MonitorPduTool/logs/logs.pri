@@ -15,8 +15,7 @@ SOURCES +=  \
 
 FORMS += \
     $$PWD/logmainwid.ui \
-    $$PWD/logquerydlg/log_logquerydlg.ui \
-    $$PWD/logquerydlg/log_macquerydlg.ui
+    $$PWD/logquerydlg/log_logquerydlg.ui
 
 
 

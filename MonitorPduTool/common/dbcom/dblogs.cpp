@@ -9,9 +9,9 @@
 DbLogs::DbLogs()
 {
     createTable();
-    tableTile = tr("校准状态日志");
+    tableTile = tr("状态日志");
     //hiddens <<  9;
-    headList << tr("设备类型") << tr("客户名称") << tr("操作员") << tr("校准状态") << tr("设备序列号");
+    headList << tr("设备类型") << tr("客户名称") << tr("操作员") << tr("结果") << tr("设备序列号");
 }
 
 void DbLogs::createTable()
