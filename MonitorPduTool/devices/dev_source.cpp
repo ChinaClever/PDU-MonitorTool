@@ -37,7 +37,7 @@ bool Dev_Source::read()
     bool ret = readPduData();
     if(!ret) ret = readPduData();
     if(!ret) {
-        QString str = tr("比对源IP-PDU数据读取失败，结束测试");
+        QString str = tr("比对源PDU数据读取失败，结束测试");
         mPacket->updatePro(str, ret);
     }
 

@@ -93,7 +93,6 @@ bool Test_DevRead::readHub()
     mRtu->setModbus(2);
     bool ret = mRtu->readPduData();
     if(ret) mRtu->setModbus(1);
-
     return ret;
 }
 
