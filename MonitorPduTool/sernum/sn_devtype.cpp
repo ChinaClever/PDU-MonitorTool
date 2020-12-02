@@ -14,7 +14,7 @@ Sn_DevType::Sn_DevType()
 
     QJsonObject json;
     Json_Build::bulid()->getJson(json);
-    Json_Recv::bulid()->recv("PDU-CalibrateTool");
+    Json_Recv::bulid()->recv("pdu_id");
 }
 
 Sn_DevType * Sn_DevType::bulid()
