@@ -7,7 +7,7 @@
 
 #include "msgbox.h"
 #include <QApplication>
-#include "QtSingleApplication.h"
+#include "qtsingleapplication.h"
 
 int main(int argc, char *argv[])
 {
