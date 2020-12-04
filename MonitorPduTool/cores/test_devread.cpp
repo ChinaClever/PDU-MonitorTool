@@ -67,10 +67,12 @@ bool Test_DevRead::readSnmp()
 
 bool Test_DevRead::checkLine()
 {
-    bool ret = true;
-    if(mDt->lines != mItem->ip.lines) {
-        ret = false;
-        mLogs->updatePro(tr("设备相数出错"), ret);
+    bool ret = !isRun;
+    if(ret) {
+        if(mDt->lines != mItem->ip.lines) {
+            ret = false;
+            mLogs->updatePro(tr("设备相数出错"), ret);
+        }
     }
 
     return ret;
