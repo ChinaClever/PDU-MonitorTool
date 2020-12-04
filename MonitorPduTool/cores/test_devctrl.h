@@ -1,7 +1,7 @@
 #ifndef TEST_DEVCTRL_H
 #define TEST_DEVCTRL_H
 
-#include "test_logs.h"
+#include "test_network.h"
 
 class Test_DevCtrl : public Test_Object
 {

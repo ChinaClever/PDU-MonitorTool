@@ -68,8 +68,6 @@ void Cfg::writeCnt()
 void Cfg::initCfgDev()
 {
     item->user = read("user", "", "User").toString();
-    item->cTh.ip_addr = read("ip_addr", "192.168.1.163").toString();
-
     item->cTh.type = read("cth_type", 1).toInt();
     item->cTh.vol_min = read("vol_min", 80).toInt();
     item->cTh.vol_max = read("vol_max", 276).toInt();
@@ -77,23 +75,35 @@ void Cfg::initCfgDev()
     item->cTh.cur_max = read("cur_max", 320).toInt();
     item->cTh.enModify = read("en_modify", 0).toInt();
     item->cTh.si_mod = read("si_mod", 0).toInt();
-    item->cTh.ip_version = read("ip_version", 1).toInt();
-    item->cTh.ip_log = read("log_en", 0).toInt();
+
+    QString g = "ipCfg";
+    item->ip.addr = read("ip_addr", "192.168.1.163", g).toString();
+    item->ip.version = read("version", 1, g).toInt();
+    item->ip.lines = read("lines", 1, g).toInt();
+    item->ip.modbus = read("modbus", 0, g).toInt();
+    item->ip.log = read("log_en", 0, g).toInt();
+    item->ip.standard = read("standard", 0, g).toInt();
+    item->ip.language = read("language", 1, g).toInt();
 }
 
 void Cfg::writeCfgDev()
 {
     write("user", item->user, "User");
-    write("ip_addr", item->cTh.ip_addr);
-
     write("cth_type", item->cTh.type);
     write("vol_min", item->cTh.vol_min);
     write("vol_max", item->cTh.vol_max);
     write("cur_min", item->cTh.cur_min);
     write("cur_max", item->cTh.cur_max);
     write("en_modify", item->cTh.enModify);
-    write("ip_version", item->cTh.ip_version);
-    write("log_en", item->cTh.ip_log);
+
+    QString g = "ipCfg";
+    write("ip_addr", item->ip.addr, g);
+    write("version", item->ip.version, g);
+    write("lines", item->ip.lines, g);
+    write("modbus", item->ip.modbus, g);
+    write("log_en", item->ip.log, g);
+    write("standard", item->ip.standard, g);
+    write("language", item->ip.language, g);
 }
 
 

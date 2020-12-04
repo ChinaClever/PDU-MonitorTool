@@ -26,8 +26,14 @@ void Home_SetDlg::initFunSlot()
     initCntLab();
     initThresholdWid();
     ui->userEdit->setText(mItem->user);
-    ui->ipEdit->setText(mItem->cTh.ip_addr);
-    ui->logCheck->setChecked(mItem->cTh.ip_log);
+    ui->ipEdit->setText(mItem->ip.addr);
+
+    ui->ipTypeBox->setCurrentIndex(mItem->ip.version);
+    ui->languageBox->setCurrentIndex(mItem->ip.language);
+    ui->lineBox->setCurrentIndex(mItem->ip.lines-1);
+    ui->ipModeBox->setCurrentIndex(mItem->ip.modbus);
+    ui->sBox->setCurrentIndex(mItem->ip.standard);
+    ui->logBox->setCurrentIndex(mItem->ip.log);
 }
 
 
@@ -50,14 +56,20 @@ bool Home_SetDlg::getThresholdWid()
 
     mItem->user = ui->userEdit->text();
     cth->enModify = ui->modifyCheck->isChecked()?1:0;
-    mItem->cTh.ip_log = ui->logCheck->isChecked()?1:0;
 
     QString str = ui->ipEdit->text();
     if(!str.isEmpty()) {
         if(cm_isIPaddress(str))
-            mItem->cTh.ip_addr = str;
+            mItem->ip.addr = str;
         else return false;
     }
+
+    mItem->ip.version = ui->ipTypeBox->currentIndex();
+    mItem->ip.language = ui->languageBox->currentIndex();
+    mItem->ip.lines = ui->lineBox->currentIndex()+1;
+    mItem->ip.modbus = ui->ipModeBox->currentIndex();
+    mItem->ip.standard = ui->sBox->currentIndex();
+    mItem->ip.log = ui->logBox->currentIndex();
 
     return true;
 }
@@ -124,4 +136,9 @@ void Home_SetDlg::on_resBtn_clicked()
         initCntLab();
         Cfg::bulid()->writeCnt();
     }
+}
+
+void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
+{
+    ui->logBox->setEnabled(!index);
 }

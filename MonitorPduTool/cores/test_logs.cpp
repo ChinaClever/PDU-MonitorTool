@@ -82,7 +82,8 @@ bool Test_Logs::updatePro(const QString &str, bool pass, int sec)
 {
     if(mPro->step < Test_End) {
         appendLogItem(str, pass);
+        mPacket->updatePro(str, pass, sec);
     }
 
-    return mPacket->updatePro(str, pass, sec);
+    return pass;
 }

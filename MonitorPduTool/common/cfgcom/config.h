@@ -21,6 +21,16 @@ enum eDevTypes {
     Mn    // 锰铜
 };
 
+struct sIpCfg {
+    QString addr;
+    uchar version;
+    uchar language; //
+    uchar lines;
+    uchar modbus; //  1 表示 Modbus版本
+    uchar log;
+    uchar standard;
+};
+
 struct sCfgDev {
     uchar type; // 0 不设置， 1 32安  2 16安， 3 63安  4 自定义
     uchar enModify;
@@ -29,10 +39,6 @@ struct sCfgDev {
     ushort cur_min;
     ushort cur_max;
     uchar si_mod;
-
-    QString ip_addr;
-    uchar ip_version;
-    uchar ip_log;
 };
 
 
@@ -67,6 +73,7 @@ struct sCfgItem
 {
     sErrRange err; // 电流误差
     sCfgDev cTh;
+    sIpCfg ip;
 
     sCount cnt;
     int logCount;

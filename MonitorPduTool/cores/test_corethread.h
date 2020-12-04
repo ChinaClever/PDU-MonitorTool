@@ -40,6 +40,7 @@ private:
     Test_ErrRange *mErr;
     Test_DevRead *mRead;
     Test_DevCtrl *mCtrl;
+    Test_NetWork *mNetWork;
 };
 
 #endif // TEST_CORETHREAD_H

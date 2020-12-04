@@ -46,7 +46,7 @@ bool Test_DevRead::readDev()
 bool Test_DevRead::checkNet()
 {
     QString str = tr("网络测试失败");
-    bool ret = cm_pingNet(mItem->cTh.ip_addr);
+    bool ret = cm_pingNet(mItem->ip.addr);
     if(ret) {
         str = tr("网络测试成功");
     }
@@ -65,12 +65,25 @@ bool Test_DevRead::readSnmp()
     return mLogs->updatePro(str, ret);
 }
 
+bool Test_DevRead::checkLine()
+{
+    bool ret = true;
+    if(mDt->lines != mItem->ip.lines) {
+        ret = false;
+        mLogs->updatePro(tr("设备相数出错"), ret);
+    }
+
+    return ret;
+}
+
+
 bool Test_DevRead::readNet()
 {
     bool ret = true;
     if(IP_PDU == mDt->devType) {
         ret = checkNet();
-        if(ret)  ret = readSnmp();
+        if(ret) ret = readSnmp();
+        if(ret) ret = checkLine();
     }
 
     return ret;

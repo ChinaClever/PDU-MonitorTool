@@ -20,6 +20,7 @@ protected:
     bool checkNet();
     bool readSnmp();
     bool initDev();
+    bool checkLine();
 
 protected slots:
     void initFunSlot();

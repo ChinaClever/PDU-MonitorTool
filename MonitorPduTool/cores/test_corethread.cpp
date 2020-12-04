@@ -17,6 +17,7 @@ void Test_CoreThread::initFunSlot()
     mErr = Test_ErrRange::bulid(this);
     mRead = Test_DevRead::bulid(this);
     mCtrl = Test_DevCtrl::bulid(this);
+    mNetWork = Test_NetWork::bulid(this);
 }
 
 

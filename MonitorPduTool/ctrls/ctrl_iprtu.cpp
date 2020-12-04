@@ -18,17 +18,9 @@ Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
 }
 
 
-void Ctrl_IpRtu::setIpVersion()
-{
-    if(mItem->cTh.ip_version != mDt->version) {
-        mItem->cTh.ip_version = mDt->version;
-        Cfg::bulid()->writeCfgDev();
-    }
-}
 
 bool Ctrl_IpRtu::startProcess()
 {
-    setIpVersion(); // 先要设置IP设备的版本号
     QProcess process(this);
     process.start("pyweb.exe");
     bool ret = process.waitForFinished(60*2000);
