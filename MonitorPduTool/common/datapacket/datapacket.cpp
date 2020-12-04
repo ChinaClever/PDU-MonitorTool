@@ -62,7 +62,7 @@ bool sDataPacket::updatePro(const QString &str, bool pass, int sec)
     if(pass && sec) {
         pass = delay(sec);
     } else {
-        pro->step = Test_Over;
+        //pro->step = Test_Over;
         pro->result = Test_Fail;
     }
 
