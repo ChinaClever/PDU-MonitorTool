@@ -28,7 +28,6 @@ void Home_SetDlg::initFunSlot()
     ui->userEdit->setText(mItem->user);
     ui->ipEdit->setText(mItem->ip.addr);
 
-    ui->numSpin->setValue(mItem->cnt.num);
     ui->ipTypeBox->setCurrentIndex(mItem->ip.version);
     ui->languageBox->setCurrentIndex(mItem->ip.language);
     ui->lineBox->setCurrentIndex(mItem->ip.lines-1);
@@ -122,6 +121,7 @@ void Home_SetDlg::on_okBtn_clicked()
 
 void Home_SetDlg::initCntLab()
 {
+    ui->numSpin->setValue(mItem->cnt.num);
     QString str = tr("设备数量：%1 成功：%2 失败：%3 ")
             .arg(mItem->cnt.all).arg(mItem->cnt.ok).arg(mItem->cnt.err);
     ui->cntLab->setText(str);

@@ -17,8 +17,8 @@ public:
     explicit Home_SetDlg(QWidget *parent = nullptr);
     ~Home_SetDlg();
 
-protected:
     void initCntLab();
+protected:
     bool getThresholdWid();
     void setThresholdWid();
     void initThresholdWid();
@@ -28,7 +28,6 @@ private slots:
     void on_okBtn_clicked();
     void on_resBtn_clicked();
     void on_comboBox_currentIndexChanged(int index);
-
     void on_ipTypeBox_currentIndexChanged(int index);
 
 private:

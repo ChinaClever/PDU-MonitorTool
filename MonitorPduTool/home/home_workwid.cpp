@@ -159,6 +159,7 @@ void Home_WorkWid::updateWid()
 
 void Home_WorkWid::on_setBtn_clicked()
 {
+    mSetDlg->initCntLab();
     mSetDlg->exec();
 }
 
