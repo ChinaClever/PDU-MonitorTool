@@ -56,6 +56,7 @@ bool Home_SetDlg::getThresholdWid()
     cth->cur_max = ui->curMaxSpin->value()*10;
 
     mItem->user = ui->userEdit->text();
+    mItem->cnt.num = ui->numSpin->value();
     cth->enModify = ui->modifyCheck->isChecked()?1:0;
 
     QString str = ui->ipEdit->text();

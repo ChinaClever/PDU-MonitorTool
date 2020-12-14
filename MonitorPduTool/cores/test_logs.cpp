@@ -66,6 +66,11 @@ void Test_Logs::writeLog()
 
     if(mItem->cnt.num > 0) {
         mItem->cnt.num -= 1;
+
+        if(!mItem->cnt.num)  {
+            mItem->user.clear();
+            Cfg::bulid()->write("user", mItem->user, "User");
+        }
     }
 
     Cfg::bulid()->writeCnt();
