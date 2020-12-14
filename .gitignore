@@ -57,3 +57,5 @@ compile_commands.json
 *.png
 *.xlsx
 项目文件/会议记录/项目会议_20201204/~WRL0005.tmp
+*.pdf
+*.tmp

@@ -64,6 +64,10 @@ void Test_Logs::writeLog()
         it.result = tr("失败");
     }
 
+    if(mItem->cnt.num > 0) {
+        mItem->cnt.num -= 1;
+    }
+
     Cfg::bulid()->writeCnt();
     DbLogs::bulid()->insertItem(it);
 }

@@ -49,6 +49,7 @@ struct sCount
 {
     sCount() {all=ok=err =0;}
 
+    int num;
     int all;
     int ok;
     int err;

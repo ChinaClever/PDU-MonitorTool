@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>513</width>
-    <height>606</height>
+    <height>649</height>
    </rect>
   </property>
   <property name="font">
@@ -25,7 +25,7 @@
      <x>10</x>
      <y>10</y>
      <width>491</width>
-     <height>71</height>
+     <height>101</height>
     </rect>
    </property>
    <property name="font">
@@ -35,7 +35,7 @@
     </font>
    </property>
    <property name="title">
-    <string>客户设置</string>
+    <string>订单设置</string>
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -54,8 +54,34 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" colspan="2">
+    <item row="0" column="1">
      <widget class="QLineEdit" name="userEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_19">
+      <property name="maximumSize">
+       <size>
+        <width>70</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string> 剩余数量</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QSpinBox" name="numSpin">
+      <property name="maximum">
+       <number>99999</number>
+      </property>
+      <property name="singleStep">
+       <number>100</number>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -63,7 +89,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>90</y>
+     <y>120</y>
      <width>491</width>
      <height>161</height>
     </rect>
@@ -369,7 +395,7 @@
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>550</y>
+     <y>600</y>
      <width>131</width>
      <height>41</height>
     </rect>
@@ -388,7 +414,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>460</y>
+     <y>510</y>
      <width>491</width>
      <height>71</height>
     </rect>
@@ -442,7 +468,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>260</y>
+     <y>300</y>
      <width>491</width>
      <height>191</height>
     </rect>

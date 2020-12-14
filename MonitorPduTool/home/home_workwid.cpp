@@ -196,6 +196,16 @@ bool Home_WorkWid::initWid()
     bool ret = initSerial();
     if(!ret) return ret;
 
+    if(mItem->user.isEmpty()) {
+        MsgBox::critical(this, tr("请先填写客户名称！"));
+        return false;
+    }
+
+    if(mItem->cnt.num < 1) {
+        MsgBox::critical(this, tr("请先填写订单剩余数量！"));
+        return false;
+    }
+
     if(mItem->cTh.enModify) {
         ret = MsgBox::question(this, tr("测试软件会自动修改，设备报警阈值，请确认？"));
     }
