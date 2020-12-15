@@ -70,10 +70,10 @@ bool Sn_SerialNum::analySn(uchar *sn, int len, sSnItem &it)
 void Sn_SerialNum::toSnStr(sSnItem &it)
 {
     QString cmd;
-    for(int i=0; i<11; ++i) {cmd += "%" + QString::number(i+1); if(i%4 == 0) cmd += " ";}
+    for(int i=0; i<9; ++i) {cmd += "%" + QString::number(i+1); if(i<7)if((i%2==1)||i==6) cmd += " ";}
     QString sn  = QString(cmd)
-            .arg(it.devType[0], 2, 16, QLatin1Char('0'))
-            .arg(it.devType[1], 2, 16, QLatin1Char('0'))
+            //.arg(it.devType[0], 2, 16, QLatin1Char('0'))
+            //.arg(it.devType[1], 2, 16, QLatin1Char('0'))
             .arg(it.devType[2], 2, 16, QLatin1Char('0'))
             .arg(it.devType[3], 2, 16, QLatin1Char('0'))
             .arg(it.date[0], 2, 10, QLatin1Char('0'))
