@@ -96,7 +96,7 @@ bool Test_ErrRange::checkErrRange(int exValue, int value, int err)
 {
     bool ret = false;
     if(qAbs(exValue-value) <= err) {
-        ret = true;
+        if(value > 0) ret = true;
     }
 
     return ret;
