@@ -39,7 +39,7 @@ void Cfg::initErrData()
 {
     item->err.volErr = read("vol", 1,"Err").toInt();
     item->err.curErr = read("cur", 1,"Err").toInt();
-    item->err.powErr = read("pow", 15,"Err").toInt();
+    item->err.powErr = read("pow", 35,"Err").toInt();
 }
 
 void Cfg::writeErrData()
