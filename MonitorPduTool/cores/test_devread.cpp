@@ -31,7 +31,14 @@ Test_DevRead *Test_DevRead::bulid(QObject *parent)
 
 bool Test_DevRead::readSn()
 {
-    bool ret = mSn->snEnter();
+    bool ret = true;
+    if(mItem->ledSi){
+        mDt->devType = SI_PDU;
+        mDt->dev_type = tr("SI/BM数码管");
+    } else {
+        ret = mSn->snEnter();
+    }
+
     if(ret) ret = initDev();
     return ret;
 }

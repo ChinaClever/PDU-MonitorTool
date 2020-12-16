@@ -79,6 +79,7 @@ struct sCfgItem
     sCount cnt;
     int logCount;
 
+    bool ledSi;
     uchar pcNum;
     QString user; // 客户名称
     sSerial coms;

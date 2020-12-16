@@ -67,7 +67,7 @@ bool Sn_DevId::readDevId()
 
 bool Sn_DevId::readDevType()
 {
-    mDev->devType.dev_type[0] = 0;
+    mDev->devType.dev_type.clear();
     QString str = tr("开始识别设备类型！");
     bool ret = mPacket->updatePro(str, true, 1);
     if(ret) {

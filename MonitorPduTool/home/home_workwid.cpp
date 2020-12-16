@@ -217,6 +217,7 @@ bool Home_WorkWid::initWid()
         emit startSig();
         ui->textEdit->clear();
         ui->groupBox_4->setEnabled(false);
+        mItem->ledSi = ui->ledCheck->isChecked();
     } else {
         MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));
     }

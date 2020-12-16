@@ -47,7 +47,6 @@ void Sn_SerialNum::initDevType(sSnItem &it)
         it.devType[i] = (0xFF) & (id >> ((3-i)*8));
     }
     it.sn.clear();
-    mDev->devType.sn[0] = 0;
 }
 
 bool Sn_SerialNum::analySn(uchar *sn, int len, sSnItem &it)

@@ -69,6 +69,7 @@ void Cfg::writeCnt()
 
 void Cfg::initCfgDev()
 {
+    item->ledSi = false;
     item->user = read("user", "", "User").toString();
     item->cTh.type = read("cth_type", 1).toInt();
     item->cTh.vol_min = read("vol_min", 80).toInt();
