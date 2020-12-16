@@ -53,7 +53,6 @@ void Test_Logs::writeLog()
     it.op = user_land_name();
     it.user = mItem->user;
     it.sn = mDev->devType.sn;
-    if(it.sn.isEmpty()) return;
 
     mItem->cnt.all += 1;
     if(mPro->result != Test_Fail) {
@@ -66,7 +65,6 @@ void Test_Logs::writeLog()
 
     if(mItem->cnt.num > 0) {
         mItem->cnt.num -= 1;
-
         if(!mItem->cnt.num)  {
             mItem->user.clear();
             Cfg::bulid()->write("user", mItem->user, "User");
@@ -74,6 +72,7 @@ void Test_Logs::writeLog()
     }
 
     Cfg::bulid()->writeCnt();
+    if(it.sn.isEmpty()) return;
     DbLogs::bulid()->insertItem(it);
 }
 
