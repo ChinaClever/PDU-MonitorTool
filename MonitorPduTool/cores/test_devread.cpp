@@ -84,10 +84,14 @@ bool Test_DevRead::checkIpLine()
 {
     bool ret = !isRun;
     if(ret) {
+        QString str = tr("设备相数检查");
         if(mDt->lines != mItem->ip.lines) {
+            str += tr("出错 L=%1").arg(mDt->lines);
             ret = false;
-            mLogs->updatePro(tr("设备相数出错"), ret);
+        } else {
+            str += tr("正常");
         }
+        mLogs->updatePro(str, ret);
     }
 
     return ret;
@@ -97,10 +101,14 @@ bool Test_DevRead::checkSiLine()
 {
     bool ret = !isRun;
     if(ret) {
+        QString str = tr("设备相数检查");
         if(mDt->lines != mItem->si.lines) {
+            str += tr("出错 L=%1").arg(mDt->lines);
             ret = false;
-            mLogs->updatePro(tr("设备相数出错"), ret);
+        } else {
+            str += tr("正常");
         }
+        mLogs->updatePro(str, ret);
     }
 
     return ret;
