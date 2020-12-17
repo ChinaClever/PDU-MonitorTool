@@ -31,6 +31,13 @@ struct sIpCfg {
     uchar standard;
 };
 
+struct sSiCfg {
+    uchar si_mod;
+    bool led;
+    uchar ac;
+    uchar lines;
+};
+
 struct sCfgDev {
     uchar type; // 0 不设置， 1 32安  2 16安， 3 63安  4 自定义
     uchar enModify;
@@ -38,7 +45,6 @@ struct sCfgDev {
     ushort vol_max;
     ushort cur_min;
     ushort cur_max;
-    uchar si_mod;
 };
 
 
@@ -75,11 +81,11 @@ struct sCfgItem
     sErrRange err; // 电流误差
     sCfgDev cTh;
     sIpCfg ip;
+    sSiCfg si;
 
     sCount cnt;
     int logCount;
 
-    bool ledSi;
     uchar pcNum;
     QString user; // 客户名称
     sSerial coms;

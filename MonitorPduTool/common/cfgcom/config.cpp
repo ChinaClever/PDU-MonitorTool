@@ -69,7 +69,6 @@ void Cfg::writeCnt()
 
 void Cfg::initCfgDev()
 {
-    item->ledSi = false;
     item->user = read("user", "", "User").toString();
     item->cTh.type = read("cth_type", 1).toInt();
     item->cTh.vol_min = read("vol_min", 80).toInt();
@@ -77,9 +76,14 @@ void Cfg::initCfgDev()
     item->cTh.cur_min = read("cur_min", 0).toInt();
     item->cTh.cur_max = read("cur_max", 320).toInt();
     item->cTh.enModify = read("en_modify", 0).toInt();
-    item->cTh.si_mod = read("si_mod", 0).toInt();
 
-    QString g = "ipCfg";
+    QString g = "siCfg";
+    item->si.led = false;
+    item->si.si_mod = read("si_mod", 0, g).toInt();
+    item->si.ac = read("ac", 1, g).toInt();
+    item->si.lines = read("lines", 1, g).toInt();
+
+    g = "ipCfg";
     item->ip.addr = read("ip_addr", "192.168.1.163", g).toString();
     item->ip.version = read("version", 1, g).toInt();
     item->ip.lines = read("lines", 1, g).toInt();
@@ -99,7 +103,12 @@ void Cfg::writeCfgDev()
     write("cur_max", item->cTh.cur_max);
     write("en_modify", item->cTh.enModify);
 
-    QString g = "ipCfg";
+    QString g = "siCfg";
+    //write("si_mod", item->si.si_mod, g);
+    //write("ac", item->si.ac, g);
+    //write("lines", item->si.lines, g);
+
+    g = "ipCfg";
     write("ip_addr", item->ip.addr, g);
     write("version", item->ip.version, g);
     write("lines", item->ip.lines, g);

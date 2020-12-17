@@ -39,12 +39,16 @@ bool Test_Logs::appendLogItem(const QString &str, bool pass)
 
 void Test_Logs::saveLogs()
 {
-    mPacket->updatePro(tr("测试日志保存"));
-    writeLog();
-    writeLogs();
+    bool ret = writeLog();
+    if(ret) {
+        mPacket->updatePro(tr("测试日志保存"));
+        writeLogs();
+    } else {
+        mLogItems.clear();
+    }
 }
 
-void Test_Logs::writeLog()
+bool Test_Logs::writeLog()
 {
     Db_Tran db;
     sLogItem it;
@@ -72,8 +76,8 @@ void Test_Logs::writeLog()
     }
 
     Cfg::bulid()->writeCnt();
-    if(it.sn.isEmpty()) return;
-    DbLogs::bulid()->insertItem(it);
+    if(it.sn.isEmpty()) return false;
+    return DbLogs::bulid()->insertItem(it);
 }
 
 

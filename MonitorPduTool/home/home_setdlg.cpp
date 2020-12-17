@@ -65,6 +65,16 @@ bool Home_SetDlg::getThresholdWid()
         else return false;
     }
 
+    mItem->si.led = ui->ledCheck->isChecked();
+    int rtn = ui->siLineBox->currentIndex();
+    if(rtn) {
+        mItem->si.ac = AC;
+        mItem->si.lines = rtn;
+    } else {
+        mItem->si.ac = DC;
+        mItem->si.lines = 1;
+    }
+
     mItem->ip.version = ui->ipTypeBox->currentIndex();
     mItem->ip.language = ui->languageBox->currentIndex();
     mItem->ip.lines = ui->lineBox->currentIndex()+1;

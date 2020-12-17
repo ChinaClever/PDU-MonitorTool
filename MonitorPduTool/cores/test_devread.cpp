@@ -32,8 +32,10 @@ Test_DevRead *Test_DevRead::bulid(QObject *parent)
 bool Test_DevRead::readSn()
 {
     bool ret = true;
-    if(mItem->ledSi){
+    if(mItem->si.led){
+        mDt->ac = mItem->si.ac;
         mDt->devType = SI_PDU;
+        mDt->lines = mItem->si.lines;
         mDt->dev_type = tr("SI/BM数码管");
     } else {
         ret = mSn->snEnter();
@@ -46,7 +48,13 @@ bool Test_DevRead::readSn()
 bool Test_DevRead::readDev()
 {
     bool ret = mSource->read();
-    if(ret) ret = mRtu->readPduData();
+    if(ret) {
+        for(int i=0; i<5; ++i) {
+            ret = mRtu->readPduData();
+            if(ret) break; else if(!mPacket->delay(5)) break;
+        }
+    }
+
     return ret;
 }
 
@@ -72,7 +80,7 @@ bool Test_DevRead::readSnmp()
     return mLogs->updatePro(str, ret);
 }
 
-bool Test_DevRead::checkLine()
+bool Test_DevRead::checkIpLine()
 {
     bool ret = !isRun;
     if(ret) {
@@ -85,6 +93,18 @@ bool Test_DevRead::checkLine()
     return ret;
 }
 
+bool Test_DevRead::checkSiLine()
+{
+    bool ret = !isRun;
+    if(ret) {
+        if(mDt->lines != mItem->si.lines) {
+            ret = false;
+            mLogs->updatePro(tr("设备相数出错"), ret);
+        }
+    }
+
+    return ret;
+}
 
 bool Test_DevRead::readNet()
 {
@@ -92,7 +112,9 @@ bool Test_DevRead::readNet()
     if(IP_PDU == mDt->devType) {
         ret = checkNet();
         if(ret) ret = readSnmp();
-        if(ret) ret = checkLine();
+        if(ret) ret = checkIpLine();
+    } else {
+        ret = checkSiLine();
     }
 
     return ret;

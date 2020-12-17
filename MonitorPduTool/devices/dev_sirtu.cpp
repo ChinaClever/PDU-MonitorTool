@@ -32,7 +32,7 @@ void Dev_SiRtu::initRtuItem(sRtuItem &it)
     uchar res = mDev->devType.ac;
     if(DC == res) {
         it.num = SI_RTU_DC_LEN;
-    } else if(mItem->cTh.si_mod) {
+    } else if(mItem->si.si_mod) {
         it.num /= 2;  // 特殊定制
     }
 }
