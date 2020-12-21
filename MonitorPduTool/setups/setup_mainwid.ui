@@ -392,7 +392,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="2">
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="label_date">
         <property name="text">
          <string>2020-08-19</string>
         </property>
