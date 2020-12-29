@@ -30,10 +30,12 @@ void Test_NetWork::workDown()
 {
     UdpBaseData *res = mUdp->getData();
     if(res) {
-        QStringList list = QString(res->datagram).split("; ");
-        bool pass = list.first().toInt();
-        QString str = list.last();
-        mLogs->updatePro(str, pass);
+        QStringList list = QString(res->datagram).split(";");
+        if(list.size() ==2) {
+            bool pass = list.last().toInt();
+            QString str = list.first();
+            mLogs->updatePro(str, pass, 0);
+        }
         delete res;
     } else {
         msleep(1);
