@@ -58,7 +58,7 @@ bool Test_CoreThread::volErrRange(int i)
 
     QString str = tr("电压 L%1 ").arg(i+1);
     if(ret) str += tr("正常");
-    else str += tr("错误，期望电压=%1V，实际电压=%2V")
+    else str += tr("错误，期望电压=%1V，实测电压=%2V")
             .arg(mSour->line.vol.value[i])
             .arg(mDev->line.vol.value[i]);
 
@@ -77,11 +77,11 @@ bool Test_CoreThread::curErrRange(int i)
     if(ret) str += tr("正常");
     else {
         if(mDev->line.cur.value[i]) {
-            str += tr("错误，期望电流=%1A，实际电流=%2A")
+            str += tr("错误，期望电流=%1A，实测电流=%2A")
                     .arg(mSour->line.cur.value[i]/COM_RATE_CUR)
                     .arg(mDev->line.cur.value[i]/COM_RATE_CUR);
         } else {
-            str += tr("错误，请接上负载，实际电流=0A");
+            str += tr("错误，请接上负载，实测电流=0A");
         }
     }
 
@@ -98,7 +98,7 @@ bool Test_CoreThread::powErrRange(int i)
 
     QString str = tr("功率 L%1 ").arg(i+1);
     if(ret) str += tr("正常");
-    else str += tr("错误，期望功率=%1kW，实际功率=%2kW")
+    else str += tr("错误，期望功率=%1kW，实测功率=%2kW")
             .arg(mSour->line.pow[i]/COM_RATE_POW)
             .arg(mDev->line.pow[i]/COM_RATE_POW);
 
@@ -112,11 +112,11 @@ bool Test_CoreThread::envErrRange()
     if(ret)  str += tr("正常");
     else {
         if(mDev->env.tem.value[0]) {
-            str += tr("错误，期望温度=%1，实际温度=%2")
+            str += tr("错误，期望温度=%1，实测温度=%2")
                     .arg(mSour->env.tem.value[0])
                     .arg(mDev->env.tem.value[0]);
         } else {
-            str += tr("错误，请插入传感器，实际温度=0"); return ret;
+            str += tr("错误，请插入传感器，实测温度=0"); return ret;
         }
     }
 
@@ -125,7 +125,7 @@ bool Test_CoreThread::envErrRange()
         str = tr("传感器湿度");
         ret = mErr->humErr();
         if(ret)  str += tr("正常");
-        else str += tr("错误，期望湿度=%1，实际湿度=%2")
+        else str += tr("错误，期望湿度=%1，实测湿度=%2")
                 .arg(mSour->env.hum.value[0])
                 .arg(mDev->env.hum.value[0]);
         ret = mLogs->updatePro(str, ret);
