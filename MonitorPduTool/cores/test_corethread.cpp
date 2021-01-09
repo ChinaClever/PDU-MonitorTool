@@ -140,7 +140,7 @@ bool Test_CoreThread::checkErrRange()
     for(int i=0; i<mDev->line.size; ++i) {
         ret = volErrRange(i); if(!ret) res = false;
         ret = curErrRange(i); if(!ret) res = false;
-        if(ret) ret = powErrRange(i); if(!ret) res = false;
+        if(ret){ret = powErrRange(i); if(!ret) res = false;}
     }
     if(res) res = envErrRange();
 
