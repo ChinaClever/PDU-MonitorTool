@@ -36,7 +36,7 @@ bool Test_CoreThread::initDev()
 {
     bool ret  = mRead->readSn();
     if(ret) {
-        QString str = tr("设备数据读取");
+        QString str = tr("设备 SER 级联口连接");
         ret = mRead->readDev();
         if(ret) str += tr("成功");
         else str += tr("失败");
