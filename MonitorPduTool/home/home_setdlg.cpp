@@ -26,8 +26,6 @@ void Home_SetDlg::initFunSlot()
     initCntLab();
     initThresholdWid();
     ui->userEdit->setText(mItem->user);
-    ui->ipEdit->setText(mItem->ip.addr);
-
     ui->ipTypeBox->setCurrentIndex(mItem->ip.version);
     ui->languageBox->setCurrentIndex(mItem->ip.language);
     ui->lineBox->setCurrentIndex(mItem->ip.lines-1);
@@ -57,13 +55,6 @@ bool Home_SetDlg::getThresholdWid()
     mItem->user = ui->userEdit->text();
     mItem->cnt.num = ui->numSpin->value();
     cth->enModify = ui->modifyCheck->isChecked()?1:0;
-
-    QString str = ui->ipEdit->text();
-    if(!str.isEmpty()) {
-        if(cm_isIPaddress(str))
-            mItem->ip.addr = str;
-        else return false;
-    }
 
     mItem->si.led = ui->ledCheck->isChecked();
     int rtn = ui->siLineBox->currentIndex();

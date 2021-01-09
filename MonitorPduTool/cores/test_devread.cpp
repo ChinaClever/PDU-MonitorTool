@@ -61,11 +61,10 @@ bool Test_DevRead::readDev()
 
 bool Test_DevRead::checkNet()
 {
-    QString str = tr("网络测试失败");
+    QString str = tr("网络检测");
     bool ret = cm_pingNet(mItem->ip.addr);
-    if(ret) {
-        str = tr("网络测试成功");
-    }
+    if(ret) str += tr("正常");
+    else str += tr("异常");
 
     return mLogs->updatePro(str, ret);
 }

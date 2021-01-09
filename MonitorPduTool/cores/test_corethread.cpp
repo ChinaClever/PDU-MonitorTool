@@ -217,8 +217,8 @@ bool Test_CoreThread::writeAlarmTh()
 
 bool Test_CoreThread::factorySet()
 {
-    QString str = tr("恢复出厂设置");
     bool ret = mCtrl->factorySet();
+    QString str = tr("恢复出厂设置");
     if(ret) str += tr("成功");
     else str += tr("失败");
 

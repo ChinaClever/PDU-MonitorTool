@@ -17,13 +17,11 @@ Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
     return sington;
 }
 
-
-
 bool Ctrl_IpRtu::startProcess()
 {
     QProcess process(this);
     process.start("pyweb.exe");
-    bool ret = process.waitForFinished(60*2000);
+    bool ret = process.waitForFinished(60*1000);
     process.close();
 
     return ret;

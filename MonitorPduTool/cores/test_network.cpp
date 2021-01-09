@@ -32,8 +32,8 @@ void Test_NetWork::workDown()
     if(res) {
         QStringList list = QString(res->datagram).split(";");
         if(list.size() ==2) {
-            bool pass = list.last().toInt();
             QString str = list.first();
+            bool pass = list.last().toInt();
             mLogs->updatePro(str, pass, 0);
         }
         delete res;
