@@ -5,7 +5,7 @@
  */
 #include "dev_source.h"
 
-Dev_Source::Dev_Source(QObject *parent) : Dev_IpRtu(parent)
+Dev_Source::Dev_Source(QObject *parent) : Dev_SiRtu(parent)
 {
     mDev = sDataPacket::bulid()->getDev(0);
     init();

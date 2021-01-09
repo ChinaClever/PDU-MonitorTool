@@ -23,7 +23,7 @@ void Test_CoreThread::initFunSlot()
 
 bool Test_CoreThread::hubPort()
 {
-    QString str = tr("设备级联口连接");
+    QString str = tr("设备LINK级联口连接");
     bool ret = mRead->readHub();
     if(ret) str += tr("正常");
     else str += tr("错误");

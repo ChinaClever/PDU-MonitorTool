@@ -3,7 +3,7 @@
 
 #include "dev_iprtu.h"
 
-class Dev_Source : public Dev_IpRtu
+class Dev_Source : public Dev_SiRtu
 {
     Q_OBJECT
     explicit Dev_Source(QObject *parent = nullptr);
