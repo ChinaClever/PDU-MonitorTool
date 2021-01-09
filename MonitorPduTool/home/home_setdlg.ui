@@ -704,7 +704,7 @@
     </font>
    </property>
    <property name="title">
-    <string>SI/BM参数</string>
+    <string>BM/SI-PDU参数</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_5">
     <item row="0" column="0">
