@@ -12,6 +12,7 @@ Test_Object::Test_Object(QObject *parent) : QThread(parent)
     mItem = Cfg::bulid()->item;
     mPro = mPacket->getPro();
     mDev = mPacket->getDev();
+    mSour = mPacket->getDev(0);
     mDt = &(mDev->devType);
     QTimer::singleShot(500,this,SLOT(initFunSlot()));
 }

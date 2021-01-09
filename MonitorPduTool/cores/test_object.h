@@ -17,6 +17,7 @@ protected:
     bool isRun;
     sDevType *mDt;
     sDevData *mDev;
+    sDevData *mSour;
     sCfgItem *mItem;
     sProgress *mPro;
     sDataPacket *mPacket;

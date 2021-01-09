@@ -58,13 +58,8 @@ bool Sn_DevId::readDevId()
     for(int i=0; i<5; ++i) {
         len = mModbus->read(it, recv);
         if(len) break; else if(!mPacket->delay(6)) break;
-    }
-
-    if(0 == len){
-        bool ret = mModbus->changeBaudRate(); // 自动转变波特泫
-        if(!ret) len = mModbus->read(it, recv);
-        if(!len) mModbus->changeBaudRate();
-    }
+        if(i%2) mModbus->changeBaudRate();
+    }   
 
     return analysDevType(recv, len);
 }

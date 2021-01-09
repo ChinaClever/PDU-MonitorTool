@@ -23,7 +23,7 @@ void Test_CoreThread::initFunSlot()
 
 bool Test_CoreThread::hubPort()
 {
-    QString str = tr("设备LINK级联口连接");
+    QString str = tr("设备 LINK 级联口连接");
     bool ret = mRead->readHub();
     if(ret) str += tr("正常");
     else str += tr("错误");
@@ -51,14 +51,16 @@ bool Test_CoreThread::initDev()
 bool Test_CoreThread::volErrRange(int i)
 {
     bool ret = true;
-    for(int k=0; k<3; ++k) {
+    for(int k=0; k<2; ++k) {
         ret = mErr->volErr(i);
-        if(ret) break; else  mRead->readDev();
+        if(ret) break; else mRead->readDev();
     }
 
     QString str = tr("电压 L%1 ").arg(i+1);
     if(ret) str += tr("正常");
-    else str += tr("错误，电压=%1V").arg(mDev->line.vol.value[i]);
+    else str += tr("错误，期望电压=%1V，实际电压=%2V")
+            .arg(mSour->line.vol.value[i])
+            .arg(mDev->line.vol.value[i]);
 
     return mLogs->updatePro(str, ret);
 }
@@ -66,14 +68,16 @@ bool Test_CoreThread::volErrRange(int i)
 bool Test_CoreThread::curErrRange(int i)
 {
     bool ret = true;
-    for(int k=0; k<3; ++k) {
+    for(int k=0; k<2; ++k) {
         ret = mErr->curErr(i);
         if(ret) break; else  mRead->readDev();
     }
 
     QString str = tr("电流 L%1 ").arg(i+1);
     if(ret) str += tr("正常");
-    else str += tr("错误，电流=%1A").arg(mDev->line.cur.value[i]/COM_RATE_CUR);
+    else str += tr("错误，期望电流=%1A，实际电流=%2A")
+            .arg(mSour->line.cur.value[i]/COM_RATE_CUR)
+            .arg(mDev->line.cur.value[i]/COM_RATE_CUR);
 
     return mLogs->updatePro(str, ret);
 }
@@ -81,14 +85,16 @@ bool Test_CoreThread::curErrRange(int i)
 bool Test_CoreThread::powErrRange(int i)
 {
     bool ret = true;
-    for(int k=0; k<3; ++k) {
+    for(int k=0; k<2; ++k) {
         ret = mErr->powErr(i);
-        if(ret) break; else  mRead->readDev();
+        if(ret) break; else mRead->readDev();
     }
 
     QString str = tr("功率 L%1 ").arg(i+1);
     if(ret) str += tr("正常");
-    else str += tr("错误，功率=%1kW").arg(mDev->line.pow[i]/COM_RATE_POW);
+    else str += tr("错误，期望功率=%1kW，实际功率=%2kW")
+            .arg(mSour->line.pow[i]/COM_RATE_POW)
+            .arg(mDev->line.pow[i]/COM_RATE_POW);
 
     return mLogs->updatePro(str, ret);
 }
@@ -98,14 +104,18 @@ bool Test_CoreThread::envErrRange()
     QString str = tr("传感器温度");
     bool ret = mErr->temErr();
     if(ret)  str += tr("正常");
-    else str += tr("错误，温度=%1").arg(mDev->env.tem.value[0]);
+    else str += tr("错误，期望温度=%1，实际温度=%2")
+            .arg(mSour->env.tem.value[0])
+            .arg(mDev->env.tem.value[0]);
 
     ret = mLogs->updatePro(str, ret);
     if(ret) {
         str = tr("传感器湿度");
         ret = mErr->humErr();
         if(ret)  str += tr("正常");
-        else str += tr("错误，湿度=%1").arg(mDev->env.hum.value[0]);
+        else str += tr("错误，期望湿度=%1，实际湿度=%2")
+                .arg(mSour->env.hum.value[0])
+                .arg(mDev->env.hum.value[0]);
         ret = mLogs->updatePro(str, ret);
     }
 
@@ -114,15 +124,15 @@ bool Test_CoreThread::envErrRange()
 
 bool Test_CoreThread::checkErrRange()
 {
-    bool ret = true;
+    bool res = true, ret = true;
     for(int i=0; i<mDev->line.size; ++i) {
-        ret = volErrRange(i); if(!ret) break;
-        ret = curErrRange(i); if(!ret) break;
-        ret = powErrRange(i); if(!ret) break;
+        ret = volErrRange(i); if(!ret) res = false;
+        ret = curErrRange(i); if(!ret) res = false;
+        ret = powErrRange(i); if(!ret) res = false;
     }
-    ret = envErrRange();
+    if(res) res = envErrRange();
 
-    return ret;
+    return res;
 }
 
 bool Test_CoreThread::volAlarmErr(int i)

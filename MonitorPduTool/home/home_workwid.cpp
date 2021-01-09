@@ -180,13 +180,13 @@ bool Home_WorkWid::initSerial()
     Cfg::bulid()->setAddr(mDev->id);
 
     bool ret = coms->source->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打开标准源串口")); return ret;}
+    if(!ret){MsgBox::critical(this, tr("请先打开 SI-PDU 参考源串口")); return ret;}
 
     ret = coms->ser1->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打级联串口 1")); return ret;}
+    if(!ret){MsgBox::critical(this, tr("请先打 SER 级联口")); return ret;}
 
     ret = coms->ser2->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打级联串口 2")); return ret;}
+    if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}
     mId = 1;
 
     return ret;
