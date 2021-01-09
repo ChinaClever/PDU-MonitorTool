@@ -59,9 +59,6 @@ bool Test_ErrRange::powErr(int id)
     int err = exValue * mItem->err.powErr/1000.0;
 
     bool ret = checkErrRange(exValue, value, err);
-
-    ret = true;//test
-
     if(ret) pass = Test_Pass;
     mDev->line.powStatus[id] = pass;
 

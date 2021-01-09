@@ -49,9 +49,10 @@ bool Test_DevRead::readDev()
 {
     bool ret = mSource->read();
     if(ret) {
-        for(int i=0; i<5; ++i) {
+        for(int i=0; i<6; ++i) {
             ret = mRtu->readPduData();
             if(ret) break; else if(!mPacket->delay(5)) break;
+            if(i>1 && i%2) mRtu->changeBaudRate();
         }
     }
 
@@ -86,7 +87,7 @@ bool Test_DevRead::checkIpLine()
     if(ret) {
         QString str = tr("设备相数检查");
         if(mDt->lines != mItem->ip.lines) {
-            str += tr("出错 L=%1").arg(mDt->lines);
+            str += tr("出错 期望相数L=%1，实现相数L=%2").arg(mItem->ip.lines).arg(mDt->lines);
             ret = false;
         } else {
             str += tr("正常");
@@ -103,7 +104,7 @@ bool Test_DevRead::checkSiLine()
     if(ret) {
         QString str = tr("设备相数检查");
         if(mDt->lines != mItem->si.lines) {
-            str += tr("出错 L=%1").arg(mDt->lines);
+            str += tr("出错 期望相数L=%1，实现相数L=%2").arg(mItem->si.lines).arg(mDt->lines);
             ret = false;
         } else {
             str += tr("正常");
@@ -142,8 +143,13 @@ bool Test_DevRead::initDev()
 
 bool Test_DevRead::readHub()
 {
+    bool ret = true;
     mRtu->setModbus(2);
-    bool ret = mRtu->readPduData();
+    for(int i=0; i<3; ++i) {
+        ret = mRtu->readPduData();
+        if(!ret) mRtu->changeBaudRate();
+    }
+
     if(ret) mRtu->setModbus(1);
     return ret;
 }

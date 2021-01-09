@@ -75,9 +75,15 @@ bool Test_CoreThread::curErrRange(int i)
 
     QString str = tr("电流 L%1 ").arg(i+1);
     if(ret) str += tr("正常");
-    else str += tr("错误，期望电流=%1A，实际电流=%2A")
-            .arg(mSour->line.cur.value[i]/COM_RATE_CUR)
-            .arg(mDev->line.cur.value[i]/COM_RATE_CUR);
+    else {
+        if(mDev->line.cur.value[i]) {
+            str += tr("错误，期望电流=%1A，实际电流=%2A")
+                    .arg(mSour->line.cur.value[i]/COM_RATE_CUR)
+                    .arg(mDev->line.cur.value[i]/COM_RATE_CUR);
+        } else {
+            str += tr("错误，请接上负载，实际电流=0A");
+        }
+    }
 
     return mLogs->updatePro(str, ret);
 }
@@ -104,9 +110,15 @@ bool Test_CoreThread::envErrRange()
     QString str = tr("传感器温度");
     bool ret = mErr->temErr();
     if(ret)  str += tr("正常");
-    else str += tr("错误，期望温度=%1，实际温度=%2")
-            .arg(mSour->env.tem.value[0])
-            .arg(mDev->env.tem.value[0]);
+    else {
+        if(mDev->env.tem.value[0]) {
+            str += tr("错误，期望温度=%1，实际温度=%2")
+                    .arg(mSour->env.tem.value[0])
+                    .arg(mDev->env.tem.value[0]);
+        } else {
+            str += tr("错误，请插入传感器，实际温度=0"); return ret;
+        }
+    }
 
     ret = mLogs->updatePro(str, ret);
     if(ret) {
@@ -128,7 +140,7 @@ bool Test_CoreThread::checkErrRange()
     for(int i=0; i<mDev->line.size; ++i) {
         ret = volErrRange(i); if(!ret) res = false;
         ret = curErrRange(i); if(!ret) res = false;
-        ret = powErrRange(i); if(!ret) res = false;
+        if(ret) ret = powErrRange(i); if(!ret) res = false;
     }
     if(res) res = envErrRange();
 

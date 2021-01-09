@@ -11,6 +11,7 @@ public:
 
     virtual bool readPduData()=0;
     void setModbus(int id);
+    void changeBaudRate() {mModbus->changeBaudRate();}
 
 protected:
     uchar *toInt(uchar *ptr, int line, uint *value);

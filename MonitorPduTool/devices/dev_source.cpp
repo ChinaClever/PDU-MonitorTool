@@ -34,10 +34,14 @@ void Dev_Source::init()
 
 bool Dev_Source::read()
 {
-    bool ret = readPduData();
-    if(!ret) ret = readPduData();
+    bool ret = true;
+    for(int i=0; i<3; ++i) {
+        ret = readPduData();
+        if(!ret) mModbus->changeBaudRate();
+    }
+
     if(!ret) {
-        QString str = tr("比对源PDU数据读取失败，结束测试");
+        QString str = tr("比对源SI-PDU数据读取失败，结束测试");
         mPacket->updatePro(str, ret);
     }
 
