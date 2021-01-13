@@ -47,7 +47,8 @@ bool Test_DevRead::readSn()
 
 bool Test_DevRead::readDev()
 {
-    bool ret = mSource->read();
+    bool ret = mPacket->delay(5);
+    if(ret) ret = mSource->read();
     if(ret) {
         for(int i=0; i<6; ++i) {
             ret = mRtu->readPduData();
