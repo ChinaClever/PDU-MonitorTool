@@ -61,7 +61,6 @@ bool Test_CoreThread::volErrRange(int i)
     if(ret) str += tr("正常");
     else str += tr("错误");
 
-
     return mLogs->updatePro(str, ret);
 }
 
@@ -132,8 +131,10 @@ bool Test_CoreThread::envErrRange()
 
 bool Test_CoreThread::checkErrRange()
 {
+    int i = 0;
     bool res = true, ret = true;
-    for(int i=0; i<mDev->line.size; ++i) {
+    if(2 == mDt->lines) i=1;
+    for(; i<mDev->line.size; ++i) {
         ret = volErrRange(i); if(!ret) res = false;
         ret = curErrRange(i); if(!ret) res = false;
         if(ret){ret = powErrRange(i); if(!ret) res = false;}

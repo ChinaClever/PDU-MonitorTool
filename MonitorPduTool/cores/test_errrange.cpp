@@ -42,7 +42,6 @@ bool Test_ErrRange::curErr(int id)
     int err = mItem->err.curErr;
     int value = mDev->line.cur.value[id];
     int exValue = mSourceDev->line.cur.value[id];
-    if((mDt->lines == 2) && id) exValue = (exValue/10 +1)/2 * 10; // 解决单相两路阈值问题
 
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
