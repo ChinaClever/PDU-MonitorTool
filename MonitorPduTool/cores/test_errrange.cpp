@@ -70,7 +70,7 @@ bool Test_ErrRange::temErr()
     int pass = Test_Fail;
     int exValue = mSourceDev->env.tem.value[0];
     int value = mDev->env.tem.value[0];
-    bool ret = checkErrRange(exValue, value, 5);
+    bool ret = checkErrRange(exValue, value, 2);
     if(ret) pass = Test_Pass;
     mDev->env.tem.status[0] = pass;
 
