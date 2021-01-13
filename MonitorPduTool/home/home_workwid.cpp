@@ -46,7 +46,7 @@ void Home_WorkWid::initLayout()
     QPalette pl = ui->textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
     ui->textEdit->setPalette(pl);
-    ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    //ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     //ui->textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     QGridLayout *gridLayout = new QGridLayout(this->parentWidget());
