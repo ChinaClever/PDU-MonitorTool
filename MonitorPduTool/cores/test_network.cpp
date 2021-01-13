@@ -22,8 +22,9 @@ void Test_NetWork::initFunSlot()
 {    
     mLogs = Test_Logs::bulid(this);
     mUdp = new UdpRecvSocket(this);
-    mUdp->initSocket(10010);
-    this->start();
+//    mUdp->initSocket(10010);
+//    this->start();
+    ////=============
 }
 
 void Test_NetWork::workDown()

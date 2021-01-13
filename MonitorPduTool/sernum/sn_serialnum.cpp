@@ -29,13 +29,13 @@ void Sn_SerialNum::initReadCmd(sRtuItem &item)
 bool Sn_SerialNum::checkSn(uchar *sn, int len)
 {
     bool ret = false;
-    if((len == 8) && (sn[0] == 0)){
+    if((len != 8) || (sn[0] != 0)  || (sn[1] > 99) ){
+        qDebug() << "SN check err" << len << sn[0];
+    } else {
         uchar exor = mModbus->xorNum(sn, len-1);//暂时注释下面的异或和校验不对
         if(exor == sn[len-1]) {
             ret = true;
         }
-    } else {
-        qDebug() << "SN check err" << len << sn[0];
     }
     return ret;
 }
@@ -52,18 +52,15 @@ void Sn_SerialNum::initDevType(sSnItem &it)
 bool Sn_SerialNum::analySn(uchar *sn, int len, sSnItem &it)
 {
     uchar *ptr = sn;
-    bool ret = checkSn(sn, len);
-    if(ret) {
-        for(int i=0; i<4; ++i) {
-            it.date[i] = *ptr++;
-        }
-        it.num = (*ptr++) << 8;
-        it.num += *ptr++;
-        it.pc = *ptr++;
-        it.exor = *ptr++;
+    for(int i=0; i<4; ++i) {
+        it.date[i] = *ptr++;
     }
+    it.num = (*ptr++) << 8;
+    it.num += *ptr++;
+    it.pc = *ptr++;
+    it.exor = *ptr++;
 
-    return ret;
+    return checkSn(sn, len);
 }
 
 void Sn_SerialNum::toSnStr(sSnItem &it)
