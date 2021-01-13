@@ -38,6 +38,7 @@ bool Dev_IpSnmp::lineNumV3()
         QtSnmpData value = values.first();
         sObjData *obj = &(mDev->line);
         obj->size = value.data().toHex().toInt(&ret,16);
+        if(obj->size == 2) obj->size = 3;
         obj->vol.size = obj->cur.size = obj->size;
     } else {
         ret = false;
@@ -101,8 +102,6 @@ bool Dev_IpSnmp::devDataV1()
 
     for(const auto& value : values) {
         sObjData *obj = &(mDev->line);
-        // obj->vol.size = obj->cur.size = obj->size = 3;
-
         int res = value.data().toHex().toInt(&ret,16);
         int id = getItemByOid(value.address(), 1);
         switch (id%12) {
