@@ -30,7 +30,8 @@ bool Ctrl_IpRtu::startProcess()
 
 bool Ctrl_IpRtu::factorySet()
 {
-    return startProcess();
+    return true; ////======
+//    return startProcess();
 }
 
 bool Ctrl_IpRtu::setCurTh(int i)
