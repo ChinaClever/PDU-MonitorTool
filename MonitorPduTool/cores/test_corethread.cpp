@@ -116,7 +116,7 @@ bool Test_CoreThread::envErrRange()
                     .arg(mSour->env.tem.value[0])
                     .arg(mDev->env.tem.value[0]);
         } else {
-            str += tr("错误，请插入传感器，实测温度=0"); return ret;
+            str += tr("错误，请插入传感器，实测温度=0");
         }
     }
 
