@@ -97,8 +97,8 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     int len = mModbus->read(itRtu, buf);
     if(8 != len) len = mModbus->read(itRtu, buf);
     if(len == 8) {
-        ret = analySn(buf, len, itSn);
-        if(ret) toSnStr(itSn); else str = tr("序列号分析错误");
+        ret = analySn(buf, len, itSn); toSnStr(itSn);
+        if(!ret) str = tr("序列号分析错误：%1").arg(itSn.sn);
     } else {
         str = tr("读序列号未返数据长度错误 %1").arg(len);
     }
