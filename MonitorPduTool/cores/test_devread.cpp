@@ -52,7 +52,7 @@ bool Test_DevRead::readDev()
     if(ret) {
         for(int i=0; i<6; ++i) {
             ret = mRtu->readPduData();
-            if(ret) break; else if(!mPacket->delay(5)) break;
+            if(ret) break; else if(!mPacket->delay(1)) break;
             if(i>1 && i%2) mRtu->changeBaudRate();
         }
     }
