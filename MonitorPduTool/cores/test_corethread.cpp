@@ -51,7 +51,7 @@ bool Test_CoreThread::initDev()
 bool Test_CoreThread::volErrRange(int i)
 {
     bool ret = true;
-    for(int k=0; k<2; ++k) {
+    for(int k=0; k<4; ++k) {
         ret = mErr->volErr(i);
         if(ret) break; else mRead->readDev();
     }
@@ -67,7 +67,7 @@ bool Test_CoreThread::volErrRange(int i)
 bool Test_CoreThread::curErrRange(int i)
 {
     bool ret = true;
-    for(int k=0; k<2; ++k) {
+    for(int k=0; k<4; ++k) {
         ret = mErr->curErr(i);
         if(ret) break; else  mRead->readDev();
     }
