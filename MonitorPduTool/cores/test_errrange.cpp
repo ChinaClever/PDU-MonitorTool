@@ -71,7 +71,7 @@ bool Test_ErrRange::powErr(int id)
     int pass = Test_Fail;
     int value = mDev->line.pow[id];
     int exValue = mSourceDev->line.pow[id];
-    int err = exValue * mItem->err.powErr/1000.0;
+    int err = exValue * (mItem->err.powErr+1)/1000.0;
 
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
