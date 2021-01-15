@@ -50,6 +50,22 @@ bool Test_ErrRange::curErr(int id)
     return ret;
 }
 
+
+bool Test_ErrRange::oneLineCheck()
+{
+    int pass = Test_Fail;
+    int err = 2*mItem->err.curErr;
+    ushort *ptr = mDev->line.cur.value;
+    int exValue = ptr[0];
+    int value = ptr[1] + ptr[2];
+
+    bool ret = checkErrRange(exValue, value, err);
+    if(ret) pass = Test_Pass;
+    mDev->line.cur.status[0] = pass;
+
+    return ret;
+}
+
 bool Test_ErrRange::powErr(int id)
 {
     int pass = Test_Fail;
@@ -69,7 +85,7 @@ bool Test_ErrRange::temErr()
     int pass = Test_Fail;
     int exValue = mSourceDev->env.tem.value[0];
     int value = mDev->env.tem.value[0];
-    bool ret = checkErrRange(exValue, value, 2);
+    bool ret = checkErrRange(exValue, value, 5);
     if(ret) pass = Test_Pass;
     mDev->env.tem.status[0] = pass;
 
@@ -81,7 +97,7 @@ bool Test_ErrRange::humErr()
     int pass = Test_Fail;
     int exValue = mSourceDev->env.hum.value[0];
     int value = mDev->env.hum.value[0];
-    bool ret = checkErrRange(exValue, value, 5);
+    bool ret = checkErrRange(exValue, value, 10);
     if(ret) pass = Test_Pass;
     mDev->env.hum.status[0] = pass;
 
@@ -91,7 +107,7 @@ bool Test_ErrRange::humErr()
 bool Test_ErrRange::checkErrRange(int exValue, int value, int err)
 {
     bool ret = false;
-    if(qAbs(exValue-value) <= err) {
+    if(qAbs(exValue-value) <= (err+1)) {
         if(value > 0) ret = true;
     }
 
