@@ -39,7 +39,7 @@ bool Test_ErrRange::volErr(int id)
 bool Test_ErrRange::curErr(int id)
 {
     int pass = Test_Fail;
-    int err = mItem->err.curErr;
+    int err = mItem->err.curErr+1;
     int value = mDev->line.cur.value[id];
     int exValue = mSourceDev->line.cur.value[id];
 
@@ -54,7 +54,7 @@ bool Test_ErrRange::curErr(int id)
 bool Test_ErrRange::oneLineCheck()
 {
     int pass = Test_Fail;
-    int err = 2*mItem->err.curErr;
+    int err = 2*mItem->err.curErr+1;
     ushort *ptr = mDev->line.cur.value;
     int exValue = ptr[0];
     int value = ptr[1] + ptr[2];
@@ -107,7 +107,7 @@ bool Test_ErrRange::humErr()
 bool Test_ErrRange::checkErrRange(int exValue, int value, int err)
 {
     bool ret = false;
-    if(qAbs(exValue-value) <= (err+1)) {
+    if(qAbs(exValue-value) <= err) {
         if(value > 0) ret = true;
     }
 
