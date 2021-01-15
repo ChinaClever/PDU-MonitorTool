@@ -89,7 +89,7 @@ bool Test_CoreThread::curErrRange(int i)
 bool Test_CoreThread::powErrRange(int i)
 {
     bool ret = true;
-    for(int k=0; k<3; ++k) {
+    for(int k=0; k<5; ++k) {
         ret = mErr->powErr(i);
         if(ret) break; else mRead->readDev();
     }
@@ -190,7 +190,7 @@ bool Test_CoreThread::checkAlarmErr()
     }
 
     if(ret) {
-        QString str = tr("电流报警阈值检测正常");
+        QString str = tr("报警阈值检测正常");
         mLogs->updatePro(str, ret);
     }
 

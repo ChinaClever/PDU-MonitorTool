@@ -375,7 +375,7 @@
        <number>1</number>
       </property>
       <property name="maximum">
-       <double>63.000000000000000</double>
+       <double>64.000000000000000</double>
       </property>
       <property name="value">
        <double>32.000000000000000</double>
@@ -656,6 +656,11 @@
         <height>30</height>
        </size>
       </property>
+      <item>
+       <property name="text">
+        <string>直流</string>
+       </property>
+      </item>
       <item>
        <property name="text">
         <string>单相</string>

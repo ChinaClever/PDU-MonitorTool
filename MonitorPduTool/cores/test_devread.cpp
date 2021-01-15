@@ -100,7 +100,7 @@ bool Test_DevRead::checkIpVersion()
 bool Test_DevRead::checkIpLine()
 {
     bool ret = !isRun;
-    if(ret) {
+    if(ret && mItem->ip.lines) {
         QString str = tr("设备相数检查");
         if(mDt->lines != mItem->ip.lines) {
             str += tr("出错 期望相数L=%1，实际相数L=%2").arg(mItem->ip.lines).arg(mDt->lines);
