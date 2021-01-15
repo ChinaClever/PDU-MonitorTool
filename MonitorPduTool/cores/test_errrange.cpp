@@ -91,8 +91,12 @@ bool Test_ErrRange::humErr()
 bool Test_ErrRange::checkErrRange(int exValue, int value, int err)
 {
     bool ret = false;
-    if(qAbs(exValue-value) <= err) {
-        if(value > 0) ret = true;
+    int min = exValue - err;
+    int max = exValue + err;
+    if((value >= min) && (value <= max )) {
+        ret =  true;
+    } else {
+        qDebug() << "value Err Range" << value << exValue << err;
     }
 
     return ret;
