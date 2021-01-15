@@ -129,6 +129,21 @@ bool Test_CoreThread::envErrRange()
     return ret;
 }
 
+bool Test_CoreThread::oneLineCheck()
+{
+    bool ret = true;
+    if(2 == mDt->lines){
+        ret = mErr->oneLineCheck();
+        ushort *value = mDev->line.cur.value;
+        QString str = tr("电流 L%1，期望电流=%2A，实测电流=%3A").arg(1)
+                .arg(value[0]/COM_RATE_CUR).arg((value[1]+value[2])/COM_RATE_CUR);
+        if(ret) str += tr("正常");
+        else str += tr("错误");
+    }
+
+    return ret;
+}
+
 bool Test_CoreThread::checkErrRange()
 {
     int i = 0;
@@ -139,6 +154,7 @@ bool Test_CoreThread::checkErrRange()
         ret = curErrRange(i); if(!ret) res = false;
         if(ret){ret = powErrRange(i); if(!ret) res = false;}
     }
+    if(res) res = oneLineCheck();
     if(res) res = envErrRange();
 
     return res;
@@ -146,22 +162,20 @@ bool Test_CoreThread::checkErrRange()
 
 bool Test_CoreThread::volAlarmErr(int i)
 {
-    QString str = tr("电压报警阈值 L%1 检测").arg(i+1);
+    QString str = tr("电压报警阈值 L%1 错误").arg(i+1);
     bool ret = mErr->volAlarm(i);
-    if(ret)  str += tr("正常");
-    else str += tr("错误");
+    if(!ret) mLogs->updatePro(str, ret);
 
-    return mLogs->updatePro(str, ret);
+    return ret;
 }
 
 bool Test_CoreThread::curAlarmErr(int i)
 {
-    QString str = tr("电流报警阈值 L%1 检测").arg(i+1);
+    QString str = tr("电流报警阈值 L%1 错误").arg(i+1);
     bool ret = mErr->curAlarm(i);
-    if(ret) str += tr("正常");
-    else str += tr("错误");
+    if(!ret) mLogs->updatePro(str, ret);
 
-    return mLogs->updatePro(str, ret);
+    return ret;
 }
 
 bool Test_CoreThread::checkAlarmErr()
@@ -174,6 +188,12 @@ bool Test_CoreThread::checkAlarmErr()
             ret = curAlarmErr(i); if(!ret) break;
         }
     }
+
+    if(ret) {
+        QString str = tr("电流报警阈值检测正常");
+        mLogs->updatePro(str, ret);
+    }
+
 
     return ret;
 }
@@ -222,10 +242,10 @@ bool Test_CoreThread::factorySet()
     return mLogs->updatePro(str, ret);
 }
 
-void Test_CoreThread::workResult(bool res)
+void Test_CoreThread::workResult(bool)
 {
     mLogs->saveLogs();
-    mLogs->updatePro(tr("测试结束"), res);
+    //mLogs->updatePro(tr("测试结束"), res);
     mPro->step = Test_Over;
 }
 

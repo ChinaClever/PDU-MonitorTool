@@ -52,7 +52,7 @@ bool Test_DevRead::readDev()
     if(ret) {
         for(int i=0; i<6; ++i) {
             ret = mRtu->readPduData();
-            if(ret) break; else if(!mPacket->delay(5)) break;
+            if(ret) break; else if(!mPacket->delay(1)) break;
             if(i>1 && i%2) mRtu->changeBaudRate();
         }
     }
@@ -81,6 +81,22 @@ bool Test_DevRead::readSnmp()
     return mLogs->updatePro(str, ret);
 }
 
+bool Test_DevRead::checkIpVersion()
+{
+    bool ret = !isRun;
+    if(ret) {
+        QString str = tr("设备相数检查");
+        if(mDt->version != mItem->ip.version) {
+            str += tr("出错 期望版本V%1，实际版本V%2").arg(mItem->ip.version).arg(mDt->version);
+            ret = false;
+        } else {
+            str += tr("正常");
+        }
+    }
+
+    return ret;
+}
+
 bool Test_DevRead::checkIpLine()
 {
     bool ret = !isRun;
@@ -92,8 +108,8 @@ bool Test_DevRead::checkIpLine()
         } else {
             str += tr("正常");
         }
-        mLogs->updatePro(str, ret);
     }
+    if(ret) ret = checkIpVersion();
 
     return ret;
 }

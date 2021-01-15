@@ -19,6 +19,7 @@ public:
 
     bool volAlarm(int id);
     bool curAlarm(int id);
+    bool oneLineCheck();
 
 protected:
     bool checkErrRange(int exValue, int value, int err);

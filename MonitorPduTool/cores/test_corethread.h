@@ -23,6 +23,7 @@ protected:
     bool powErrRange(int i);
     bool envErrRange();
     bool checkErrRange();
+    bool oneLineCheck();
 
     bool volAlarmErr(int i);
     bool curAlarmErr(int i);
@@ -33,7 +34,7 @@ protected:
     bool writeAlarmTh();
 
     bool factorySet();
-    void workResult(bool res);
+    void workResult(bool);
 
 private:
     Test_Logs *mLogs;

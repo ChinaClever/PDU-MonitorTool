@@ -25,13 +25,15 @@ void Home_SetDlg::initFunSlot()
 {
     initCntLab();
     initThresholdWid();
+    int v = mItem->ip.version-1?1:0;
+    ui->ipTypeBox->setCurrentIndex(v);
     ui->userEdit->setText(mItem->user);
-    ui->ipTypeBox->setCurrentIndex(mItem->ip.version);
     ui->languageBox->setCurrentIndex(mItem->ip.language);
     ui->lineBox->setCurrentIndex(mItem->ip.lines-1);
     ui->ipModeBox->setCurrentIndex(mItem->ip.modbus);
     ui->sBox->setCurrentIndex(mItem->ip.standard);
     ui->logBox->setCurrentIndex(mItem->ip.log);
+    on_ipTypeBox_currentIndexChanged(v);
 }
 
 
@@ -66,7 +68,7 @@ bool Home_SetDlg::getThresholdWid()
         mItem->si.lines = 1;
     }
 
-    mItem->ip.version = ui->ipTypeBox->currentIndex();
+    mItem->ip.version = ui->ipTypeBox->currentIndex()?3:1;
     mItem->ip.language = ui->languageBox->currentIndex();
     mItem->ip.lines = ui->lineBox->currentIndex()+1;
     mItem->ip.modbus = ui->ipModeBox->currentIndex();
@@ -143,5 +145,11 @@ void Home_SetDlg::on_resBtn_clicked()
 
 void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
 {
-    ui->logBox->setEnabled(!index);
+    bool res = true;
+    if(index)  res = false;
+
+    ui->sBox->setHidden(res);
+    ui->logBox->setHidden(res);
+    ui->label_8->setHidden(res);
+    ui->label_11->setHidden(res);
 }
