@@ -12,11 +12,12 @@ public:
 
     bool setCurTh(int i);
     bool setVolTh(int i);
-    bool factorySet();
+    bool factorySet(){return true;}
 
 protected:
     bool startProcess();
     bool sentRtuCmd(ushort reg, ushort value);
+    void run();
 };
 
 #endif // CTRL_IPRTU_H

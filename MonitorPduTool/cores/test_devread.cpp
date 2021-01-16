@@ -138,6 +138,7 @@ bool Test_DevRead::readNet()
         ret = checkNet();
         if(ret) ret = readSnmp();
         if(ret) ret = checkIpLine();
+        if(ret) Ctrl_IpRtu::bulid(this)->start();
     } else {
         ret = checkSiLine();
     }

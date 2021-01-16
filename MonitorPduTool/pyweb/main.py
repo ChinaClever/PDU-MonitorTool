@@ -1,12 +1,12 @@
-from pyweb.ip_v1 import  *
-from pyweb.ip_v3 import  *
+from monitor_ip.ip_v1 import  *
+from monitor_ip.ip_v3 import  *
 
 
 
 if __name__ == '__main__':
-    v = IpWeb.getCfg().get("Cfg", "ip_version")
+    v = IpWeb.getCfg().get("ipCfg", "version")
 
-    if(3 == int(v)):
+    if(int(v)>1):
         app = IpV3()
         app.start_fun()
     else:

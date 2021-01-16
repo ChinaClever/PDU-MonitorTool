@@ -109,7 +109,7 @@ bool Test_ErrRange::checkErrRange(int exValue, int value, int err)
     bool ret = false;
     int min = exValue - err;
     int max = exValue + err;
-    if((value >= min) && (value <= max )) {
+    if((value>=min) && (value<=max) && value) {
         ret =  true;
     } else {
         qDebug() << "value Err Range" << value << exValue << err;

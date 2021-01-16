@@ -20,18 +20,16 @@ Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
 bool Ctrl_IpRtu::startProcess()
 {
     QProcess process(this);
-    process.start("pyweb.exe");
+    process.start("pyweb_monitor_ip.exe");
     bool ret = process.waitForFinished(60*1000);
     process.close();
 
     return ret;
 }
 
-
-bool Ctrl_IpRtu::factorySet()
+void Ctrl_IpRtu::run()
 {
-    return true; ////======
-//    return startProcess();
+    startProcess();
 }
 
 bool Ctrl_IpRtu::setCurTh(int i)

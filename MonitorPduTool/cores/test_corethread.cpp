@@ -31,7 +31,6 @@ bool Test_CoreThread::hubPort()
     return mLogs->updatePro(str, ret);
 }
 
-
 bool Test_CoreThread::initDev()
 {
     bool ret  = mRead->readSn();
@@ -42,8 +41,8 @@ bool Test_CoreThread::initDev()
         else str += tr("失败");
         mLogs->updatePro(str, ret);
     }
-    if(ret) ret = hubPort();
     if(ret) ret = mRead->readNet();
+    if(ret) ret = hubPort();
 
     return ret;
 }
@@ -180,22 +179,21 @@ bool Test_CoreThread::curAlarmErr(int i)
 
 bool Test_CoreThread::checkAlarmErr()
 {
-    bool ret = true;
+    bool res = true, ret = true;
     sCfgDev *cth = &(mItem->cTh);
     if(cth->type) {
         for(int i=0; i<mDev->line.size; ++i) {
-            ret = volAlarmErr(i); if(!ret) break;
-            ret = curAlarmErr(i); if(!ret) break;
+            ret = volAlarmErr(i); if(!ret) res = false;
+            ret = curAlarmErr(i); if(!ret) res = false;
         }
     }
 
-    if(ret) {
+    if(res) {
         QString str = tr("报警阈值检测正常");
-        mLogs->updatePro(str, ret);
+        mLogs->updatePro(str, res);
     }
 
-
-    return ret;
+    return res;
 }
 
 bool Test_CoreThread::curAlarmWrite(int i)
@@ -234,12 +232,18 @@ bool Test_CoreThread::writeAlarmTh()
 
 bool Test_CoreThread::factorySet()
 {
-    bool ret = mCtrl->factorySet();
-    QString str = tr("恢复出厂设置");
-    if(ret) str += tr("成功");
-    else str += tr("失败");
+    bool ret = true;
+    if(SI_PDU == mDt->devType) {
+        ret = mCtrl->factorySet();
+        QString str = tr("恢复出厂设置");
+        if(ret) str += tr("成功");
+        else str += tr("失败");
+        mLogs->updatePro(str, ret);
+    } else {
+        Ctrl_IpRtu::bulid(this)->wait();
+    }
 
-    return mLogs->updatePro(str, ret);
+    return ret;
 }
 
 void Test_CoreThread::workResult(bool)
@@ -260,7 +264,7 @@ void Test_CoreThread::workDown()
         } else {
             if(ret) ret = checkAlarmErr();
         }
-        if(ret) ret = factorySet();
+        ret = factorySet();
     }
     workResult(ret);
 }
