@@ -37,7 +37,7 @@ bool Dev_Source::read()
     bool ret = true;
     for(int i=0; i<3; ++i) {
         ret = readPduData();
-        if(!ret) mModbus->changeBaudRate();
+        if(ret) break; else mModbus->changeBaudRate();
     }
 
     if(!ret) {
