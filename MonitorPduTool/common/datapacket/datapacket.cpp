@@ -71,7 +71,7 @@ bool sDataPacket::delay(int s)
     bool ret = true;
     for(int i=0; i<s; ++i) {
         if((pro->step < Test_Over)  || (pro->step > Test_End)){
-            QThread::msleep(200);
+            QThread::msleep(150);
         } else {
             ret = false;
             break;

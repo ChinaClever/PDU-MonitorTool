@@ -37,7 +37,7 @@ void Home_WorkWid::createWid()
     ui->addrSpin->setValue(mDev->id);
 
     timer = new QTimer(this);
-    timer->start(200);
+    timer->start(100);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutDone()));
 }
 

@@ -164,10 +164,10 @@ bool Test_DevRead::readHub()
     mRtu->setModbus(2);
     for(int i=0; i<3; ++i) {
         ret = mRtu->readPduData();
-        if(!ret) mRtu->changeBaudRate();
+        if(ret) break; else mRtu->changeBaudRate();
     }
+    mRtu->setModbus(1);
 
-    if(ret) mRtu->setModbus(1);
     return ret;
 }
 
