@@ -1,6 +1,6 @@
 from monitor_ip.ip_v1 import  *
 from monitor_ip.ip_v3 import  *
-
+from monitor_ip.ip_web import  *
 
 
 if __name__ == '__main__':

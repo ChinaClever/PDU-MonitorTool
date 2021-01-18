@@ -60,3 +60,5 @@ compile_commands.json
 *.pdf
 *.tmp
 *.bmp
+*.xlsx
+*.xlsx

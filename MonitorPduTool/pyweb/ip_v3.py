@@ -17,8 +17,8 @@ class IpV3(IpWeb):
 
     def timeCheck(self):
         self.setTime(); time.sleep(0.15)
-        loctime = self.driver.find_element_by_id('loctime').text()
-        devtime = self.driver.find_element_by_id('devtime1').text()
+        loctime = self.driver.find_element_by_id('loctime').text
+        devtime = self.driver.find_element_by_id('devtime1').text
         if str(devtime[0:15]) in str(loctime):
             msg = '设备时间错误，设备时间{0}'.format(devtime)
             self.sendtoMainapp(msg, 1)
