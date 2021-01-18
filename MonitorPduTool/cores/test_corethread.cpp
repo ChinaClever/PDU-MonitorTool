@@ -68,7 +68,7 @@ bool Test_CoreThread::curErrRange(int i)
     bool ret = true;
     for(int k=0; k<4; ++k) {
         ret = mErr->curErr(i);
-        if(ret) break; else  mRead->readDev();
+        if(ret) break; else mRead->readDev();
     }
 
     QString str = tr("电流 L%1，期望电流=%2A，实测电流=%3A").arg(i+1)
@@ -132,12 +132,26 @@ bool Test_CoreThread::oneLineCheck()
 {
     bool ret = true;
     if(2 == mDt->lines){
-        ret = mErr->oneLineCheck();
+        ret = mErr->oneLineCurErr();
         ushort *value = mDev->line.cur.value;
-        QString str = tr("电流 L%1，期望电流=%2A，实测电流=%3A").arg(1)
+        QString str = tr("电流 L%1 ，期望电流=%2A，实测电流=%3A").arg(1)
                 .arg(value[0]/COM_RATE_CUR).arg((value[1]+value[2])/COM_RATE_CUR);
-        if(ret) str += tr("正常");
-        else str += tr("错误");
+        if(ret) str += tr("正常"); else str += tr("错误");
+        mLogs->updatePro(str, ret);
+
+        ret = mErr->oneLinePowErr();
+        value = mDev->line.pow;
+        str = tr("功率 L%1 ，期望功率=%2KW，实测功率=%3KW").arg(1)
+                .arg(value[0]/COM_RATE_POW).arg((value[1]+value[2])/COM_RATE_POW);
+        if(ret) str += tr("正常"); else str += tr("错误");
+        mLogs->updatePro(str, ret);
+
+        ret = mErr->oneLineVolErr();
+        value = mDev->line.vol.value;
+        str = tr("电压 L%1 ，期望电压=%2V，实测电压=%3V").arg(1)
+                .arg(value[0]/COM_RATE_VOL).arg((value[1]+value[2])/COM_RATE_VOL);
+        if(ret) str += tr("正常"); else str += tr("错误");
+        mLogs->updatePro(str, ret);
     }
 
     return ret;
@@ -161,20 +175,22 @@ bool Test_CoreThread::checkErrRange()
 
 bool Test_CoreThread::volAlarmErr(int i)
 {
-    QString str = tr("电压报警阈值 L%1 错误").arg(i+1);
+    QString str = tr("电压报警阈值 L%1 ").arg(i+1);
     bool ret = mErr->volAlarm(i);
-    if(!ret) mLogs->updatePro(str, ret);
+    if(ret) str += tr("正常");
+    else str += tr("错误");
 
-    return ret;
+    return mLogs->updatePro(str, ret);
 }
 
 bool Test_CoreThread::curAlarmErr(int i)
 {
-    QString str = tr("电流报警阈值 L%1 错误").arg(i+1);
+    QString str = tr("电流报警阈值 L%1 ").arg(i+1);
     bool ret = mErr->curAlarm(i);
-    if(!ret) mLogs->updatePro(str, ret);
+    if(ret) str += tr("正常");
+    else str += tr("错误");
 
-    return ret;
+    return mLogs->updatePro(str, ret);
 }
 
 bool Test_CoreThread::checkAlarmErr()
@@ -186,11 +202,6 @@ bool Test_CoreThread::checkAlarmErr()
             ret = volAlarmErr(i); if(!ret) res = false;
             ret = curAlarmErr(i); if(!ret) res = false;
         }
-    }
-
-    if(res) {
-        QString str = tr("报警阈值检测正常");
-        mLogs->updatePro(str, res);
     }
 
     return res;
@@ -262,7 +273,7 @@ void Test_CoreThread::workDown()
         if(mItem->cTh.enModify) {
             if(ret) ret = writeAlarmTh();
         } else {
-            if(ret) ret = checkAlarmErr();
+            ret = checkAlarmErr();
         }
         ret = factorySet();
     }

@@ -90,6 +90,7 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     uchar buf[32] = {0};
     QString str = tr("序列号读取成功");
 
+    mPacket->delay(2);
     initReadCmd(itRtu);
     int len = mModbus->read(itRtu, buf);
     if(8 != len) len = mModbus->read(itRtu, buf);

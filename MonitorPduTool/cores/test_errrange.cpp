@@ -51,7 +51,21 @@ bool Test_ErrRange::curErr(int id)
 }
 
 
-bool Test_ErrRange::oneLineCheck()
+bool Test_ErrRange::oneLineVolErr()
+{
+    int pass = Test_Fail;
+    int err = 2*mItem->err.volErr+1;
+    ushort *ptr = mDev->line.vol.value;
+    int exValue = ptr[0];
+    int value = ptr[1] + ptr[2];
+    bool ret = checkErrRange(exValue, value, err);
+    if(ret) pass = Test_Pass;
+    mDev->line.vol.status[0] = pass;
+
+    return ret;
+}
+
+bool Test_ErrRange::oneLineCurErr()
 {
     int pass = Test_Fail;
     int err = 2*mItem->err.curErr+1;
@@ -62,6 +76,21 @@ bool Test_ErrRange::oneLineCheck()
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
     mDev->line.cur.status[0] = pass;
+
+    return ret;
+}
+
+
+bool Test_ErrRange::oneLinePowErr()
+{
+    int pass = Test_Fail;
+    ushort *ptr = mDev->line.pow;
+    int exValue = ptr[0];
+    int value = ptr[1] + ptr[2];
+    int err = exValue * (2*mItem->err.powErr+1)/1000.0;
+    bool ret = checkErrRange(exValue, value, err);
+    if(ret) pass = Test_Pass;
+    mDev->line.powStatus[0] = pass;
 
     return ret;
 }

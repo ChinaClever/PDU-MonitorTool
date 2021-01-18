@@ -26,6 +26,7 @@ bool Home_ManualDlg::inputCheck()
     if(ret) ret = ui->beepRradio->isChecked();
     if(ret) ret = ui->ledRadio->isChecked();
     if(ret) ret = ui->keyRadio->isChecked();
+    if(ret) ret = ui->curRadio->isChecked();
 
     return ret;
 }

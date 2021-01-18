@@ -20,7 +20,8 @@ class IpV3(IpWeb):
         loctime = self.driver.find_element_by_id('loctime').text()
         devtime = self.driver.find_element_by_id('devtime1').text()
         if str(devtime[0:15]) in str(loctime):
-            return True
+            msg = '设备时间错误，设备时间{0}'.format(devtime)
+            self.sendtoMainapp(msg, 1)
         else:
             msg = '设备时间错误，本地时间{0}，设备时间{1}'.format(loctime, devtime)
             self.sendtoMainapp(msg, 0)
@@ -36,6 +37,7 @@ class IpV3(IpWeb):
             self.setSelect("loglist", num)
             self.execJs(jsSheet.format(num))
             time.sleep(0.2)
+        self.sendtoMainapp('清除日志', 1)
 
     def checkCorrect(self):
         cfg = self.cfgs

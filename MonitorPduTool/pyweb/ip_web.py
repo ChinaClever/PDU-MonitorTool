@@ -122,7 +122,7 @@ class IpWeb:
         it = self.driver.find_element_by_id('mac1')
         mac = it.get_attribute('value')
         if "2C:26:5F:" in mac:
-            return True
+            self.sendtoMainapp("Mac地址合法："+mac, 1)
         else:
             self.sendtoMainapp("Mac地址错误："+mac, 0)
 
@@ -134,9 +134,11 @@ class IpWeb:
             #self.sendtoMainapp(msg, 1)
         else:
             v = it.get_attribute('value')
+            msg = '检测{0}，期望值{1}，实际值{2}'.format(parameter, value, v)
             if (str(value) != str(v)):
-                msg = '检测{0}错误，期望值{1}，实际值{2}'.format(parameter, value, v)
-                self.sendtoMainapp(msg, 0)
+               self.sendtoMainapp('错误 '+msg, 0)
+            else:
+               self.sendtoMainapp(msg, 1)
 
 
 
