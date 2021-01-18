@@ -16,7 +16,7 @@ class IpV3(IpWeb):
         self.execJsAlert("check_time()")
 
     def timeCheck(self):
-        self.setTime(); time.sleep(0.15)
+        self.divClick(8); time.sleep(0.15)
         loctime = self.driver.find_element_by_id('loctime').text
         devtime = self.driver.find_element_by_id('devtime1').text
         if str(devtime[0:15]) in str(loctime):
@@ -30,7 +30,7 @@ class IpV3(IpWeb):
         en = self.cfgs['log_en']
         if(int(en) < 1):
             return
-        #self.timeCheck()
+        self.timeCheck()
         self.divClick(9)
         jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setlclear?a=\" + {0} + \"&\");"
         for num in range(0, 2):
