@@ -88,7 +88,7 @@ bool Test_CoreThread::curErrRange(int i)
 bool Test_CoreThread::powErrRange(int i)
 {
     bool ret = true;
-    for(int k=0; k<5; ++k) {
+    for(int k=0; k<6; ++k) {
         ret = mErr->powErr(i);
         if(ret) break; else mRead->readDev();
     }
