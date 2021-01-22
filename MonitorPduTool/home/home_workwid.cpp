@@ -12,6 +12,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    mFirst = 0;
     createWid();
     initLayout();
 }
@@ -196,6 +197,11 @@ bool Home_WorkWid::initWid()
 {
     bool ret = initSerial();
     if(!ret) return ret;
+
+    if(!mFirst++) {
+        ret = MsgBox::information(this, tr("请确认人工已进行过首件测试？"));
+        if(!ret) return false;
+    }
 
     if(mItem->user.isEmpty()) {
         MsgBox::critical(this, tr("请先填写客户名称！"));

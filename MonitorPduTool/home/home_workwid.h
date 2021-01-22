@@ -45,7 +45,7 @@ private slots:
 private:
     Ui::Home_WorkWid *ui;
 
-    int mId;
+    uint mId, mFirst;
     QTimer *timer;
     sDevData * mDev;
     sProgress *mPro;
