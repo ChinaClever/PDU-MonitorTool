@@ -20,7 +20,7 @@ class IpV3(IpWeb):
         loctime = self.driver.find_element_by_id('loctime').text
         devtime = self.driver.find_element_by_id('devtime1').text
         if str(devtime[0:15]) in str(loctime):
-            msg = '设备时间错误，设备时间{0}'.format(devtime)
+            msg = '设备时间正常，设备时间{0}'.format(devtime)
             self.sendtoMainapp(msg, 1)
         else:
             msg = '设备时间错误，本地时间{0}，设备时间{1}'.format(loctime, devtime)
