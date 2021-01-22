@@ -135,21 +135,21 @@ bool Test_CoreThread::oneLineCheck()
         ret = mErr->oneLineCurErr();
         ushort *value = mDev->line.cur.value;
         QString str = tr("电流 L%1 ，期望电流=%2A，实测电流=%3A").arg(1)
-                .arg(value[0]/COM_RATE_CUR).arg((value[1]+value[2])/COM_RATE_CUR);
+                .arg((value[1]+value[2])/COM_RATE_CUR).arg(value[0]/COM_RATE_CUR);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
 
         ret = mErr->oneLinePowErr();
         value = mDev->line.pow;
         str = tr("功率 L%1 ，期望功率=%2KW，实测功率=%3KW").arg(1)
-                .arg(value[0]/COM_RATE_POW).arg((value[1]+value[2])/COM_RATE_POW);
+                .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
 
         ret = mErr->oneLineVolErr();
         value = mDev->line.vol.value;
         str = tr("电压 L%1 ，期望电压=%2V，实测电压=%3V").arg(1)
-                .arg(value[0]/COM_RATE_VOL).arg((value[1]+value[2])/COM_RATE_VOL);
+                .arg((value[1]+value[2])/2/COM_RATE_VOL).arg(value[0]/COM_RATE_VOL);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
     }

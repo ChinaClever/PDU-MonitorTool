@@ -56,7 +56,7 @@ bool Test_ErrRange::oneLineVolErr()
     int pass = Test_Fail;
     int err = 2*mItem->err.volErr+1;
     ushort *ptr = mDev->line.vol.value;
-    int exValue = ptr[0];
+    int exValue = 2*ptr[0];
     int value = ptr[1] + ptr[2];
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
