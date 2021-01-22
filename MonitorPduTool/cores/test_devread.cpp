@@ -73,12 +73,15 @@ bool Test_DevRead::checkNet()
 bool Test_DevRead::readSnmp()
 {
     bool ret = true;
-    QString str = tr("SNMP通讯");
-    ret = mIpSnmp->readPduData();
-    if(ret) str += tr("成功");
-    else str += tr("失败");
+    if(!mItem->ip.modbus) {
+        QString str = tr("SNMP通讯");
+        ret = mIpSnmp->readPduData();
+        if(ret) str += tr("成功");
+        else str += tr("失败");
+        mLogs->updatePro(str, ret);
+    }
 
-    return mLogs->updatePro(str, ret);
+    return ret;
 }
 
 bool Test_DevRead::checkIpVersion()
