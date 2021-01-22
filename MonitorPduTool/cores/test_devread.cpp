@@ -84,50 +84,53 @@ bool Test_DevRead::readSnmp()
 bool Test_DevRead::checkIpVersion()
 {
     bool ret = !isRun;
-    QString str = tr("设备相数检查");
     if(ret) {
+        QString str = tr("设备相数检查");
         if(mDt->version != mItem->ip.version) {
             str += tr("出错 期望版本V%1，实际版本V%2").arg(mItem->ip.version).arg(mDt->version);
             ret = false;
         } else {
             str += tr("正常");
         }
+        mLogs->updatePro(str, ret);
     }
 
-    return mLogs->updatePro(str, ret);
+    return ret;
 }
 
 bool Test_DevRead::checkIpLine()
 {
     bool ret = !isRun;
-    QString str = tr("设备相数检查");
     if(ret && mItem->ip.lines) {
+        QString str = tr("设备相数检查");
         if(mDt->lines != mItem->ip.lines) {
             str += tr("出错 期望相数L=%1，实际相数L=%2").arg(mItem->ip.lines).arg(mDt->lines);
             ret = false;
         } else {
             str += tr("正常");
         }
+        mLogs->updatePro(str, ret);
     }
     if(ret) ret = checkIpVersion();
 
-    return mLogs->updatePro(str, ret);
+    return ret;
 }
 
 bool Test_DevRead::checkSiLine()
 {
     bool ret = !isRun;
-    QString str = tr("设备相数检查");
     if(ret) {
+        QString str = tr("设备相数检查");
         if(mDt->lines != mItem->si.lines) {
             str += tr("出错 期望相数L=%1，实际相数L=%2").arg(mItem->si.lines).arg(mDt->lines);
             ret = false;
         } else {
             str += tr("正常");
         }
+        mLogs->updatePro(str, ret);
     }
 
-    return  mLogs->updatePro(str, ret);
+    return ret;
 }
 
 bool Test_DevRead::readNet()
