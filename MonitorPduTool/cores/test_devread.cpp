@@ -85,7 +85,7 @@ bool Test_DevRead::checkIpVersion()
 {
     bool ret = !isRun;
     if(ret) {
-        QString str = tr("设备相数检查");
+        QString str = tr("设备版本检查");
         if(mDt->version != mItem->ip.version) {
             str += tr("出错 期望版本V%1，实际版本V%2").arg(mItem->ip.version).arg(mDt->version);
             ret = false;
