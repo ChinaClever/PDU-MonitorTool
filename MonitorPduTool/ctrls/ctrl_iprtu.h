@@ -18,6 +18,9 @@ protected:
     bool startProcess();
     bool sentRtuCmd(ushort reg, ushort value);
     void run();
+
+private:
+    QProcess *mProcess;
 };
 
 #endif // CTRL_IPRTU_H

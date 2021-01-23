@@ -7,6 +7,7 @@
 
 Ctrl_IpRtu::Ctrl_IpRtu(QObject *parent) : Ctrl_Object(parent)
 {
+    mProcess = new QProcess(this);
 }
 
 Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
@@ -19,10 +20,9 @@ Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
 
 bool Ctrl_IpRtu::startProcess()
 {
-    QProcess process(this);
-    process.start("pyweb_monitor_ip.exe");
-    bool ret = process.waitForFinished(60*1000);
-    process.close();
+    mProcess->start("pyweb_monitor_ip.exe");
+    bool ret = mProcess->waitForFinished(60*1000);
+    mProcess->close();
 
     return ret;
 }
