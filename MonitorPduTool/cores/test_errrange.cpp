@@ -166,8 +166,8 @@ bool Test_ErrRange::curAlarm(int id)
 
     bool ret = true;
     if((mDt->lines == 2) && id){
-        if(unit->min[id] != (cth->cur_min+1)/2) ret = false;
-        if(unit->max[id] != (cth->cur_max+1)/2) ret = false;
+        if(unit->min[id]/10 != (cth->cur_min/10+1)/2) ret = false;
+        if(unit->max[id]/10 != (cth->cur_max/10+1)/2) ret = false;
     }else{
         if(unit->min[id] != cth->cur_min) ret = false;
         if(unit->max[id] != cth->cur_max) ret = false;
