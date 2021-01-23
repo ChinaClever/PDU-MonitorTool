@@ -20,7 +20,7 @@ UsrLandDlg::UsrLandDlg(QWidget *parent) :
     QString name = Cfg::bulid()->getLoginName();
 
     ui->nameLineEdit->setText(name);
-    ui->pwdLineEdit->setText("admin");
+    //ui->pwdLineEdit->setText("admin");
 }
 
 UsrLandDlg::~UsrLandDlg()
