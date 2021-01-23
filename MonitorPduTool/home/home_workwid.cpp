@@ -199,7 +199,7 @@ bool Home_WorkWid::initWid()
     if(!ret) return ret;
 
     if(!mFirst++) {
-        ret = MsgBox::information(this, tr("请确认人工已进行过首件测试？"));
+        ret = MsgBox::information(this, tr("请确认首件测试，人工已验证通过？"));
         if(!ret) return false;
     }
 
