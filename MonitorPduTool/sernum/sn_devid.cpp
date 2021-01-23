@@ -41,9 +41,7 @@ bool Sn_DevId::analysDevType(uchar *buf, int len)
     }
 
     ret = mTypeDef->analysDevType(id);
-    if(!ret){
-        str = tr("不支持此设备类型 ID：%1").arg(id);
-    }
+    if(!ret) str = tr("不支持此设备类型 ID：%1").arg(id, 0, 16);
 
     return mPacket->updatePro(str, ret);
 }
