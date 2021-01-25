@@ -83,7 +83,7 @@ int Dev_IpRtu::recvDataV1(uchar *ptr)
     env->size = env->tem.size = env->hum.size = 1;
     ptr =  toShort(ptr, 1, env->tem.value);
     ptr =  toShort(ptr, 1, env->hum.value);
-    env->tem.max[0] = 60; env->hum.max[0] = 99;
+    env->tem.max[0] = 40; env->hum.max[0] = 99;
 
     ptr = toThreshold(ptr, line, obj->vol);
     ptr = toThreshold(ptr, line, obj->cur);
@@ -128,7 +128,7 @@ int Dev_IpRtu::recvDataV3(uchar *ptr)
     env->size = env->tem.size = env->hum.size = 1;
     ptr =  toShort(ptr, 1, env->tem.value);
     ptr =  toShort(ptr, 1, env->hum.value);
-    env->tem.max[0] = 60; env->hum.max[0] = 99;
+    env->tem.max[0] = 40; env->hum.max[0] = 99;
 
     ptr = toThreshold(ptr, line, obj->vol);
     ptr = toThreshold(ptr, line, obj->cur);

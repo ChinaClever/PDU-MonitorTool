@@ -181,7 +181,7 @@ bool Test_ErrRange::temAlarm()
 {
     bool ret = true;
     sDataUnit *unit = &(mDev->env.tem);
-    if(unit->max[0] > 60) ret = false;
+    if(unit->max[0] != 40) ret = false;
     if(unit->min[0]) ret = false;
 
     return ret;
@@ -192,7 +192,7 @@ bool Test_ErrRange::humAlarm()
 {
     bool ret = true;
     sDataUnit *unit = &(mDev->env.hum);
-    if(unit->max[0] > 99) ret = false;
+    if(unit->max[0] != 99) ret = false;
     if(unit->min[0]) ret = false;
 
     return ret;

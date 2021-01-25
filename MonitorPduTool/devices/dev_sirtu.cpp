@@ -68,7 +68,7 @@ int Dev_SiRtu::recvDcData(uchar *ptr, int line)
     ptr = toThreshold(ptr, line, obj->cur);
 
     sEnvData *env = &(mDev->env);
-    env->tem.value[0] = *ptr++; env->tem.max[0] = 60;
+    env->tem.value[0] = *ptr++; env->tem.max[0] = 40;
     env->hum.value[0] = *ptr++; env->hum.max[0] = 99;
     env->size = env->tem.size = env->hum.size = 1;
 
