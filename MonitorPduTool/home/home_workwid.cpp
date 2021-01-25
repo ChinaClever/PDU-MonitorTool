@@ -175,20 +175,20 @@ void Home_WorkWid::timeoutDone()
 
 bool Home_WorkWid::initSerial()
 {
-    QString str;
+    QString str;  mId = 1;
     sSerial *coms = &(mItem->coms);
     mDev->id = ui->addrSpin->value();
     Cfg::bulid()->setAddr(mDev->id);
 
-    bool ret = coms->source->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打开 SI-PDU 参考源串口")); return ret;}
-
-    ret = coms->ser1->isOpened();
+    bool ret = coms->ser1->isOpened();
     if(!ret){MsgBox::critical(this, tr("请先打 SER 级联口")); return ret;}
+    if(mPro->step < Test_End) {
+        ret = coms->source->isOpened();
+        if(!ret){MsgBox::critical(this, tr("请先打开 SI-PDU 参考源串口")); return ret;}
 
-    ret = coms->ser2->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}
-    mId = 1;
+        ret = coms->ser2->isOpened();
+        if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}
+    }
 
     return ret;
 }
@@ -245,6 +245,7 @@ void Home_WorkWid::on_startBtn_clicked()
 
 void Home_WorkWid::on_readBtn_clicked()
 {
+    mPro->step = Collect_Start;
     bool ret = initSerial();
     if(ret) {
         ui->textEdit->clear();
