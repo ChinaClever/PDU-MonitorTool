@@ -20,7 +20,7 @@ Ctrl_IpRtu *Ctrl_IpRtu::bulid(QObject *parent)
 
 bool Ctrl_IpRtu::startProcess()
 {
-    mProcess->start("pyweb_monitor_ip.exe");
+    mProcess->start("pyweb_monitor_ip.run");
     bool ret = mProcess->waitForFinished(60*1000);
     mProcess->close();
 
