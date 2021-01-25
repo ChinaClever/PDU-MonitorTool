@@ -19,6 +19,8 @@ public:
 
     bool volAlarm(int id);
     bool curAlarm(int id);
+    bool temAlarm();
+    bool humAlarm();
 
     bool oneLinePowErr();
     bool oneLineCurErr();

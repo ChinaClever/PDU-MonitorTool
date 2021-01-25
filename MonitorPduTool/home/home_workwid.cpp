@@ -198,9 +198,9 @@ bool Home_WorkWid::initWid()
     bool ret = initSerial();
     if(!ret) return ret;
 
-    if(!mFirst++) {
+    if(!mFirst) {
         ret = MsgBox::information(this, tr("请确认首件测试，人工已验证通过？"));
-        if(!ret) return false;
+        if(ret) mFirst++; else return false;
     }
 
     if(mItem->user.isEmpty()) {

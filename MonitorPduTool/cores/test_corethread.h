@@ -28,6 +28,7 @@ protected:
     bool volAlarmErr(int i);
     bool curAlarmErr(int i);
     bool checkAlarmErr();
+    bool envAlarmErr();
 
     bool volAlarmWrite(int i);
     bool curAlarmWrite(int i);

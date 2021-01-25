@@ -193,6 +193,24 @@ bool Test_CoreThread::curAlarmErr(int i)
     return mLogs->updatePro(str, ret);
 }
 
+bool Test_CoreThread::envAlarmErr()
+{
+    bool res = true;
+    if(SI_PDU == mDt->devType) {
+        QString str = tr("温度报警阈值 ");
+        bool ret = mErr->temAlarm();
+        if(ret) str += tr("正常"); else {str += tr("错误"); res = false;}
+        mLogs->updatePro(str, ret);
+
+        str = tr("湿度报警阈值 ");
+        ret = mErr->humAlarm();
+        if(ret) str += tr("正常"); else {str += tr("错误"); res = false;}
+        mLogs->updatePro(str, ret);
+    }
+
+    return res;
+}
+
 bool Test_CoreThread::checkAlarmErr()
 {
     bool res = true, ret = true;
@@ -202,6 +220,7 @@ bool Test_CoreThread::checkAlarmErr()
             ret = volAlarmErr(i); if(!ret) res = false;
             ret = curAlarmErr(i); if(!ret) res = false;
         }
+        if(res) res = envAlarmErr();
     }
 
     return res;
