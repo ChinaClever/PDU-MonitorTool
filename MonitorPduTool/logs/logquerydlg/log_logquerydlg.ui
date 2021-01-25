@@ -63,10 +63,10 @@
   <widget class="QPushButton" name="quitBtn">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>420</y>
+     <x>60</x>
+     <y>410</y>
      <width>120</width>
-     <height>30</height>
+     <height>35</height>
     </rect>
    </property>
    <property name="font">
@@ -85,10 +85,10 @@
   <widget class="QPushButton" name="okBtn">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>420</y>
+     <x>280</x>
+     <y>410</y>
      <width>120</width>
-     <height>30</height>
+     <height>35</height>
     </rect>
    </property>
    <property name="font">

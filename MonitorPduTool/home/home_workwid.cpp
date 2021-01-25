@@ -201,6 +201,7 @@ bool Home_WorkWid::initWid()
     if(!mFirst) {
         ret = MsgBox::information(this, tr("请确认首件测试，人工已验证通过？"));
         if(ret) mFirst++; else return false;
+        on_setBtn_clicked();
     }
 
     if(mItem->user.isEmpty()) {

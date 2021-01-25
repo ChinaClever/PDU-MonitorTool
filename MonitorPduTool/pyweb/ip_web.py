@@ -59,10 +59,18 @@ class IpWeb:
         self.execJs("login()")
         self.sendtoMainapp("网页登陆成功", 1)
         time.sleep(1)
-        
+
+    def checkEnv(self):
+        self.divClick(2)
+        self.itemCheck("min7", 0, '温度最小值')
+        self.itemCheck("max7", 40, '温度最大值')
+        self.itemCheck("min8", 0, '湿度最小值')
+        self.itemCheck("max8", 99, '湿度最大值')
+
     def setEle(self):
+        self.checkEnv()
         self.divClick(3)
-        jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"        
+        jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"
         for num in range(0, 4):
             self.execJs(jsSheet.format(num))
         self.sendtoMainapp("设备电能清除成功", 1)
@@ -72,13 +80,19 @@ class IpWeb:
         Select(it).select_by_index(v)
         time.sleep(0.5)
 
-    def setItById(self, id, v):
+    def findItById(self, id):
         try:
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
-            self.sendtoMainapp(msg, 0)
+            #self.sendtoMainapp(msg, 1)
+            return None
         else:
+            return it
+
+    def setItById(self, id, v):
+        it = self.findItById(id)
+        if it != None:
             it.clear()
             it.send_keys(str(v))
 
@@ -104,7 +118,7 @@ class IpWeb:
         self.execJs(js)
         self.driver.switch_to.alert.accept()
         time.sleep(0.5)
-        
+
     def resetFactory(self):
         v = self.cfgs['version']
         aj = 'ajaxget'
@@ -127,20 +141,14 @@ class IpWeb:
             self.sendtoMainapp("Mac地址错误："+mac, 0)
 
     def itemCheck(self, ssid, value, parameter):
-        try:
-            it = self.driver.find_element_by_id(ssid)
-        except NoSuchElementException:
-            msg = '网页上找不到{0}'.format(parameter)
-            #self.sendtoMainapp(msg, 1)
-        else:
+        it = self.findItById(ssid)
+        if it != None:
             v = it.get_attribute('value')
             msg = '检测{0}，期望值{1}，实际值{2}'.format(parameter, value, v)
             if (str(value) != str(v)):
-               self.sendtoMainapp('错误 '+msg, 0)
+                self.sendtoMainapp('错误 '+msg, 0)
             else:
-               self.sendtoMainapp(msg, 1)
-
-
+                self.sendtoMainapp(msg, 1)
 
 
 
