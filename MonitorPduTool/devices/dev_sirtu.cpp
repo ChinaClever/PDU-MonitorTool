@@ -29,7 +29,7 @@ void Dev_SiRtu::initRtuItem(sRtuItem &it)
     it.reg = 0;
     it.num = SI_RTU_THREE_LEN;
 
-    uchar res = mDev->devType.ac;
+    uchar res = mItem->si.ac; //mDev->devType.ac;
     if(DC == res) {
         it.num = SI_RTU_DC_LEN;
     } else if(mItem->si.si_mod) {
