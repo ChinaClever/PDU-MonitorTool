@@ -35,6 +35,7 @@ void Dev_Source::init()
 bool Dev_Source::read()
 {
     bool ret = true;
+    //mDev->devType.ac = mItem->si.ac;
     for(int i=0; i<3; ++i) {
         ret = readPduData();
         if(ret) break; else mModbus->changeBaudRate();

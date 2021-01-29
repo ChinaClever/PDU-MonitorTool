@@ -53,7 +53,7 @@ class IpWeb:
     def login(self):
         ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
         user = 'admin'; pwd = 'admin'
-        self.driver.get(ip)
+        self.driver.get(ip); time.sleep(0.35)
         self.setItById("name", user)
         self.setItById("psd", pwd)
         self.execJs("login()")
