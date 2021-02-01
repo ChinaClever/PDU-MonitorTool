@@ -97,17 +97,17 @@ bool NewUsrDlg::inputCheck(void)
         return false;
     }
 
-    str = ui->EmaillineEdit->text();
-    if(str.isEmpty())
-    {
-        MsgBox::critical(this,  tr("请输入Email地址"));
-        return false;
-    }
-    if(!str.contains("@"))
-    {
-        MsgBox::critical(this,  tr("请输入合法Email地址"));
-        return false;
-    }
+//    str = ui->EmaillineEdit->text();
+//    if(str.isEmpty())
+//    {
+//        MsgBox::critical(this,  tr("请输入Email地址"));
+//        return false;
+//    }
+//    if(!str.contains("@"))
+//    {
+//        MsgBox::critical(this,  tr("请输入合法Email地址"));
+//        return false;
+//    }
 
     str = ui->TelephonelineEdit->text();
     if(str.isEmpty())
