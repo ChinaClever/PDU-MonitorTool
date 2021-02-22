@@ -62,17 +62,16 @@ bool Test_Logs::writeLog()
     if(mPro->result != Test_Fail) {
         it.result = tr("通过");
         mItem->cnt.ok += 1;
+        if(mItem->cnt.num > 0) {
+            mItem->cnt.num -= 1;
+            if(!mItem->cnt.num)  {
+                mItem->user.clear();
+                Cfg::bulid()->write("user", mItem->user, "User");
+            }
+        }
     } else {
         mItem->cnt.err += 1;
         it.result = tr("失败");
-    }
-
-    if(mItem->cnt.num > 0) {
-        mItem->cnt.num -= 1;
-        if(!mItem->cnt.num)  {
-            mItem->user.clear();
-            Cfg::bulid()->write("user", mItem->user, "User");
-        }
     }
 
     Cfg::bulid()->writeCnt();
