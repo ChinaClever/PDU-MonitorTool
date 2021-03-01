@@ -19,7 +19,6 @@ protected:
 
 private:
     sDevType *mDt;
-    sDataPacket *mPacket;
 };
 
 #endif // DEV_DEFTYPE_H
