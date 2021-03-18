@@ -32,6 +32,7 @@ void Setup_MainWid::initFunSlot()
     ui->stackedWid->addWidget(mUserWid);
     QDate buildDate = QLocale(QLocale::English ).toDate( QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
     ui->label_date->setText(buildDate.toString("yyyy-MM-dd"));
+    QTimer::singleShot(3*1000,this,SLOT(checkPcNumSlot()));
 }
 
 void Setup_MainWid::initSerial()
@@ -117,6 +118,18 @@ void Setup_MainWid::initPcNum()
     ui->pcNumSpin->setValue(value);
 }
 
+
+void Setup_MainWid::checkPcNumSlot()
+{
+    int num = mItem->pcNum;
+    if(num < 1) {
+        if(!usr_land_jur())
+            MsgBox::warning(this, tr("请联系研发部设定电脑号！\n 服务设置 -> 设置功能 \n 需要管理员权限!"));
+        else
+            MsgBox::warning(this, tr("请自行设定电脑号！\n 服务设置 -> 设置功能 \n 需要管理员权限!"));
+        QTimer::singleShot(20*1000,this,SLOT(checkPcNumSlot()));
+    }
+}
 
 
 void Setup_MainWid::writePcNum()
