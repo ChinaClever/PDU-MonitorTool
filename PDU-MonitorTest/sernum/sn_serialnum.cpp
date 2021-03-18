@@ -97,11 +97,85 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     if(len == 8) {
         ret = analySn(buf, len, itSn); toSnStr(itSn);
         if(!ret) str = tr("序列号分析错误：%1").arg(itSn.sn);
+        mPacket->updatePro(str, true);
     } else {
         str = tr("读序列号未返数据长度错误 %1").arg(len);
+        mPacket->updatePro(str, false);
     }
 
-    return mPacket->updatePro(str, ret);
+    return ret;
+}
+
+
+void Sn_SerialNum::initWriteCmd(sRtuSetItems &item, uchar *data, int len)
+{
+    item.addr = mDev->id;
+    item.fn = 0x10;
+    item.reg = 0xA003;
+    item.num = 4;
+    item.len = len;
+
+    for(int i=0; i<len; ++i) {
+        item.data[i] = data[i];
+    }
+}
+
+void Sn_SerialNum::createSn(sSnItem &it)
+{
+    int k = 0;
+    QDate date = QDate::currentDate();
+    it.date[k++] = 0;
+    it.date[k++] = date.year() % 100;
+    it.date[k++] = date.month();
+    it.date[k++] = date.day();
+
+    it.num = ++(mItem->currentNum);
+    it.pc = mItem->pcNum;
+}
+
+int Sn_SerialNum::toSnData(sSnItem &it, uchar *data)
+{
+    int k = 0;
+    for(int i=0; i<4; ++i) {
+        data[k++] = it.date[i];
+    }
+
+    data[k++] = it.num / 256;
+    data[k++] = it.num % 256;
+    data[k++] = it.pc;
+
+    uchar exor = mModbus->xorNum(data, k);
+    data[k++] = it.exor = exor;
+    toSnStr(it);
+
+    return k;
+}
+
+bool Sn_SerialNum::writeSn(sSnItem &itSn)
+{
+    createSn(itSn);
+    uchar buf[32] = {0};
+    int len = toSnData(itSn, buf);
+
+    sRtuSetItems itRtu;
+    initWriteCmd(itRtu, buf, len);
+    mPacket->delay(1);
+
+    return mModbus->writes(itRtu);
+}
+
+void Sn_SerialNum::writeStatus(bool ret)
+{
+    QString str = tr("已写入序列号：");
+    if(ret) {
+        Cfg::bulid()->setCurrentNum();
+    } else {
+        str = tr("序列号写入失败: ");
+        mItem->currentNum -= 1;
+    }
+    str += mSnItem.sn;
+
+    mPacket->updatePro(str, ret);
 }
 
 bool Sn_SerialNum::snEnter()
@@ -110,6 +184,10 @@ bool Sn_SerialNum::snEnter()
     if(ret) {
         initDevType(mSnItem);
         ret = readSn(mSnItem);
+        if(!ret && mSnItem.sn.size()) {
+            ret = writeSn(mSnItem);
+            writeStatus(ret);
+        }
         if(ret) mDev->devType.sn = mSnItem.sn;
     }
 

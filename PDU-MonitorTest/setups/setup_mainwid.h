@@ -27,12 +27,10 @@ protected:
 
 protected slots:
     void initFunSlot();
-    void on_saveBtn_clicked();
+    void checkPcNumSlot();
     void on_pcBtn_clicked();
-
-private slots:
-
     void on_verBtn_clicked();
+    void on_saveBtn_clicked();
 
 private:
     Ui::Setup_MainWid *ui;

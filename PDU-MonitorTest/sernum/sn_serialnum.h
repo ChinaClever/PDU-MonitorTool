@@ -32,6 +32,11 @@ protected:
     bool readPduData(){return false;}
     bool analySn(uchar *sn, int len, sSnItem &it);
 
+    void writeStatus(bool ret);
+    void initWriteCmd(sRtuSetItems &item, uchar *data, int len);
+    void createSn(sSnItem &it);
+    int toSnData(sSnItem &it, uchar *data);
+    bool writeSn(sSnItem &itSn);
 private:
     sSnItem mSnItem;
     Sn_DevId *mTypeId;

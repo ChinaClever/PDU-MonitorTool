@@ -89,6 +89,7 @@ struct sCfgItem
     uchar pcNum;
     QString user; // 客户名称
     sSerial coms;
+    ushort currentNum;
 };
 
 
@@ -114,6 +115,7 @@ public:
     void writeCfgDev();
     void setAddr(int addr);
 
+    void setCurrentNum();
     void write(const QString &key, const QVariant& v, const QString &g="Cfg");
     QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="Cfg");
 
@@ -121,6 +123,9 @@ protected:
     void initCnt();
     void initErrData();
     void initCfgDev();
+    bool getDate();
+    void setDate();
+    void initCurrentNum();
 
 private:
     CfgCom *mCfg;

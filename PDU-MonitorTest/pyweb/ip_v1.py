@@ -7,7 +7,7 @@ class IpV1(IpWeb):
         self.setEle()
         self.checkCorrect()
         #self.resetFactory()
-        self.driver.close()
+        self.driver.quit()
 
     def checkCorrect(self):
         cfg = self.cfgs
