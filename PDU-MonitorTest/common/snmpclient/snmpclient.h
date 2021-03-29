@@ -32,6 +32,7 @@ class SnmpClient : public QThread
     explicit SnmpClient(QObject *parent = nullptr);
 public:    
     static SnmpClient *bulid(QObject *parent = nullptr);
+     ~SnmpClient();
 
     void setAddress(const QString& ip);
     void setValue(const sSnmpSetCmd &cmd);

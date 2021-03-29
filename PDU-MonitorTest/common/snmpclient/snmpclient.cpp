@@ -20,6 +20,13 @@ SnmpClient::SnmpClient(QObject *parent) : QThread(parent)
     setAddress("192.168.1.163");
 }
 
+SnmpClient::~SnmpClient()
+{
+    delete timer;
+    delete mMutex;
+    delete m_snmp_client;
+}
+
 SnmpClient *SnmpClient::bulid(QObject *parent)
 {
     static SnmpClient* sington = nullptr;

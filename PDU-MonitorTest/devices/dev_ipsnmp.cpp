@@ -22,6 +22,12 @@ Dev_IpSnmp *Dev_IpSnmp::bulid(QObject *parent)
     return sington;
 }
 
+void Dev_IpSnmp::resetSnmp()
+{
+    delete mSnmp; msleep(20);
+    mSnmp = SnmpClient::bulid(this);
+}
+
 int Dev_IpSnmp::getItemByOid(const QString &oid, int id)
 {
     QString res = QString(oid).remove(IP_MIB_OID).simplified();

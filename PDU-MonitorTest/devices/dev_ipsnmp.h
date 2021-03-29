@@ -11,6 +11,7 @@ class Dev_IpSnmp : public QThread
 public:
     static Dev_IpSnmp *bulid(QObject *parent = nullptr);
     bool readPduData();
+    void resetSnmp();
 
 protected:
     bool lineNumV3();

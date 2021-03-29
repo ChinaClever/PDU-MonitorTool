@@ -76,6 +76,10 @@ bool Test_DevRead::readSnmp()
     if(!mItem->ip.modbus) {
         QString str = tr("SNMP通讯");
         ret = mIpSnmp->readPduData();
+        if(!ret) {
+            mIpSnmp->resetSnmp();
+            ret = mIpSnmp->readPduData();
+        }
         if(ret) str += tr("成功");
         else str += tr("失败");
         mLogs->updatePro(str, ret);
