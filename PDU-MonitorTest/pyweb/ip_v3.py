@@ -52,4 +52,4 @@ class IpV3(IpWeb):
         self.itemCheck("Log_flag", cfg['log_en'], '日志功能设置')
         self.macAddrCheck()
         self.driver.back()
-        time.sleep(0.5)
+        time.sleep(1)
