@@ -53,12 +53,12 @@ class IpWeb:
     def login(self):
         ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
         user = 'admin'; pwd = 'admin'
-        self.driver.get(ip); time.sleep(0.35)
+        self.driver.get(ip); time.sleep(1)
         self.setItById("name", user)
         self.setItById("psd", pwd)
         self.execJs("login()")
         self.sendtoMainapp("网页登陆成功", 1)
-        time.sleep(1)
+        time.sleep(1.2)
 
     def checkEnv(self):
         self.divClick(2)
@@ -99,7 +99,7 @@ class IpWeb:
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
-        time.sleep(0.4)
+        time.sleep(0.5)
 
     def alertClick(self, id):
         self.btnClick(id)
