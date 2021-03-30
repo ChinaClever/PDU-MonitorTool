@@ -82,6 +82,7 @@ class IpWeb:
 
     def findItById(self, id):
         try:
+            time.sleep(0.1)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
@@ -112,7 +113,7 @@ class IpWeb:
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.35)
+        time.sleep(0.5)
 
     def execJsAlert(self, js):
         self.execJs(js)
