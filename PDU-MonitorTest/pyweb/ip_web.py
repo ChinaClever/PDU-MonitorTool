@@ -110,6 +110,7 @@ class IpWeb:
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
         self.driver.switch_to.frame('ifrm')
+        time.sleep(0.5)
 
     def execJs(self, js):
         self.driver.execute_script(js)
