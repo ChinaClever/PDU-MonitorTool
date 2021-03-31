@@ -53,12 +53,12 @@ class IpWeb:
     def login(self):
         ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
         user = 'admin'; pwd = 'admin'
-        self.driver.get(ip); time.sleep(0.35)
+        self.driver.get(ip); time.sleep(1)
         self.setItById("name", user)
         self.setItById("psd", pwd)
         self.execJs("login()")
         self.sendtoMainapp("网页登陆成功", 1)
-        time.sleep(1)
+        time.sleep(1.2)
 
     def checkEnv(self):
         self.divClick(2)
@@ -82,6 +82,7 @@ class IpWeb:
 
     def findItById(self, id):
         try:
+            time.sleep(0.1)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
@@ -98,7 +99,7 @@ class IpWeb:
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
-        time.sleep(0.4)
+        time.sleep(0.5)
 
     def alertClick(self, id):
         self.btnClick(id)
@@ -109,10 +110,11 @@ class IpWeb:
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
         self.driver.switch_to.frame('ifrm')
+        time.sleep(0.5)
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.35)
+        time.sleep(0.5)
 
     def execJsAlert(self, js):
         self.execJs(js)
