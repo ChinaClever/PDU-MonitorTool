@@ -82,6 +82,7 @@ bool Ctrl_SiRtu::sentRtuCmd(ushort reg, ushort value)
     it.fn = 0x10;
     it.reg = reg;
     it.data = value;
+    if(mItem->si.si_mod) it.fn = 0x06;
 
     return mModbus->write(it);
 }
