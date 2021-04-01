@@ -29,10 +29,10 @@ struct sSnmpSetCmd
 class SnmpClient : public QThread
 {
     Q_OBJECT
-    explicit SnmpClient(QObject *parent = nullptr);
 public:    
-    static SnmpClient *bulid(QObject *parent = nullptr);
-     ~SnmpClient();
+    explicit SnmpClient(QObject *parent = nullptr);
+    //static SnmpClient *bulid(QObject *parent = nullptr);
+    // ~SnmpClient();
 
     void setAddress(const QString& ip);
     void setValue(const sSnmpSetCmd &cmd);
