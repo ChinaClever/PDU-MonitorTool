@@ -43,6 +43,7 @@ void Home_SetDlg::initThresholdWid()
     ui->comboBox->setCurrentIndex(cth->type);
     on_comboBox_currentIndexChanged(cth->type);
     ui->modifyCheck->setChecked(cth->enModify);
+    ui->modifyCheck->setHidden(true);
 }
 
 bool Home_SetDlg::getThresholdWid()

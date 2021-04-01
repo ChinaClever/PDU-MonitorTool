@@ -33,12 +33,12 @@ bool Test_CoreThread::hubPort()
 
 bool Test_CoreThread::initDev()
 {
+    mLogs->updatePro(tr("即将开始"));
     bool ret  = mRead->readSn();
     if(ret) {
-        QString str = tr("设备 SER 级联口连接");
         ret = mRead->readDev();
-        if(ret) str += tr("成功");
-        else str += tr("失败");
+        QString str = tr("设备 SER 级联口连接");
+        if(ret) str += tr("成功"); else str += tr("失败");
         mLogs->updatePro(str, ret);
     }
     if(ret) ret = mRead->readNet();

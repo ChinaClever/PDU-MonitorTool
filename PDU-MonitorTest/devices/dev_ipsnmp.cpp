@@ -24,7 +24,7 @@ Dev_IpSnmp *Dev_IpSnmp::bulid(QObject *parent)
 
 void Dev_IpSnmp::resetSnmp()
 {
-    delete mSnmp; msleep(120);
+    //delete mSnmp; msleep(150);
     mSnmp = new SnmpClient(this);
 }
 

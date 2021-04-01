@@ -76,13 +76,13 @@ class IpWeb:
         self.sendtoMainapp("设备电能清除成功", 1)
 
     def setSelect(self, id, v):
-        it = self.driver.find_element_by_id(id)
+        it = self.findItById(id)
         Select(it).select_by_index(v)
         time.sleep(0.5)
 
     def findItById(self, id):
         try:
-            time.sleep(0.1)
+            time.sleep(0.15)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
