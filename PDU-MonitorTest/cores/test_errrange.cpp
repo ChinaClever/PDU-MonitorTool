@@ -114,7 +114,7 @@ bool Test_ErrRange::temErr()
     int pass = Test_Fail;
     int exValue = mSourceDev->env.tem.value[0];
     int value = mDev->env.tem.value[0];
-    bool ret = checkErrRange(exValue, value, 5);
+    bool ret = checkErrRange(exValue, value, 10);
     if(ret) pass = Test_Pass;
     mDev->env.tem.status[0] = pass;
 
@@ -126,7 +126,7 @@ bool Test_ErrRange::humErr()
     int pass = Test_Fail;
     int exValue = mSourceDev->env.hum.value[0];
     int value = mDev->env.hum.value[0];
-    bool ret = checkErrRange(exValue, value, 10);
+    bool ret = checkErrRange(exValue, value, 15);
     if(ret) pass = Test_Pass;
     mDev->env.hum.status[0] = pass;
 
@@ -181,7 +181,7 @@ bool Test_ErrRange::temAlarm()
 {
     bool ret = true;
     sDataUnit *unit = &(mDev->env.tem);
-    if(unit->max[0] != 40) ret = false;
+    if((unit->max[0] == 40) || (unit->max[0] == 60)) ret = true; else ret = false;
     if(unit->min[0]) ret = false;
 
     return ret;
