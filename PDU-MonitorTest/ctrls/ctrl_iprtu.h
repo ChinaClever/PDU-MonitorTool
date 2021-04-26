@@ -9,10 +9,8 @@ class Ctrl_IpRtu : public Ctrl_Object
     explicit Ctrl_IpRtu(QObject *parent = nullptr);
 public:
     static Ctrl_IpRtu *bulid(QObject *parent = nullptr);
-
     bool setCurTh(int i);
     bool setVolTh(int i);
-    bool factorySet(){return true;}
 
 protected:
     bool startProcess();

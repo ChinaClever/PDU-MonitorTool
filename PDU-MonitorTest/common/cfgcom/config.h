@@ -88,8 +88,10 @@ struct sCfgItem
 
     uchar pcNum;
     QString user; // 客户名称
+    QString sw_ver;
     sSerial coms;
     ushort currentNum;
+    bool eleCheck;
 };
 
 

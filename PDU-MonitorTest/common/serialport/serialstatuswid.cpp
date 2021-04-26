@@ -65,6 +65,7 @@ SerialPort *SerialStatusWid::initSerialPort(const QString &str)
             QString br = Cfg::bulid()->getSerialBr(com);
             if(!br.isEmpty()) {
                 qint32 baudRate = br.toInt();
+                if(!str.contains("SER"))
                 ret = serial->open(com, baudRate);
                 mSerialDlg->updateBaudRate(baudRate);
                 updateSerialWid();

@@ -43,7 +43,7 @@ class IpWeb:
 
     def initCfg(self):
         items = IpWeb.getCfg().items("ipCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs = {'version':1, 'ip_addr': '192.168.1.163', 'ac':1, 'log_en':0}
+        self.cfgs = {'version':1, 'sw_ver': '','ip_addr': '192.168.1.163', 'ac':1, 'log_en':0, 'user':'admin', 'pwd':'admin'}
         for it in items:
             self.cfgs[it[0]] = it[1]
         if int(self.cfgs['lines']) == 0:
@@ -51,14 +51,20 @@ class IpWeb:
             self.cfgs['ac'] = 0
 
     def login(self):
-        ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
-        user = 'admin'; pwd = 'admin'
-        self.driver.get(ip); time.sleep(1)
-        self.setItById("name", user)
-        self.setItById("psd", pwd)
-        self.execJs("login()")
-        self.sendtoMainapp("网页登陆成功", 1)
-        time.sleep(1.2)
+        ip = self.ip_prefix + self.cfgs['ip_addr'] + '/'
+        user = self.cfgs['user']
+        pwd = self.cfgs['pwd']
+        self.driver.get(ip); time.sleep(2)
+        try:
+            self.driver.refresh(); time.sleep(1)
+            self.setItById("name", user)
+            self.setItById("psd", pwd)
+            self.execJs("login()")
+            self.sendtoMainapp("网页登陆成功", 1)
+        except:
+            self.sendtoMainapp("网页登陆失败", 0)
+        finally:
+            time.sleep(1.2)
 
     def checkEnv(self):
         self.divClick(2)
@@ -78,7 +84,7 @@ class IpWeb:
     def setSelect(self, id, v):
         it = self.findItById(id)
         Select(it).select_by_index(v)
-        time.sleep(0.5)
+        time.sleep(0.7)
 
     def findItById(self, id):
         try:
@@ -104,22 +110,22 @@ class IpWeb:
     def alertClick(self, id):
         self.btnClick(id)
         self.driver.switch_to.alert.accept()
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
         self.driver.switch_to.frame('ifrm')
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def execJsAlert(self, js):
-        self.execJs(js)
+        self.execJs(js);time.sleep(0.4)
         self.driver.switch_to.alert.accept()
-        time.sleep(0.5)
+        time.sleep(1)
 
     def resetFactory(self):
         v = self.cfgs['version']
@@ -133,9 +139,10 @@ class IpWeb:
         jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
         self.execJs(jsSheet.format(aj))
         self.sendtoMainapp("设备Web出厂设置成功", 1)
+        time.sleep(0.5)
 
     def macAddrCheck(self):
-        it = self.driver.find_element_by_id('mac1')
+        it = self.findItById('mac1')
         mac = it.get_attribute('value')
         if "2C:26:5F:" in mac:
             self.sendtoMainapp("Mac地址合法："+mac, 1)

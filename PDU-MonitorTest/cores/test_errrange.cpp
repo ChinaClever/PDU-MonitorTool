@@ -112,9 +112,10 @@ bool Test_ErrRange::powErr(int id)
 bool Test_ErrRange::temErr()
 {
     int pass = Test_Fail;
-    int exValue = mSourceDev->env.tem.value[0];
+    //int exValue = mSourceDev->env.tem.value[0];
     int value = mDev->env.tem.value[0];
-    bool ret = checkErrRange(exValue, value, 10);
+    bool ret = false; if((value>0)&&(value<100))ret=true;
+    //bool ret = checkErrRange(exValue, value, 10);
     if(ret) pass = Test_Pass;
     mDev->env.tem.status[0] = pass;
 
@@ -124,9 +125,10 @@ bool Test_ErrRange::temErr()
 bool Test_ErrRange::humErr()
 {
     int pass = Test_Fail;
-    int exValue = mSourceDev->env.hum.value[0];
+    //int exValue = mSourceDev->env.hum.value[0];
     int value = mDev->env.hum.value[0];
-    bool ret = checkErrRange(exValue, value, 15);
+    bool ret = false; if((value>0)&&(value<100))ret=true;
+    //bool ret = checkErrRange(exValue, value, 15);
     if(ret) pass = Test_Pass;
     mDev->env.hum.status[0] = pass;
 

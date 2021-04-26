@@ -43,6 +43,16 @@ bool Test_DevCtrl::setVolTh(int i)
     return ret;
 }
 
+
+bool Test_DevCtrl::eleClean()
+{
+    bool ret = initDev();
+    if(ret) {
+        ret = mRtu->eleClean();
+    }
+    return ret;
+}
+
 bool Test_DevCtrl::factorySet()
 {
     bool ret = initDev();

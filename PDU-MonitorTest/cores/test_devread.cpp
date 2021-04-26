@@ -147,7 +147,7 @@ bool Test_DevRead::readNet()
         ret = checkNet();
         if(ret) ret = readSnmp();
         if(ret) ret = checkIpLine();
-        if(ret) Ctrl_IpRtu::bulid(this)->start();
+        //if(ret) Ctrl_IpRtu::bulid(this)->start();
     } else {
         ret = checkSiLine();
     }
@@ -170,12 +170,12 @@ bool Test_DevRead::initDev()
 bool Test_DevRead::readHub()
 {
     bool ret = true;
-    mRtu->setModbus(2);
+    mRtu->setModbus(1);
     for(int i=0; i<3; ++i) {
         ret = mRtu->readPduData();
         if(ret) break; else mRtu->changeBaudRate();
     }
-    mRtu->setModbus(1);
+    mRtu->setModbus(2);
 
     return ret;
 }

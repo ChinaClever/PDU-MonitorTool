@@ -8,7 +8,7 @@ class IpV3(IpWeb):
         self.setEle()
         self.checkCorrect()
         self.clearLogs()
-        #self.resetFactory()
+        self.resetFactory()
         self.driver.quit()
 
     def setTime(self):
