@@ -23,22 +23,28 @@ void Test_CoreThread::initFunSlot()
 
 bool Test_CoreThread::hubPort()
 {
-    QString str = tr("设备 LINK 级联口连接");
-    bool ret = mRead->readHub();
-    if(ret) str += tr("正常");
-    else str += tr("错误");
+    QString str = tr("设备 SER 级联口");
+    bool ret = mItem->coms.ser1->isOpened();
+    if(ret) {
+        ret = mRead->readHub();
+        if(ret) str += tr("正常");
+        else str += tr("错误");
+    } else {
+        ret = true;
+        str += tr("跳过");
+    }
 
     return mLogs->updatePro(str, ret);
 }
 
 bool Test_CoreThread::initDev()
 {
+    mLogs->updatePro(tr("即将开始"));
     bool ret  = mRead->readSn();
     if(ret) {
-        QString str = tr("设备 SER 级联口连接");
         ret = mRead->readDev();
-        if(ret) str += tr("成功");
-        else str += tr("失败");
+        QString str = tr("设备 LINK 级联口连接");
+        if(ret) str += tr("成功"); else str += tr("失败");
         mLogs->updatePro(str, ret);
     }
     if(ret) ret = mRead->readNet();
@@ -85,6 +91,27 @@ bool Test_CoreThread::curErrRange(int i)
     return mLogs->updatePro(str, ret);
 }
 
+
+bool Test_CoreThread::eleErrRange(int i)
+{
+    bool ret = mItem->eleCheck;
+    QString str = tr("电能 L%1，实测电能=%2Kwh").arg(i+1).arg(mDev->line.ele[i]/COM_RATE_ELE);
+    if(ret) {
+        if(1 != mDev->line.ele[i]) {
+            str += tr("错误");
+            ret = false;
+        } else {
+            str += tr("正常");
+            ret = true;
+        }
+    } else {
+        str += tr("跳过");
+        ret = true;
+    }
+
+    return mLogs->updatePro(str, ret);
+}
+
 bool Test_CoreThread::powErrRange(int i)
 {
     bool ret = true;
@@ -104,8 +131,7 @@ bool Test_CoreThread::powErrRange(int i)
 bool Test_CoreThread::envErrRange()
 {
     bool ret = mErr->temErr();
-    QString str = tr("传感器温度，期望温度=%1，实测温度=%2")
-            .arg(mSour->env.tem.value[0]).arg(mDev->env.tem.value[0]);
+    QString str = tr("传感器温度，温度=%1").arg(mDev->env.tem.value[0]);
     if(ret) str += tr("正常");
     else {
         if(mDev->env.tem.value[0]) {
@@ -117,10 +143,9 @@ bool Test_CoreThread::envErrRange()
 
     ret = mLogs->updatePro(str, ret);
     if(ret) {
-        str = tr("传感器湿度，期望湿度=%1，实测湿度=%2")
-                .arg(mSour->env.hum.value[0]).arg(mDev->env.hum.value[0]);
+        str = tr("传感器湿度，湿度=%2").arg(mDev->env.hum.value[0]);
         ret = mErr->humErr();
-        if(ret)  str += tr("正常");
+        if(ret) str += tr("正常");
         else str += tr("错误");
         ret = mLogs->updatePro(str, ret);
     }
@@ -165,6 +190,7 @@ bool Test_CoreThread::checkErrRange()
     for(; i<mDev->line.size; ++i) {
         ret = volErrRange(i); if(!ret) res = false;
         ret = curErrRange(i); if(!ret) res = false;
+        ret = eleErrRange(i); if(!ret) res = false;
         if(ret){ret = powErrRange(i); if(!ret) res = false;}
     }
     if(res) res = oneLineCheck();
@@ -264,12 +290,19 @@ bool Test_CoreThread::factorySet()
 {
     bool ret = true;
     if(SI_PDU == mDt->devType) {
-        ret = mCtrl->factorySet();
-        QString str = tr("恢复出厂设置");
-        if(ret) str += tr("成功");
-        else str += tr("失败");
+        ret = mCtrl->eleClean();
+        QString str = tr("清除电能");
+        if(ret) str += tr("成功"); else str += tr("失败");
         mLogs->updatePro(str, ret);
+
+        if(1 != mDev->id) {
+            ret = mCtrl->factorySet();
+            str = tr("设备通讯地址");
+            if(ret) str += tr("成功"); else str += tr("失败");
+            mLogs->updatePro(str, ret);
+        }
     } else {
+        Ctrl_IpRtu::bulid(this)->start();
         Ctrl_IpRtu::bulid(this)->wait();
     }
 
@@ -294,7 +327,7 @@ void Test_CoreThread::workDown()
         } else {
             ret = checkAlarmErr();
         }
-        ret = factorySet();
+        if(ret) ret = factorySet();
     }
     workResult(ret);
 }

@@ -34,6 +34,7 @@ void Home_WorkWid::createWid()
     mItem = Cfg::bulid()->item;
     mPro->step = Test_End;
 
+    ui->readBtn->setHidden(true);
     mDev->id = Cfg::bulid()->initAddr();
     ui->addrSpin->setValue(mDev->id);
 
@@ -179,15 +180,15 @@ bool Home_WorkWid::initSerial()
     sSerial *coms = &(mItem->coms);
     mDev->id = ui->addrSpin->value();
     Cfg::bulid()->setAddr(mDev->id);
+    mItem->eleCheck = ui->eleCheck->isChecked();
 
-    bool ret = coms->ser1->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打 SER 级联口")); return ret;}
+    bool ret = coms->ser2->isOpened();
+    if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}
     if(mPro->step < Test_End) {
         ret = coms->source->isOpened();
         if(!ret){MsgBox::critical(this, tr("请先打开 SI-PDU 参考源串口")); return ret;}
-
-        ret = coms->ser2->isOpened();
-        if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}
+        //ret = coms->ser1->isOpened();
+        //if(!ret){MsgBox::critical(this, tr("请先打 SER 级联口")); return ret;}
     }
 
     return ret;
@@ -218,7 +219,8 @@ bool Home_WorkWid::initWid()
         ret = MsgBox::question(this, tr("测试软件会自动修改，设备报警阈值，请确认？"));
     }
 
-    if(ret) ret = mManualDlg->exec();
+    if(ret) ret = ui->guideCheck->isChecked();
+    if(ret) ret = mManualDlg->exec(); else ret = true;
     if(ret) {
         mPacket->init();
         emit startSig();

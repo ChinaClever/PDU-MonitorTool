@@ -41,7 +41,7 @@ bool Dev_Source::read()
     }
 
     if(!ret) {
-        QString str = tr("比对源SI-PDU数据读取失败，结束测试");
+        QString str = tr("比对源SI-PDU数据读取失败，质检结束");
         mPacket->updatePro(str, ret);
     }
 

@@ -43,6 +43,7 @@ void Home_SetDlg::initThresholdWid()
     ui->comboBox->setCurrentIndex(cth->type);
     on_comboBox_currentIndexChanged(cth->type);
     ui->modifyCheck->setChecked(cth->enModify);
+    ui->modifyCheck->setHidden(true);
 }
 
 bool Home_SetDlg::getThresholdWid()
@@ -74,6 +75,7 @@ bool Home_SetDlg::getThresholdWid()
     mItem->ip.modbus = ui->ipModeBox->currentIndex();
     mItem->ip.standard = ui->sBox->currentIndex();
     mItem->ip.log = ui->logBox->currentIndex();
+    mItem->sw_ver = ui->verEdit->text();
 
     return true;
 }
@@ -124,6 +126,7 @@ void Home_SetDlg::on_okBtn_clicked()
 
 void Home_SetDlg::initCntLab()
 {
+    ui->verEdit->setText(mItem->sw_ver);
     ui->numSpin->setValue(mItem->cnt.num);
     QString str = tr("设备数量：%1 成功：%2 失败：%3 ")
             .arg(mItem->cnt.all).arg(mItem->cnt.ok).arg(mItem->cnt.err);

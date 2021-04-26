@@ -13,6 +13,7 @@ public:
     bool setCurTh(int i);
     bool setVolTh(int i);
     bool factorySet();
+    bool eleClean();
 
 protected:
     bool initDev();

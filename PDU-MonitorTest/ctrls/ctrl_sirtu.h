@@ -10,12 +10,11 @@ class Ctrl_SiRtu : public Ctrl_Object
 public:
     static Ctrl_SiRtu *bulid(QObject *parent = nullptr);
 
-    bool factorySet();
     bool setModel();
-
+    bool eleClean();
+    bool factorySet();
     bool setCurTh(int i);
     bool setVolTh(int i);
-
 
 protected:
     bool sentRtuCmd(ushort reg, ushort value);

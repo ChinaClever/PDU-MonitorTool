@@ -21,6 +21,7 @@ protected:
     bool volErrRange(int i);
     bool curErrRange(int i);
     bool powErrRange(int i);
+    bool eleErrRange(int i);
     bool envErrRange();
     bool checkErrRange();
     bool oneLineCheck();

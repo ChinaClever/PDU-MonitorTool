@@ -25,6 +25,7 @@ Setup_MainWid::~Setup_MainWid()
 
 void Setup_MainWid::initFunSlot()
 {
+    initPcNum();
     initLogCount();
     initErrData();
 

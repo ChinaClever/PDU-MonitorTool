@@ -6,7 +6,7 @@ class IpV1(IpWeb):
         self.login()
         self.setEle()
         self.checkCorrect()
-        #self.resetFactory()
+        self.resetFactory()
         self.driver.quit()
 
     def checkCorrect(self):
@@ -20,7 +20,7 @@ class IpV1(IpWeb):
         self.itemCheck("ACDC", cfg['ac'], '交直流选择')
         self.macAddrCheck()
         self.driver.back()
-        time.sleep(0.5)
+        time.sleep(1)
 
 
 

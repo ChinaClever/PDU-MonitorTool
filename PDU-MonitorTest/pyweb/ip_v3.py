@@ -8,7 +8,7 @@ class IpV3(IpWeb):
         self.setEle()
         self.checkCorrect()
         self.clearLogs()
-        #self.resetFactory()
+        self.resetFactory()
         self.driver.quit()
 
     def setTime(self):
@@ -52,4 +52,4 @@ class IpV3(IpWeb):
         self.itemCheck("Log_flag", cfg['log_en'], '日志功能设置')
         self.macAddrCheck()
         self.driver.back()
-        time.sleep(0.5)
+        time.sleep(1)

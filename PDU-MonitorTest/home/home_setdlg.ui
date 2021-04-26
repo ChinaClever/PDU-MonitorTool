@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>513</width>
-    <height>582</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="font">
@@ -23,9 +23,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>481</width>
-     <height>66</height>
+     <y>5</y>
+     <width>491</width>
+     <height>98</height>
     </rect>
    </property>
    <property name="font">
@@ -83,13 +83,32 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_18">
+      <property name="maximumSize">
+       <size>
+        <width>70</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>设备版本</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="verEdit"/>
+    </item>
    </layout>
   </widget>
   <widget class="QGroupBox" name="groupBox_1">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>80</y>
+     <y>100</y>
      <width>491</width>
      <height>141</height>
     </rect>
@@ -395,7 +414,7 @@
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>530</y>
+     <y>550</y>
      <width>131</width>
      <height>41</height>
     </rect>
@@ -414,7 +433,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>450</y>
+     <y>470</y>
      <width>491</width>
      <height>71</height>
     </rect>
@@ -468,7 +487,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>300</y>
+     <y>320</y>
      <width>491</width>
      <height>151</height>
     </rect>
@@ -684,7 +703,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
+     <y>240</y>
      <width>491</width>
      <height>71</height>
     </rect>

@@ -63,7 +63,7 @@ void CfgCom::write(const QString& key, const QVariant &v, const QString& g)
     mCfgIni->beginGroup(g);
     mCfgIni->setValue(key, v);
     mCfgIni->endGroup();
-    mCfgIni->sync();
+    //mCfgIni->sync();
 }
 
 /**

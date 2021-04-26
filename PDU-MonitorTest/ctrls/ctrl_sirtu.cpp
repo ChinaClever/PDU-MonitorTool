@@ -70,9 +70,14 @@ bool Ctrl_SiRtu::setModel()
     return mModbus->write(it);
 }
 
-bool Ctrl_SiRtu::factorySet()
+bool Ctrl_SiRtu::eleClean()
 {
     return sentRtuCmd(0x1013, 0x00F0); // 清除电能
+}
+
+bool Ctrl_SiRtu::factorySet()
+{
+    return sentRtuCmd(0x1001, 1); // 清除电能
 }
 
 bool Ctrl_SiRtu::sentRtuCmd(ushort reg, ushort value)
@@ -82,6 +87,7 @@ bool Ctrl_SiRtu::sentRtuCmd(ushort reg, ushort value)
     it.fn = 0x10;
     it.reg = reg;
     it.data = value;
+    if(mItem->si.si_mod) it.fn = 0x06;
 
     return mModbus->write(it);
 }
