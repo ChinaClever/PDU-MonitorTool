@@ -53,12 +53,11 @@ class IpWeb:
     def verCheck(self):
         tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
         name , ver = tt.text.split(':')
-        if( ver == self.cfgs['sw_ver'] ):
-            self.sendtoMainapp("版本号正确", 1)
-        elif( len(self.cfgs['sw_ver']) > 0 ):
-            self.sendtoMainapp("版本号空", 0)
+        msg = '版本号检测，V{0}'.format(ver)
+        if(ver != self.cfgs['sw_ver'] ):
+            self.sendtoMainapp(msg+" 错误",0)
         else:
-            self.sendtoMainapp("版本号错误", 1)
+            self.sendtoMainapp(msg, 1)
 
     def login(self):
         ip = self.ip_prefix + self.cfgs['ip_addr'] + '/'
