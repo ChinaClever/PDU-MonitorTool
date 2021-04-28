@@ -66,7 +66,7 @@ class IpWeb:
             name , ver = tt.text.split(':')
             if( ver == self.cfgs['sw_ver'] ):
                 self.sendtoMainapp("版本号正确", 1)
-            elif( len(self.cfgs['sw_ver']) > 0 ):
+            elif( len(self.cfgs['sw_ver']) == 0 ):
                 self.sendtoMainapp("版本号空", 0)
             else:
                 self.sendtoMainapp("版本号错误", 1)
