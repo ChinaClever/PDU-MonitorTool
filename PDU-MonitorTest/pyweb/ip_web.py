@@ -50,6 +50,15 @@ class IpWeb:
             self.cfgs['lines'] = 1
             self.cfgs['ac'] = 0
 
+    def verCheck(self):
+        tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
+        name , ver = tt.text.split(':')
+        msg = '版本号检测，V{0}'.format(ver)
+        if(ver != self.cfgs['sw_ver'] ):
+            self.sendtoMainapp(msg+" 错误",0)
+        else:
+            self.sendtoMainapp(msg, 1)
+
     def login(self):
         ip = self.ip_prefix + self.cfgs['ip_addr'] + '/'
         user = self.cfgs['user']
@@ -61,6 +70,7 @@ class IpWeb:
             self.setItById("psd", pwd)
             self.execJs("login()")
             self.sendtoMainapp("网页登陆成功", 1)
+
             tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
             #print(tt.text)
             name , ver = tt.text.split(':')
@@ -74,6 +84,7 @@ class IpWeb:
             self.sendtoMainapp("网页登陆失败", 0)
         finally:
             time.sleep(1.2)
+            self.verCheck()
 
     def checkEnv(self):
         self.divClick(2)
