@@ -16,7 +16,7 @@ class IpV3(IpWeb):
         self.execJsAlert("check_time()")
 
     def timeCheck(self):
-        self.divClick(8); time.sleep(0.35)
+        self.divClick(8); time.sleep(0.25)
         loctime = self.driver.find_element_by_id('loctime').text
         devtime = self.driver.find_element_by_id('devtime1').text
         if str(devtime[0:15]) in str(loctime):
@@ -41,8 +41,10 @@ class IpV3(IpWeb):
 
     def checkCorrect(self):
         cfg = self.cfgs
+        security = int(self.cfgs['security'])
         ip =  self.ip_prefix + cfg['ip_addr'] + '/correct.html'
-        self.driver.get(ip); time.sleep(1)
+        self.driver.get(ip); time.sleep(1.1)
+        if(security): time.sleep(1.2)
         self.driver.switch_to.default_content()
         self.itemCheck("language", int(cfg['language']), '语言选择')
         self.itemCheck("modbus", cfg['modbus'], '模式选择')
@@ -51,5 +53,5 @@ class IpV3(IpWeb):
         self.itemCheck("standard", cfg['standard'], '中性/标准选择')
         self.itemCheck("Log_flag", cfg['log_en'], '日志功能设置')
         self.macAddrCheck()
-        self.driver.back()
-        time.sleep(1)
+        self.driver.back(); time.sleep(1)
+        if(security):time.sleep(1.3)

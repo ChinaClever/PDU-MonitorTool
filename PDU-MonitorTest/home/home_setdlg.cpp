@@ -28,6 +28,7 @@ void Home_SetDlg::initFunSlot()
     int v = mItem->ip.version-1?1:0;
     ui->ipTypeBox->setCurrentIndex(v);
     ui->userEdit->setText(mItem->user);
+    ui->securityBox->setCurrentIndex(mItem->ip.security);
     ui->languageBox->setCurrentIndex(mItem->ip.language);
     ui->lineBox->setCurrentIndex(mItem->ip.lines);
     ui->ipModeBox->setCurrentIndex(mItem->ip.modbus);
@@ -69,6 +70,7 @@ bool Home_SetDlg::getThresholdWid()
         mItem->si.lines = 1;
     }
 
+    mItem->ip.security = ui->securityBox->currentIndex();
     mItem->ip.version = ui->ipTypeBox->currentIndex()?3:1;
     mItem->ip.language = ui->languageBox->currentIndex();
     mItem->ip.lines = ui->lineBox->currentIndex();

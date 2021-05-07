@@ -90,6 +90,7 @@ void Cfg::initCfgDev()
     item->ip.lines = read("lines", 1, g).toInt();
     item->ip.modbus = read("modbus", 0, g).toInt();
     item->ip.log = read("log_en", 0, g).toInt();
+    item->ip.security = read("security", 0, g).toInt();
     item->ip.standard = read("standard", 0, g).toInt();
     item->ip.language = read("language", 1, g).toInt();
     item->sw_ver = read("sw_ver", "", g).toString();
@@ -118,6 +119,7 @@ void Cfg::writeCfgDev()
     write("log_en", item->ip.log, g);
     write("standard", item->ip.standard, g);
     write("language", item->ip.language, g);
+    write("security", item->ip.security, g);
     write("sw_ver", item->sw_ver, g);
 }
 

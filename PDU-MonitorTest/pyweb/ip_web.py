@@ -19,6 +19,8 @@ class IpWeb:
             self.driver = webdriver.Firefox(executable_path="geckodriver.exe")
         except ValueError:
             self.driver = webdriver.Chrome(executable_path="chromedriver.exe")
+        #finally:
+            #self.driver.minimize_window()
 
     def initNetWork(self):
         hostname = socket.gethostname()  # 获取计算机名称
@@ -43,7 +45,7 @@ class IpWeb:
 
     def initCfg(self):
         items = IpWeb.getCfg().items("ipCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs = {'version':1, 'sw_ver': '','ip_addr': '192.168.1.163', 'ac':1, 'log_en':0, 'user':'admin', 'pwd':'admin'}
+        self.cfgs = {'version':1, 'sw_ver': '','ip_addr': '192.168.1.163', 'ac':1, 'log_en':0, 'security':0}
         for it in items:
             self.cfgs[it[0]] = it[1]
         if int(self.cfgs['lines']) == 0:
@@ -59,13 +61,32 @@ class IpWeb:
         else:
             self.sendtoMainapp(msg, 1)
 
-    def login(self):
-        ip = self.ip_prefix + self.cfgs['ip_addr'] + '/'
-        user = self.cfgs['user']
-        pwd = self.cfgs['pwd']
-        self.driver.get(ip); time.sleep(2)
+    def createAccount(self):
+        self.ip_prefix = 'https://'
+        ip = self.ip_prefix + self.cfgs['ip'] + '/index.html'
+        user = self.cfgs['user'] = 'abcd123'
+        pwd = self.cfgs['pwd'] = 'abcd123'
+        self.driver.get(ip); time.sleep(3)
         try:
+            self.setItById('old_pwd' , user)
+            self.setItById('sign_pwd' , pwd)
+            self.setItById('sign_repwd' , pwd)
+            self.execJs('changePwd()'); time.sleep(1.2)
+            self.sendtoMainapp("创建测试账号成功", 1)
+        except:
+            self.sendtoMainapp("创建测试账号失败", 0)
+        finally:
             self.driver.refresh(); time.sleep(1)
+            self.setItById("name", user)
+            self.setItById("psd", pwd)
+            self.execJs("login()");time.sleep(3)
+
+    def inputAccount(self):
+        ip = self.ip_prefix + self.cfgs['ip'] + '/'
+        user = self.cfgs['user'] = 'admin'
+        pwd = self.cfgs['pwd'] = 'admin'
+        self.driver.get(ip); time.sleep(2.2)
+        try:
             self.setItById("name", user)
             self.setItById("psd", pwd)
             self.execJs("login()")
@@ -74,6 +95,15 @@ class IpWeb:
             self.sendtoMainapp("网页登陆失败", 0)
         finally:
             time.sleep(1.2)
+
+    def login(self):
+        self.cfgs['ip'] = self.cfgs['ip_addr']
+        security = int(self.cfgs['security'])
+        if(security):
+            self.createAccount()
+            self.verCheck()
+        else:
+            self.inputAccount()
             self.verCheck()
 
     def checkEnv(self):
@@ -86,7 +116,7 @@ class IpWeb:
     def setEle(self):
         self.checkEnv()
         self.divClick(3)
-        jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"
+        jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"        
         for num in range(0, 4):
             self.execJs(jsSheet.format(num))
         self.sendtoMainapp("设备电能清除成功", 1)
@@ -115,7 +145,7 @@ class IpWeb:
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def alertClick(self, id):
         self.btnClick(id)
@@ -123,31 +153,31 @@ class IpWeb:
         time.sleep(0.8)
 
     def divClick(self, id):
+        security = int(self.cfgs['security'])
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
         self.driver.switch_to.frame('ifrm')
+        if(security):time.sleep(1.2)
         time.sleep(0.8)
 
     def execJs(self, js):
-        self.driver.execute_script(js)
-        time.sleep(0.8)
+        security = int(self.cfgs['security'])
+        self.driver.execute_script(js);time.sleep(1)
+        if(security):time.sleep(1)
 
     def execJsAlert(self, js):
         self.execJs(js);time.sleep(0.4)
         self.driver.switch_to.alert.accept()
         time.sleep(1)
-
+        
     def resetFactory(self):
         v = self.cfgs['version']
-        aj = 'ajaxget'
         if(3 == int(v)):
-            aj += 's'
             self.divClick(10)
         else:
             self.divClick(8)
         self.setSelect("order",1)
-        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
-        self.execJs(jsSheet.format(aj))
+        self.execJsAlert("setdevice();")
         self.sendtoMainapp("设备Web出厂设置成功", 1)
         time.sleep(0.5)
 

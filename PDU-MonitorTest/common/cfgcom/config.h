@@ -29,6 +29,7 @@ struct sIpCfg {
     uchar modbus; //  1 表示 Modbus版本
     uchar log;
     uchar standard;
+    uchar security;
 };
 
 struct sSiCfg {

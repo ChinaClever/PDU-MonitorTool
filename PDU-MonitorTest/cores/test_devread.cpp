@@ -145,8 +145,8 @@ bool Test_DevRead::readNet()
     bool ret = true;
     if(IP_PDU == mDt->devType) {
         ret = checkNet();
-        if(ret) ret = readSnmp();
         if(ret) ret = checkIpLine();
+        //if(ret) ret = readSnmp();
         //if(ret) Ctrl_IpRtu::bulid(this)->start();
     } else {
         ret = checkSiLine();
