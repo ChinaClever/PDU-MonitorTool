@@ -54,7 +54,10 @@ class IpWeb:
 
     def verCheck(self):
         security = int(self.cfgs['security'])
-        tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
+        try:
+            tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
+         except:
+            self.sendtoMainapp("版本号加载时间慢", 0)    
         if(security):
             str1, str2 = tt.text.split(' ')
             name, ver = str1.split(':')
