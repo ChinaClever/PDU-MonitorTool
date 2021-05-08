@@ -52,12 +52,12 @@ class IpWeb:
             self.cfgs['lines'] = 1
             self.cfgs['ac'] = 0
 
-    def verCheck(self):
-        security = int(self.cfgs['security'])
+    def verCheck(self):        
         try:
             tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
          except:
             self.sendtoMainapp("版本号加载时间慢", 0)    
+        security = int(self.cfgs['security'])
         if(security):
             str1, str2 = tt.text.split(' ')
             name, ver = str1.split(':')
