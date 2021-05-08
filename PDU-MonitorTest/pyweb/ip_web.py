@@ -53,8 +53,13 @@ class IpWeb:
             self.cfgs['ac'] = 0
 
     def verCheck(self):
+        security = int(self.cfgs['security'])
         tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
-        name , ver = tt.text.split(':')
+        if(security):
+            str1, str2 = tt.text.split(' ')
+            name, ver = str1.split(':')
+        else:
+            name, ver = tt.text.split(':')
         msg = '版本号检测，V{0}'.format(ver)
         if(ver != self.cfgs['sw_ver'] ):
             self.sendtoMainapp(msg+" 错误",0)
@@ -101,10 +106,9 @@ class IpWeb:
         security = int(self.cfgs['security'])
         if(security):
             self.createAccount()
-            self.verCheck()
         else:
             self.inputAccount()
-            self.verCheck()
+        self.verCheck()
 
     def checkEnv(self):
         self.divClick(2)
