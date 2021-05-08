@@ -52,17 +52,13 @@ class IpWeb:
             self.cfgs['lines'] = 1
             self.cfgs['ac'] = 0
 
-    def verCheck(self):        
+    def verCheck(self):
+        tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
         try:
-            tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
-         except:
-            self.sendtoMainapp("版本号加载时间慢", 0)    
-        security = int(self.cfgs['security'])
-        if(security):
+            name, ver = tt.text.split(':')
+        except:
             str1, str2 = tt.text.split(' ')
             name, ver = str1.split(':')
-        else:
-            name, ver = tt.text.split(':')
         msg = '版本号检测，V{0}'.format(ver)
         if(ver != self.cfgs['sw_ver'] ):
             self.sendtoMainapp(msg+" 错误",0)
@@ -82,7 +78,7 @@ class IpWeb:
             self.execJs('changePwd()'); time.sleep(1.2)
             self.sendtoMainapp("创建测试账号成功", 1)
         except:
-            self.sendtoMainapp("创建测试账号失败", 0)
+            self.sendtoMainapp("创建测试账号失败", 1)
         finally:
             self.driver.refresh(); time.sleep(1)
             self.setItById("name", user)
@@ -123,7 +119,7 @@ class IpWeb:
     def setEle(self):
         self.checkEnv()
         self.divClick(3)
-        jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"        
+        jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"
         for num in range(0, 4):
             self.execJs(jsSheet.format(num))
         self.sendtoMainapp("设备电能清除成功", 1)
@@ -176,7 +172,7 @@ class IpWeb:
         self.execJs(js);time.sleep(0.4)
         self.driver.switch_to.alert.accept()
         time.sleep(1)
-        
+
     def resetFactory(self):
         v = self.cfgs['version']
         if(3 == int(v)):

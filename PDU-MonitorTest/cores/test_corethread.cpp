@@ -302,8 +302,9 @@ bool Test_CoreThread::factorySet()
             mLogs->updatePro(str, ret);
         }
     } else {
+        ret = mRead->checkNet(); if(!ret) return ret;
         mLogs->updatePro(tr("启动Web，开始网页检查"));
-        Ctrl_IpRtu::bulid(this)->start();
+        Ctrl_IpRtu::bulid(this)->start();        
         Ctrl_IpRtu::bulid(this)->wait();
         mLogs->updatePro(tr("退出Web，网页检查结束"));
     }

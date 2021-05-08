@@ -62,11 +62,20 @@ bool Test_DevRead::readDev()
 
 bool Test_DevRead::checkNet()
 {
+    bool ret = true;
     QString str = tr("网络检测");
-    bool ret = cm_pingNet(mItem->ip.addr);
-    if(ret) str += tr("正常");
-    else str += tr("异常");
+    for(int i=0; i<3; ++i) {
+        QString ip = "192.168.1.16" + QString::number(3+i);
+        ret = cm_pingNet(ip);
+        if(ret) {
+            str += ip;
+            mItem->ip.addr = ip;
+            Cfg::bulid()->write("ip_addr", ip, "ipCfg");
+            break;
+        } else msleep(250);
+    }
 
+    if(ret) str += tr("正常");else str += tr("异常");
     return mLogs->updatePro(str, ret);
 }
 
@@ -144,7 +153,7 @@ bool Test_DevRead::readNet()
 {
     bool ret = true;
     if(IP_PDU == mDt->devType) {
-        ret = checkNet();
+        //ret = checkNet();
         if(ret) ret = checkIpLine();
         //if(ret) ret = readSnmp();
         //if(ret) Ctrl_IpRtu::bulid(this)->start();
