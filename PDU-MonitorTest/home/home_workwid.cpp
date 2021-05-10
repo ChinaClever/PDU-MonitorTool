@@ -141,6 +141,10 @@ void Home_WorkWid::updateResult()
 
     ui->groupBox_4->setEnabled(true);
     ui->startBtn->setText(tr("开始测试"));
+    ui->startBtn->setDefault(true);//设置默认按钮
+    ui->startBtn->setShortcut(Qt::Key_Return);
+    ui->startBtn->setShortcut(Qt::Key_Enter);
+    ui->startBtn->setShortcut(Qt::Key_Backspace);
 }
 
 void Home_WorkWid::updateWid()
@@ -172,6 +176,7 @@ void Home_WorkWid::timeoutDone()
         updateWid();
         updateCnt();
     }
+    ui->startBtn->setFocus(); //设置默认焦点
 }
 
 bool Home_WorkWid::initSerial()
