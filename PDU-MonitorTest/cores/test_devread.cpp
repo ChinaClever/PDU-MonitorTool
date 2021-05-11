@@ -62,17 +62,27 @@ bool Test_DevRead::readDev()
 
 bool Test_DevRead::checkNet()
 {
+    QString ip;
     bool ret = true;
     QString str = tr("网络检测");
-    for(int i=0; i<3; ++i) {
-        QString ip = "192.168.1.16" + QString::number(3+i);
-        ret = cm_pingNet(ip);
-        if(ret) {
-            str += ip;
-            mItem->ip.addr = ip;
-            Cfg::bulid()->write("ip_addr", ip, "ipCfg");
-            break;
-        } else msleep(250);
+    for(int k=0; k<3; ++k) {
+        for(int i=0; i<3; ++i) {
+            ip = "192.168.1.16" + QString::number(3+i);
+            ret = cm_pingNet(ip);
+            if(!ret) {
+                 msleep(50);
+                 ip = "192.168.1.163";
+                 ret = cm_pingNet(ip);
+            }
+            if(ret) break;
+        }
+        if(ret) break;
+    }
+
+    if(ret) {
+        str += ip;
+        mItem->ip.addr = ip;
+        Cfg::bulid()->write("ip_addr", ip, "ipCfg");
     }
 
     if(ret) str += tr("正常");else str += tr("异常");
