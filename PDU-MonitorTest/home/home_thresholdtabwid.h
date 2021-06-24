@@ -21,6 +21,7 @@ protected slots:
 
 private:
     sObjData *mData;
+    sDevData *mDev;
 };
 
 #endif // HOME_THRESHOLDTABWID_H
