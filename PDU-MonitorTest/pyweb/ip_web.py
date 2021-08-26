@@ -55,7 +55,25 @@ class IpWeb:
     def verCheck(self):
         tt = self.driver.find_element_by_xpath('//div/div/div/div[last()]/span')
         try:
-            name, ver = tt.text.split(':')
+            try:
+                jsSheet = 'if(confirm("确认网页Logo是否正确")){alert("Logo正确");}else{alert("Logo错误");}'
+                self.execJs(jsSheet)
+                time.sleep(1)
+                while( True ):
+                    alert = self.driver.switch_to_alert().text
+                    if( alert == '确认网页Logo是否正确' ):
+                        time.sleep(1)
+                    elif( alert == 'Logo正确' ):
+                        self.sendtoMainapp('Logo正确',1)
+                        break
+                    elif( alert == 'Logo错误' ):
+                        self.sendtoMainapp('Logo错误',0)
+                        break
+                self.driver.switch_to.alert.accept()
+            except :
+                print('exception')
+            finally:
+                name, ver = tt.text.split(':')
         except:
             str1, str2 = tt.text.split(' ')
             name, ver = str1.split(':')
