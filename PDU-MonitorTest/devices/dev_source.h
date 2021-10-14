@@ -2,6 +2,7 @@
 #define DEV_SOURCETHREAD_H
 
 #include "dev_iprtu.h"
+#include "rk_serial.h"
 
 class Dev_Source : public Dev_SiRtu
 {
@@ -16,7 +17,11 @@ protected:
 
 protected slots:
     void initFunSlot();
+    bool readRk9901();
+    bool readSiPdu();
 
+private:
+    Rk_Serial *mRk;
 };
 
 #endif // DEV_SOURCETHREAD_H

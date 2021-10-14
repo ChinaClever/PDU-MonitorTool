@@ -97,11 +97,8 @@ bool Test_ErrRange::oneLinePowErr()
     ushort *ptr = mDev->line.pow;
     int exValue = ptr[0];
     int value = ptr[1] + ptr[2];
-    int err = 0;
-    if( crate == 10 )
-        err = exValue * (2*mItem->err.powErr+1)/100.0;
-    else
-        err = exValue * (2*mItem->err.powErr+1)/1000.0;
+    int err = exValue * (2*mItem->err.powErr+1);
+    if(crate == 10) err /= 100.0; else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
     mDev->line.powStatus[0] = pass;
@@ -116,13 +113,8 @@ bool Test_ErrRange::powErr(int id)
     if(mDev->devType.screen == 1) crate = 10;
     int value = mDev->line.pow[id]*crate;
     int exValue = mSourceDev->line.pow[id];
-    int err = 0;
-    if( crate == 10 )
-        err = exValue * (mItem->err.powErr+1)/100.0;
-    else
-        err = exValue * (mItem->err.powErr+1)/1000.0;
-
-
+    int err = exValue * (mItem->err.powErr+1);
+    if(crate == 10) err /= 100.0; else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
     mDev->line.powStatus[id] = pass;
@@ -172,13 +164,10 @@ bool Test_ErrRange::checkErrRange(int exValue, int value, int err)
 
 bool Test_ErrRange::volAlarm(int id)
 {
+    bool ret = true; int crate = 1;
     sCfgDev *cth = &(mItem->cTh);
     sDataUnit *unit = &(mDev->line.vol);
-    int crate = 1;
-    if(mDev->devType.screen == 1) crate = 10;
-
-
-    bool ret = true;
+    if(mDev->devType.screen == 1) crate = 10;   
     if(unit->min[id] != cth->vol_min*crate) ret = false;
     if(unit->max[id] != cth->vol_max*crate) ret = false;
 
@@ -186,24 +175,21 @@ bool Test_ErrRange::volAlarm(int id)
 }
 
 bool Test_ErrRange::curAlarm(int id)
-{
+{    
+    bool ret = true; int crate = 1;
     sCfgDev *cth = &(mItem->cTh);
     sDataUnit *unit = &(mDev->line.cur);
-    int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
-
-    bool ret = true;
     if((mDt->lines == 2) && id){
         if(unit->min[id]/10 != (cth->cur_min/10+1)/2) ret = false;
         if(cth->cur_max == 630){
             if( unit->max[id]/10 != (cth->cur_max/10+1)/2*crate)
                 ret = false;
-        }
-        else{
+        } else{
             if( unit->max[id]/10 != cth->cur_max/10*crate)
                 ret = false;
         }
-    }else{
+    } else {
         if(unit->min[id] != cth->cur_min*crate) ret = false;
         if(unit->max[id] != cth->cur_max*crate) ret = false;
     }

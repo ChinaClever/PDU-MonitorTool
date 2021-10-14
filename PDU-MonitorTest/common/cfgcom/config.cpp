@@ -28,12 +28,14 @@ Cfg *Cfg::bulid()
 
 int Cfg::initAddr()
 {
+    item->vref = read("vref", false,"Sys").toBool();
     return read("addr", 1,"Sys").toInt();
 }
 
 void Cfg::setAddr(int addr)
 {
     write("addr", addr, "Sys");
+    write("vref", item->vref,"Sys");
 }
 
 void Cfg::initErrData()
