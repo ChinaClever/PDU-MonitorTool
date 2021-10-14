@@ -9,7 +9,7 @@ int Rk_Serial::transmit(uchar *recv)
 {
     if(!mSerial) return 0;
     static uchar sent[] = {0x55, 0xAA, 0x00, 0x01};
-    int len = mSerial->transmit(sent, sizeof(sent), recv, 2);
+    int len = mSerial->transmit(sent, sizeof(sent), recv, 1);
     if(len < 10) { qDebug() << " Rk_Serial read len err" << len; return 0; }
     else if(memcmp(sent, recv, 3)) { qDebug() << " Rk_Serial read Data err" << len; return 0; }
     return len;
