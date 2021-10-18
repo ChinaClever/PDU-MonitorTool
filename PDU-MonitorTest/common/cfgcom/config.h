@@ -93,6 +93,7 @@ struct sCfgItem
     sSerial coms;
     ushort currentNum;
     bool eleCheck;
+    bool vref;
 };
 
 
