@@ -85,6 +85,14 @@ int Sn_DevType::getSerie(const QString &str)
     return ret;
 }
 
+int Sn_DevType::getSceenType(const QString &str)
+{
+    int ret = 0;
+    if(str.contains("断码屏")) ret = 1;
+    if(str.contains("数码管")) ret = 2;
+    return ret;
+}
+
 bool Sn_DevType::analysDevType(uint id)
 {
     bool ret = true;

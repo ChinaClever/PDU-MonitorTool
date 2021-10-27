@@ -8,8 +8,8 @@
 Home_ThresholdTabWid::Home_ThresholdTabWid(QWidget *parent) : ComTableWid(parent)
 {
     initWid();
-    sDevData *dev = sDataPacket::bulid()->getDev();
-    mData = &(dev->line);
+    sDevData *mDev = sDataPacket::bulid()->getDev();
+    mData = &(mDev->line);
 }
 
 void Home_ThresholdTabWid::initWid()
@@ -25,6 +25,8 @@ void Home_ThresholdTabWid::setDataUnit(int id, sDataUnit &unit)
     double rate = COM_RATE_CUR;
     QString suffix = "A";
     QString str = tr("电流");
+    int crate = 1;
+    if(mDev->devType.screen == 1) crate = 10;
     if(id < 3) {
         rate = 1;
         suffix = "V";
@@ -35,9 +37,9 @@ void Home_ThresholdTabWid::setDataUnit(int id, sDataUnit &unit)
         QStringList listStr;
 
         listStr << str;
-        listStr << QString::number(unit.value[i]/rate,'f',2)+suffix;
-        listStr << QString::number(unit.min[i]/rate,'f',2)+suffix;
-        listStr << QString::number(unit.max[i]/rate,'f',2)+suffix;
+        listStr << QString::number(unit.value[i]/rate/crate,'f',2)+suffix;
+        listStr << QString::number(unit.min[i]/rate/crate,'f',2)+suffix;
+        listStr << QString::number(unit.max[i]/rate/crate,'f',2)+suffix;
         setTableRow(id+i, listStr);
 
         if((unit.value[i] < unit.min[i]) || (unit.value[i] > unit.max[i])) {

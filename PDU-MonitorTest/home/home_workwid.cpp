@@ -37,6 +37,7 @@ void Home_WorkWid::createWid()
     ui->readBtn->setHidden(true);
     mDev->id = Cfg::bulid()->initAddr();
     ui->addrSpin->setValue(mDev->id);
+    ui->vrefCheck->setChecked(mItem->vref);
 
     timer = new QTimer(this);
     timer->start(100);
@@ -141,6 +142,11 @@ void Home_WorkWid::updateResult()
 
     ui->groupBox_4->setEnabled(true);
     ui->startBtn->setText(tr("开始测试"));
+    ui->startBtn->setFocus(); //设置默认焦点
+    //ui->startBtn->setDefault(true);//设置默认按钮
+    //ui->startBtn->setShortcut(Qt::Key_Return);
+    //ui->startBtn->setShortcut(Qt::Key_Enter);
+    //ui->startBtn->setShortcut(Qt::Key_Backspace);
 }
 
 void Home_WorkWid::updateWid()
@@ -179,8 +185,9 @@ bool Home_WorkWid::initSerial()
     QString str;  mId = 1;
     sSerial *coms = &(mItem->coms);
     mDev->id = ui->addrSpin->value();
-    Cfg::bulid()->setAddr(mDev->id);
     mItem->eleCheck = ui->eleCheck->isChecked();
+    mItem->vref = ui->vrefCheck->isChecked();
+    Cfg::bulid()->setAddr(mDev->id);
 
     bool ret = coms->ser2->isOpened();
     if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}

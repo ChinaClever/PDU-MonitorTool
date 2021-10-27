@@ -16,6 +16,7 @@ protected:
     int getColMode(const QString &str);
     int getLineNum(const QString &str);
     int getSerie(const QString &str);
+    int getSceenType(const QString &str);
 
 private:
     sDevType *mDt;

@@ -61,8 +61,10 @@ bool Test_CoreThread::volErrRange(int i)
         if(ret) break; else mRead->readDev();
     }
 
+    int crate = 1;
+    if(mDev->devType.screen == 1) crate = 10;
     QString str = tr("电压 L%1，期望电压=%2V，实测电压=%3V").arg(i+1)
-            .arg(mSour->line.vol.value[i]).arg(mDev->line.vol.value[i]);
+            .arg(mSour->line.vol.value[i]).arg(mDev->line.vol.value[i]/(crate*1.0));
     if(ret) str += tr("正常");
     else str += tr("错误");
 
@@ -77,8 +79,10 @@ bool Test_CoreThread::curErrRange(int i)
         if(ret) break; else mRead->readDev();
     }
 
+    int crate = 1;
+    if(mDev->devType.screen == 1) crate = 10;
     QString str = tr("电流 L%1，期望电流=%2A，实测电流=%3A").arg(i+1)
-            .arg(mSour->line.cur.value[i]/COM_RATE_CUR).arg(mDev->line.cur.value[i]/COM_RATE_CUR);
+            .arg(mSour->line.cur.value[i]/COM_RATE_CUR).arg(mDev->line.cur.value[i]/COM_RATE_CUR/crate);
     if(ret) str += tr("正常");
     else {
         if(mDev->line.cur.value[i]) {
@@ -157,16 +161,22 @@ bool Test_CoreThread::oneLineCheck()
 {
     bool ret = true;
     if(2 == mDt->lines){
+        int crate = 1;
+        if(mDev->devType.screen == 1) crate = 10;
         ret = mErr->oneLineCurErr();
         ushort *value = mDev->line.cur.value;
         QString str = tr("电流 L%1 ，期望电流=%2A，实测电流=%3A").arg(1)
-                .arg((value[1]+value[2])/COM_RATE_CUR).arg(value[0]/COM_RATE_CUR);
+                .arg((value[1]+value[2])/COM_RATE_CUR/crate).arg(value[0]/COM_RATE_CUR/crate);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
 
         ret = mErr->oneLinePowErr();
         value = mDev->line.pow;
-        str = tr("功率 L%1 ，期望功率=%2KW，实测功率=%3KW").arg(1)
+        if( crate == 10 )
+            str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                    .arg((value[1]+value[2])/COM_RATE_PF).arg(value[0]/COM_RATE_PF);
+        else
+            str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
                 .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
@@ -174,7 +184,7 @@ bool Test_CoreThread::oneLineCheck()
         ret = mErr->oneLineVolErr();
         value = mDev->line.vol.value;
         str = tr("电压 L%1 ，期望电压=%2V，实测电压=%3V").arg(1)
-                .arg((value[1]+value[2])/2/COM_RATE_VOL).arg(value[0]/COM_RATE_VOL);
+                .arg((value[1]+value[2])/2/COM_RATE_VOL/crate).arg(value[0]/COM_RATE_VOL/crate);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
     }
@@ -302,8 +312,11 @@ bool Test_CoreThread::factorySet()
             mLogs->updatePro(str, ret);
         }
     } else {
-        Ctrl_IpRtu::bulid(this)->start();
+        ret = mRead->checkNet(); if(!ret) return ret;
+        mLogs->updatePro(tr("启动Web，开始网页检查"));
+        Ctrl_IpRtu::bulid(this)->start();        
         Ctrl_IpRtu::bulid(this)->wait();
+        mLogs->updatePro(tr("退出Web，网页检查结束"));
     }
 
     return ret;

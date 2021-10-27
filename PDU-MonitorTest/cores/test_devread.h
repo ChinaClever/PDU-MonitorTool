@@ -14,10 +14,10 @@ public:
     bool readDev();
     bool readHub();
     bool readNet();
+    bool checkNet();
 
 protected:
     void run();
-    bool checkNet();
     bool readSnmp();
     bool initDev();
     bool checkSiLine();
