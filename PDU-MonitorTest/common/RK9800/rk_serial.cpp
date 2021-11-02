@@ -37,7 +37,7 @@ bool Rk_Serial::readPacket(sRkItem &it)
         QByteArray array((char *)recv, len);
         QDataStream rxStream(array);
         rxStream.setByteOrder(QDataStream::LittleEndian);
-        rxStream >> it.header >> it.rkId >> it.enAlarm
+        rxStream >> it.header >> it.flag >> it.rkId >> it.enAlarm
                 >> it.vol >> it.curUnit >> it.cur >> it.pow
                 >> it.ele >> it.hz >> it.pf >> it.crc;
         it.rkStr = rkType(it.rkId);

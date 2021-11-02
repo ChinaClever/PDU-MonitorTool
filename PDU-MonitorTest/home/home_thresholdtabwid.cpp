@@ -8,7 +8,7 @@
 Home_ThresholdTabWid::Home_ThresholdTabWid(QWidget *parent) : ComTableWid(parent)
 {
     initWid();
-    sDevData *mDev = sDataPacket::bulid()->getDev();
+    mDev = sDataPacket::bulid()->getDev();
     mData = &(mDev->line);
 }
 
