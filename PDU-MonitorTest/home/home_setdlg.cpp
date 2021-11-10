@@ -25,7 +25,7 @@ void Home_SetDlg::initFunSlot()
 {
     initCntLab();
     initThresholdWid();
-    int v = mItem->ip.version-1?1:0;
+    int v = mItem->ip.version-1; if( v ) v = v - 1;
     ui->ipTypeBox->setCurrentIndex(v);
     ui->userEdit->setText(mItem->user);
     ui->securityBox->setCurrentIndex(mItem->ip.security);
@@ -35,6 +35,12 @@ void Home_SetDlg::initFunSlot()
     ui->sBox->setCurrentIndex(mItem->ip.standard);
     ui->logBox->setCurrentIndex(mItem->ip.log);
     on_ipTypeBox_currentIndexChanged(v);
+    ui->lcdBox->setCurrentIndex(mItem->ip.lcd);
+
+    ui->InFirst->setText(mItem->ip.inFirst);
+    ui->InSecond->setText(mItem->ip.inSecond);
+    ui->OutFirst->setText(mItem->ip.outFirst);
+    ui->OutSecond->setText(mItem->ip.outSecond);
 }
 
 
@@ -71,13 +77,19 @@ bool Home_SetDlg::getThresholdWid()
     }
 
     mItem->ip.security = ui->securityBox->currentIndex();
-    mItem->ip.version = ui->ipTypeBox->currentIndex()?3:1;
+    int v = ui->ipTypeBox->currentIndex()+1;
+    if(v > 1) v = v + 1; mItem->ip.version = v;
     mItem->ip.language = ui->languageBox->currentIndex();
     mItem->ip.lines = ui->lineBox->currentIndex();
     mItem->ip.modbus = ui->ipModeBox->currentIndex();
     mItem->ip.standard = ui->sBox->currentIndex();
     mItem->ip.log = ui->logBox->currentIndex();
     mItem->sw_ver = ui->verEdit->text();
+    mItem->ip.inFirst = ui->InFirst->text();
+    mItem->ip.inSecond = ui->InSecond->text();
+    mItem->ip.outFirst = ui->OutFirst->text();
+    mItem->ip.outSecond = ui->OutSecond->text();
+    mItem->ip.lcd = ui->lcdBox->currentIndex();
 
     return true;
 }
@@ -151,7 +163,25 @@ void Home_SetDlg::on_resBtn_clicked()
 void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
 {
     bool res = true;
-    if(index)  res = false;
+    if(index == IP_PDUV3_EATON - 2)  res = false;
+    ui->label_14 ->setHidden(res);
+    ui->InFirst->setHidden(res);
+    ui->InSecond->setHidden(res);
+    ui->label_16 ->setHidden(res);
+    ui->OutFirst->setHidden(res);
+    ui->OutSecond->setHidden(res);
+
+    res = false;
+    if(index >= IP_PDUV3_C3 - 2)  res = true;
+    ui->label_8->setHidden(res);
+    ui->sBox->setHidden(res);
+    ui->label_3->setHidden(res);
+    ui->ipModeBox->setHidden(res);
+    ui->label_11->setHidden(res);
+    ui->logBox->setHidden(res);
+
+    res = true;
+    if(index == IP_PDUV3 - 2 )  res = false;
 
     ui->sBox->setHidden(res);
     ui->logBox->setHidden(res);
