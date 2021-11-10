@@ -183,7 +183,9 @@ bool Test_ErrRange::curAlarm(int id)
     if((mDt->lines == 2) && id){
         if(unit->min[id]/10 != (cth->cur_min/10+1)/2) ret = false;
         if(cth->cur_max == 630){
-            if( unit->max[id]/10 != (cth->cur_max/10+1)/2*crate)
+//            if( unit->max[id]/10 != (cth->cur_max/10+1)/2*crate)
+//                ret = false;
+            if( unit->max[id]/10 != (cth->cur_max/10)/2*crate)
                 ret = false;
         } else{
             if( unit->max[id]/10 != cth->cur_max/10*crate)

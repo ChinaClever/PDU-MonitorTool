@@ -28,6 +28,8 @@ void sDataPacket::clear(int id)
 
     pro->step = 0;
     pro->result = 0;
+    pro->pass.clear();
+    pro->itPass.clear();
     pro->item.clear();
     pro->status.clear();
     pro->startTime = QTime::currentTime();
