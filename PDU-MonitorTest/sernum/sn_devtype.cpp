@@ -42,7 +42,16 @@ int Sn_DevType::getDevType(const QString &str)
     if(str.contains("SI-PDU")) ret = SI_PDU;
     if(str.contains("IP-PDU")) {
         ret = IP_PDU;
-        if(str.contains("SNMPV3")) mDt->version = 3; else mDt->version = 1;
+        if(str.contains("SNMPV3")){
+            if(str.contains("C3")) mDt->version = IP_PDUV3_C3;
+            else if(str.contains("EATON")) mDt->version = IP_PDUV3_EATON;
+            else
+            mDt->version = IP_PDUV3;
+        }else if(str.contains("V6")){
+            if(str.contains("HUAWEI")) mDt->version = IP_PDUV6_HUAWEI;
+            else mDt->version = IP_PDUV6;
+        }
+        else mDt->version = IP_PDUV1;
     }
 
     return ret;
