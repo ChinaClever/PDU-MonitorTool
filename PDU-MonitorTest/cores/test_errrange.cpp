@@ -98,7 +98,12 @@ bool Test_ErrRange::oneLinePowErr()
     int exValue = ptr[0];
     int value = ptr[1] + ptr[2];
     int err = exValue * (2*mItem->err.powErr+1);
-    if(crate == 10) err /= 100.0; else err /= 1000.0;
+    if(crate == 10)
+    {
+      if(mDev->devType.devType == SI_PDU) err /= 100.0;
+      else err /= 1000.0;
+    }
+    else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
     mDev->line.powStatus[0] = pass;
@@ -114,7 +119,11 @@ bool Test_ErrRange::powErr(int id)
     int value = mDev->line.pow[id]*crate;
     int exValue = mSourceDev->line.pow[id];
     int err = exValue * (mItem->err.powErr+1);
-    if(crate == 10) err /= 100.0; else err /= 1000.0;
+    if(crate == 10)
+    {
+      if(mDev->devType.devType == SI_PDU) err /= 100.0;
+      else err /= 1000.0;
+    } else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
     mDev->line.powStatus[id] = pass;
