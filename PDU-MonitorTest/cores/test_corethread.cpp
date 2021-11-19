@@ -173,8 +173,14 @@ bool Test_CoreThread::oneLineCheck()
         ret = mErr->oneLinePowErr();
         value = mDev->line.pow;
         if( crate == 10 )
-            str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
-                    .arg((value[1]+value[2])/COM_RATE_PF).arg(value[0]/COM_RATE_PF);
+        {
+           if(SI_PDU == mDev->devType.devType)
+               str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                                .arg((value[1]+value[2])/COM_RATE_PF).arg(value[0]/COM_RATE_PF);
+           else
+               str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                   .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
+        }
         else
             str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
                 .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);

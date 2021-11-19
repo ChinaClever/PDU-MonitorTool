@@ -32,7 +32,10 @@ void Home_LineTabWid::appendItem(sObjData *dev)
         listStr << QString::number(dev->cur.value[i]/COM_RATE_CUR/crate,'f',2)+"A";
         listStr << QString::number(dev->vol.value[i]/COM_RATE_VOL/crate,'f',2)+"V";
         if(crate == 10)
-            listStr << QString::number(dev->pow[i]/COM_RATE_PF,'f',3)+"kW";
+        {
+            if(mDev->devType.devType == SI_PDU) listStr << QString::number(dev->pow[i]/COM_RATE_PF,'f',3)+"kW";
+            else listStr << QString::number(dev->pow[i]/COM_RATE_POW,'f',3)+"kW";
+        }
         else
             listStr << QString::number(dev->pow[i]/COM_RATE_POW,'f',3)+"kW";
         listStr << QString::number(dev->pf[i]/COM_RATE_PF,'f',2);

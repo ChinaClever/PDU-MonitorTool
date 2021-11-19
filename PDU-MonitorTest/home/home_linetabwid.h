@@ -3,6 +3,7 @@
 
 #include "comtablewid.h"
 #include "datapacket.h"
+#include "config.h"
 
 class Home_LineTabWid : public ComTableWid
 {
