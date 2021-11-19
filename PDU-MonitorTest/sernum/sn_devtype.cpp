@@ -113,6 +113,7 @@ bool Sn_DevType::analysDevType(uint id)
         mDt->specs = getColMode(str);
         mDt->series = getSerie(str);
         mDt->lines = getLineNum(str);
+        mDt->screen = getSceenType(str);
     } else {
         ret = false;
     }
