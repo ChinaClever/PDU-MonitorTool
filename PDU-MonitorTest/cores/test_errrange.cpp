@@ -102,6 +102,7 @@ bool Test_ErrRange::oneLinePowErr()
     {
       if(mDev->devType.devType == SI_PDU) err /= 100.0;
       else err /= 1000.0;
+      if(mDev->devType.devType == IP_PDU) value /= 10;
     }
     else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
@@ -123,6 +124,7 @@ bool Test_ErrRange::powErr(int id)
     {
       if(mDev->devType.devType == SI_PDU) err /= 100.0;
       else err /= 1000.0;
+      if(mDev->devType.devType == IP_PDU) value /= 10;
     } else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
@@ -192,12 +194,12 @@ bool Test_ErrRange::curAlarm(int id)
     if((mDt->lines == 2) && id){
         if(unit->min[id]/10 != (cth->cur_min/10+1)/2) ret = false;
         if(cth->cur_max == 630){
-//            if( unit->max[id]/10 != (cth->cur_max/10+1)/2*crate)
-//                ret = false;
-            if( unit->max[id]/10 != (cth->cur_max/10)/2*crate)
+            if( unit->max[id]/10 != (cth->cur_max/10+1)/2*crate)
                 ret = false;
+//            if( unit->max[id]/10 != (cth->cur_max/10)/2*crate)
+//                ret = false;
         } else{
-            if( unit->max[id]/10 != cth->cur_max/10*crate)
+            if( unit->max[id]/10 != (cth->cur_max/10)/2*crate)
                 ret = false;
         }
     } else {
