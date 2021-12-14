@@ -22,7 +22,7 @@ bool Ctrl_IpRtu::startProcess()
 {
     mProcess->close();
     mProcess->start("pyweb_monitor_ip.exe");
-    bool ret = mProcess->waitForFinished(90*1000);
+    bool ret = mProcess->waitForFinished(120*1000);
 
     return ret;
 }

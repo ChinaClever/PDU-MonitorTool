@@ -27,8 +27,7 @@ enum eIpTypes {
     IP_PDUV3_C3,        // IP-PDU 俄罗斯C3
     IP_PDUV3_EATON,     // IP-PDU伊顿
     IP_PDUV6,           // IPV6标准
-    IP_PDUV6_HUAWEI,     // IPV6华为
-    IP_PDUV6_ALI     // IPV6阿里
+    IP_PDUV6_HUAWEI     // IPV6华为
 };
 
 struct sIpCfg {
