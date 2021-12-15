@@ -44,7 +44,7 @@ void Dev_IpRtu::initRtuItem(sRtuItem &it)
     it.reg = 0;
     it.num = IP_RTU_ONE_LEN;// V1
 
-    if(mDev->devType.version == 3) {
+    if(mDev->devType.version <= 3 && mDev->devType.version >= 5) {
         it.num = IP_RTU_THREE_LEN;  // V3
     }
 }
