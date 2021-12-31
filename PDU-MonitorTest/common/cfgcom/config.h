@@ -21,6 +21,16 @@ enum eDevTypes {
     Mn    // 锰铜
 };
 
+enum eIpTypes {
+    IP_PDUV1=1,         // IPV1标准
+    IP_PDUV3=3,         // IPV3标准
+    IP_PDUV3_C3,        // IP-PDU 俄罗斯C3
+    IP_PDUV3_EATON,     // IP-PDU伊顿
+    IP_PDUV6,           // IPV6标准
+    IP_PDUV6_HUAWEI,     // IPV6华为
+    IP_PDUV1_YIXIN      // IPV1易信
+};
+
 struct sIpCfg {
     QString addr;
     uchar version;
@@ -30,6 +40,11 @@ struct sIpCfg {
     uchar log;
     uchar standard;
     uchar security;
+    uchar lcd;
+    QString inFirst;
+    QString inSecond;
+    QString outFirst;
+    QString outSecond;
 };
 
 struct sSiCfg {

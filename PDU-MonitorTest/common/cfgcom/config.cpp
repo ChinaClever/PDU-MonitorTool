@@ -95,7 +95,12 @@ void Cfg::initCfgDev()
     item->ip.security = read("security", 0, g).toInt();
     item->ip.standard = read("standard", 0, g).toInt();
     item->ip.language = read("language", 1, g).toInt();
+    item->ip.lcd = read("lcd", 0, g).toInt();
     item->sw_ver = read("sw_ver", "", g).toString();
+    item->ip.inFirst = read("ip_inFirst", "IEC309", g).toString();
+    item->ip.inSecond = read("ip_inSecond", "18A", g).toString();
+    item->ip.outFirst = read("ip_outFirst", "20xC13", g).toString();
+    item->ip.outSecond = read("ip_outSecond", "4xC19", g).toString();
 }
 
 void Cfg::writeCfgDev()
@@ -122,7 +127,12 @@ void Cfg::writeCfgDev()
     write("standard", item->ip.standard, g);
     write("language", item->ip.language, g);
     write("security", item->ip.security, g);
+    write("lcd", item->ip.lcd, g);
     write("sw_ver", item->sw_ver, g);
+    write("ip_inFirst", item->ip.inFirst, g);
+    write("ip_inSecond", item->ip.inSecond, g);
+    write("ip_outFirst", item->ip.outFirst, g);
+    write("ip_outSecond", item->ip.outSecond, g);
 }
 
 
