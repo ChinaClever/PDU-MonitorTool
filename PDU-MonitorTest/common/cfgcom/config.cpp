@@ -96,6 +96,7 @@ void Cfg::initCfgDev()
     item->ip.standard = read("standard", 0, g).toInt();
     item->ip.language = read("language", 1, g).toInt();
     item->ip.lcd = read("lcd", 0, g).toInt();
+    item->ip.protocol = read("protocol", 0, g).toInt();
     item->sw_ver = read("sw_ver", "", g).toString();
     item->ip.inFirst = read("ip_inFirst", "IEC309", g).toString();
     item->ip.inSecond = read("ip_inSecond", "18A", g).toString();
@@ -128,6 +129,7 @@ void Cfg::writeCfgDev()
     write("language", item->ip.language, g);
     write("security", item->ip.security, g);
     write("lcd", item->ip.lcd, g);
+    write("protocol", item->ip.protocol, g);
     write("sw_ver", item->sw_ver, g);
     write("ip_inFirst", item->ip.inFirst, g);
     write("ip_inSecond", item->ip.inSecond, g);
