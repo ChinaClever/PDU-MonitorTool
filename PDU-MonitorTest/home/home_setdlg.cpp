@@ -41,6 +41,7 @@ void Home_SetDlg::initFunSlot()
     ui->InSecond->setText(mItem->ip.inSecond);
     ui->OutFirst->setText(mItem->ip.outFirst);
     ui->OutSecond->setText(mItem->ip.outSecond);
+    ui->ipBox->setCurrentIndex(mItem->ip.ipdistribution);
 }
 
 
@@ -90,6 +91,7 @@ bool Home_SetDlg::getThresholdWid()
     mItem->ip.outFirst = ui->OutFirst->text();
     mItem->ip.outSecond = ui->OutSecond->text();
     mItem->ip.lcd = ui->lcdBox->currentIndex();
+    mItem->ip.ipdistribution = ui->ipBox->currentIndex();
 
     return true;
 }
@@ -187,4 +189,29 @@ void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
     ui->logBox->setHidden(res);
     ui->label_8->setHidden(res);
     ui->label_11->setHidden(res);
+
+    if( index == IP_PDUV1_HUADA - 2){//IP_PDUV1_HUADA
+        res = false;
+        ui->label_8->setHidden(res);
+        ui->sBox->setHidden(res);
+        ui->label_11->setHidden(res);
+        ui->logBox->setHidden(res);
+        ui->label_20->setText(tr("屏类型"));
+        ui->securityBox->setItemText(0 , tr("液晶屏"));
+        ui->securityBox->setItemText(1 , tr("段码屏"));
+        ui->label_11->setText(tr("电压显示"));
+        ui->logBox->setItemText(0 , tr("显示0.1"));
+        ui->logBox->setItemText(1 , tr("整数"));
+        ui->label_3->setHidden(res);
+        ui->ipModeBox->setHidden(res);//电流小数 1 2； 屏类型 段码屏 和 液晶屏
+        ui->label_20->setHidden(res);
+        ui->securityBox->setHidden(res);
+    }else{
+        ui->label_20->setText(tr("安全版本"));
+        ui->securityBox->setItemText(0 , tr("标准"));
+        ui->securityBox->setItemText(1 , tr("加密"));
+        ui->label_11->setText(tr("日志功能"));
+        ui->logBox->setItemText(0 , tr("无日志"));
+        ui->logBox->setItemText(1 , tr("带日志"));
+    }
 }

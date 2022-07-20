@@ -102,6 +102,7 @@ int Sn_DevType::getSceenType(const QString &str)
     int ret = 0;
     if(str.contains("断码屏")) ret = 1;
     if(str.contains("数码管")) ret = 2;
+    if(str.contains("断码屏") && str.contains("V1")) ret = 3;
     return ret;
 }
 

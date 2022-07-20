@@ -63,6 +63,7 @@ bool Test_CoreThread::volErrRange(int i)
 
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     QString str = tr("电压 L%1，期望电压=%2V，实测电压=%3V").arg(i+1)
             .arg(mSour->line.vol.value[i]).arg(mDev->line.vol.value[i]/(crate*1.0));
     if(ret) str += tr("正常");
@@ -81,6 +82,7 @@ bool Test_CoreThread::curErrRange(int i)
 
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     QString str = tr("电流 L%1，期望电流=%2A，实测电流=%3A").arg(i+1)
             .arg(mSour->line.cur.value[i]/COM_RATE_CUR).arg(mDev->line.cur.value[i]/COM_RATE_CUR/crate);
     if(ret) str += tr("正常");

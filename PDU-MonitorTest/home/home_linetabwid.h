@@ -23,6 +23,7 @@ protected slots:
 private:
     sObjData *mData;
     sDevData *mDev;
+    sCfgItem *mItem;
 };
 
 #endif // HOME_LINETABWID_H

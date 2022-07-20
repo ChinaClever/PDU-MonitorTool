@@ -28,6 +28,7 @@ bool Test_ErrRange::volErr(int id)
     int pass = Test_Fail;
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     int err = mItem->err.volErr*crate;
     int value = mDev->line.vol.value[id];
     int exValue = mSourceDev->line.vol.value[id]*crate;
@@ -43,6 +44,7 @@ bool Test_ErrRange::curErr(int id)
     int pass = Test_Fail;
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     int err = (mItem->err.curErr+1)*crate;
     int value = mDev->line.cur.value[id];
     int exValue = mSourceDev->line.cur.value[id]*crate;
@@ -60,6 +62,7 @@ bool Test_ErrRange::oneLineVolErr()
     int pass = Test_Fail;
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     int err = (2*mItem->err.volErr+1)*crate;
     ushort *ptr = mDev->line.vol.value;
     int exValue = 2*ptr[0];
@@ -76,6 +79,7 @@ bool Test_ErrRange::oneLineCurErr()
     int pass = Test_Fail;
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     int err = (2*mItem->err.curErr+1)*crate;
     ushort *ptr = mDev->line.cur.value;
     int exValue = ptr[0];
@@ -138,7 +142,7 @@ bool Test_ErrRange::temErr()
     int pass = Test_Fail;
     //int exValue = mSourceDev->env.tem.value[0];
     int value = mDev->env.tem.value[0];
-    bool ret = false; if((value>0)&&(value<100))ret=true;
+    bool ret = false; if((value>0)&&(value<1000))ret=true;
     //bool ret = checkErrRange(exValue, value, 10);
     if(ret) pass = Test_Pass;
     mDev->env.tem.status[0] = pass;
@@ -151,7 +155,7 @@ bool Test_ErrRange::humErr()
     int pass = Test_Fail;
     //int exValue = mSourceDev->env.hum.value[0];
     int value = mDev->env.hum.value[0];
-    bool ret = false; if((value>0)&&(value<100))ret=true;
+    bool ret = false; if((value>0)&&(value<1000))ret=true;
     //bool ret = checkErrRange(exValue, value, 15);
     if(ret) pass = Test_Pass;
     mDev->env.hum.status[0] = pass;
@@ -178,7 +182,8 @@ bool Test_ErrRange::volAlarm(int id)
     bool ret = true; int crate = 1;
     sCfgDev *cth = &(mItem->cTh);
     sDataUnit *unit = &(mDev->line.vol);
-    if(mDev->devType.screen == 1) crate = 10;   
+    if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     if(unit->min[id] != cth->vol_min*crate) ret = false;
     if(unit->max[id] != cth->vol_max*crate) ret = false;
 
@@ -191,6 +196,7 @@ bool Test_ErrRange::curAlarm(int id)
     sCfgDev *cth = &(mItem->cTh);
     sDataUnit *unit = &(mDev->line.cur);
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     if((mDt->lines == 2) && id){
         if(unit->min[id]/10 != (cth->cur_min/10+1)/2) ret = false;
         if(cth->cur_max == 630){
@@ -215,7 +221,7 @@ bool Test_ErrRange::temAlarm()
 {
     bool ret = true;
     sDataUnit *unit = &(mDev->env.tem);
-    if((unit->max[0] == 40) || (unit->max[0] == 60)) ret = true; else ret = false;
+    if((unit->max[0] == 40) || (unit->max[0] == 60)|| (unit->max[0] == 39)) ret = true; else ret = false;
     if(unit->min[0]) ret = false;
 
     return ret;

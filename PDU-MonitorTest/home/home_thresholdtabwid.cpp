@@ -9,6 +9,7 @@ Home_ThresholdTabWid::Home_ThresholdTabWid(QWidget *parent) : ComTableWid(parent
 {
     initWid();
     mDev = sDataPacket::bulid()->getDev();
+    mItem = Cfg::bulid()->item;
     mData = &(mDev->line);
 }
 
@@ -27,6 +28,7 @@ void Home_ThresholdTabWid::setDataUnit(int id, sDataUnit &unit)
     QString str = tr("电流");
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     if(id < 3) {
         rate = 1;
         suffix = "V";

@@ -9,6 +9,7 @@ Home_LineTabWid::Home_LineTabWid(QWidget *parent) : ComTableWid(parent)
 {
     initWid();
     mDev = sDataPacket::bulid()->getDev();
+    mItem = Cfg::bulid()->item;
     mData = &(mDev->line);
 }
 
@@ -25,6 +26,7 @@ void Home_LineTabWid::appendItem(sObjData *dev)
 {
     int crate = 1;
     if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
     for(int i=0; i<dev->size; ++i) {
         QStringList listStr;
 
