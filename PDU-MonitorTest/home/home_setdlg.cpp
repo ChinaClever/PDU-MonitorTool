@@ -42,8 +42,6 @@ void Home_SetDlg::initFunSlot()
     ui->InSecond->setText(mItem->ip.inSecond);
     ui->OutFirst->setText(mItem->ip.outFirst);
     ui->OutSecond->setText(mItem->ip.outSecond);
-    ui->protocolBox->hide();
-    ui->label_22->hide();
 }
 
 
