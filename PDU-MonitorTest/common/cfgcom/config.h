@@ -42,7 +42,7 @@ struct sIpCfg {
     uchar standard;
     uchar security;
     uchar lcd;
-    uchar ipdistribution;
+    uchar protocol;//  0 表示静态协议 1表示DHCP
     QString inFirst;
     QString inSecond;
     QString outFirst;

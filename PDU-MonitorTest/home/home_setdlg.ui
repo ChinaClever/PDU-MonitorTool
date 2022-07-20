@@ -166,15 +166,15 @@
     <item row="0" column="2">
      <widget class="QLabel" name="label_22">
       <property name="text">
-       <string>IP分配</string>
+       <string>协议</string>
       </property>
      </widget>
     </item>
     <item row="0" column="3">
-     <widget class="QComboBox" name="ipBox">
+     <widget class="QComboBox" name="protocolBox">
       <item>
        <property name="text">
-        <string>静态</string>
+        <string>静态地址</string>
        </property>
       </item>
       <item>

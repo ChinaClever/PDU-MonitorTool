@@ -36,12 +36,14 @@ void Home_SetDlg::initFunSlot()
     ui->logBox->setCurrentIndex(mItem->ip.log);
     on_ipTypeBox_currentIndexChanged(v);
     ui->lcdBox->setCurrentIndex(mItem->ip.lcd);
+    ui->protocolBox->setCurrentIndex(mItem->ip.protocol);
 
     ui->InFirst->setText(mItem->ip.inFirst);
     ui->InSecond->setText(mItem->ip.inSecond);
     ui->OutFirst->setText(mItem->ip.outFirst);
     ui->OutSecond->setText(mItem->ip.outSecond);
-    ui->ipBox->setCurrentIndex(mItem->ip.ipdistribution);
+    ui->protocolBox->hide();
+    ui->label_22->hide();
 }
 
 
@@ -91,7 +93,7 @@ bool Home_SetDlg::getThresholdWid()
     mItem->ip.outFirst = ui->OutFirst->text();
     mItem->ip.outSecond = ui->OutSecond->text();
     mItem->ip.lcd = ui->lcdBox->currentIndex();
-    mItem->ip.ipdistribution = ui->ipBox->currentIndex();
+    mItem->ip.protocol = ui->protocolBox->currentIndex();
 
     return true;
 }
