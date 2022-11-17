@@ -40,7 +40,7 @@ private slots:
     void timeoutDone();
     void on_setBtn_clicked();
     void on_startBtn_clicked();
-    void on_readBtn_clicked();
+//    void on_readBtn_clicked();
 
 private:
     Ui::Home_WorkWid *ui;

@@ -106,7 +106,7 @@ bool Test_ErrRange::oneLinePowErr()
     {
       if(mDev->devType.devType == SI_PDU) err /= 100.0;
       else err /= 1000.0;
-      if(mDev->devType.devType == IP_PDU) value /= 10;
+      //if(mDev->devType.devType == IP_PDU) value /= 10;
     }
     else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);

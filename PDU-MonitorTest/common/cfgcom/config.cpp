@@ -29,6 +29,8 @@ Cfg *Cfg::bulid()
 int Cfg::initAddr()
 {
     item->vref = read("vref", false,"Sys").toBool();
+    item->printer = read("printer", false ).toBool();
+    item->macCheck = read("maccheck" , 1).toInt();
     return read("addr", 1,"Sys").toInt();
 }
 
@@ -36,6 +38,8 @@ void Cfg::setAddr(int addr)
 {
     write("addr", addr, "Sys");
     write("vref", item->vref,"Sys");
+    write("printer", item->printer);
+    write("maccheck", item->macCheck);
 }
 
 void Cfg::initErrData()
@@ -79,6 +83,8 @@ void Cfg::initCfgDev()
     item->cTh.cur_min = read("cur_min", 0).toInt();
     item->cTh.cur_max = read("cur_max", 320).toInt();
     item->cTh.enModify = read("en_modify", 0).toInt();
+    item->hw_ver = read("hw_ver", "").toString();
+    item->pn = read("pn", "").toString();
 
     QString g = "siCfg";
     item->si.led = false;
@@ -113,6 +119,8 @@ void Cfg::writeCfgDev()
     write("cur_min", item->cTh.cur_min);
     write("cur_max", item->cTh.cur_max);
     write("en_modify", item->cTh.enModify);
+    write("hw_ver", item->hw_ver);
+    write("pn", item->pn);
 
     QString g = "siCfg";
     //write("si_mod", item->si.si_mod, g);

@@ -38,6 +38,9 @@ void Home_SetDlg::initFunSlot()
     ui->lcdBox->setCurrentIndex(mItem->ip.lcd);
     ui->protocolBox->setCurrentIndex(mItem->ip.protocol);
 
+    ui->hwEdit->setText(mItem->hw_ver);
+    ui->pnEdit->setText(mItem->pn);
+
     ui->InFirst->setText(mItem->ip.inFirst);
     ui->InSecond->setText(mItem->ip.inSecond);
     ui->OutFirst->setText(mItem->ip.outFirst);
@@ -86,6 +89,8 @@ bool Home_SetDlg::getThresholdWid()
     mItem->ip.standard = ui->sBox->currentIndex();
     mItem->ip.log = ui->logBox->currentIndex();
     mItem->sw_ver = ui->verEdit->text();
+    mItem->hw_ver = ui->hwEdit->text();
+    mItem->pn = ui->pnEdit->text();
     mItem->ip.inFirst = ui->InFirst->text();
     mItem->ip.inSecond = ui->InSecond->text();
     mItem->ip.outFirst = ui->OutFirst->text();
@@ -165,14 +170,6 @@ void Home_SetDlg::on_resBtn_clicked()
 void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
 {
     bool res = true;
-    if(index == IP_PDUV3_EATON - 2)  res = false;
-    ui->label_14 ->setHidden(res);
-    ui->InFirst->setHidden(res);
-    ui->InSecond->setHidden(res);
-    ui->label_16 ->setHidden(res);
-    ui->OutFirst->setHidden(res);
-    ui->OutSecond->setHidden(res);
-
     res = false;
     if(index >= IP_PDUV3_C3 - 2)  res = true;
     ui->label_8->setHidden(res);
@@ -189,6 +186,24 @@ void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
     ui->logBox->setHidden(res);
     ui->label_8->setHidden(res);
     ui->label_11->setHidden(res);
+
+
+    if(index == IP_PDUV3_EATON - 2){
+        res = false;
+        ui->label_14 ->setHidden(res);
+        ui->InFirst->setHidden(res);
+        ui->InSecond->setHidden(res);
+        ui->label_16 ->setHidden(res);
+        ui->OutFirst->setHidden(res);
+        ui->OutSecond->setHidden(res);
+
+        ui->label_8->setHidden(res);
+        ui->sBox->setHidden(res);
+        ui->label_3->setHidden(res);
+        ui->ipModeBox->setHidden(res);
+        ui->label_11->setHidden(res);
+        ui->logBox->setHidden(res);
+    }
 
     if( index == IP_PDUV1_HUADA - 2){//IP_PDUV1_HUADA
         res = false;

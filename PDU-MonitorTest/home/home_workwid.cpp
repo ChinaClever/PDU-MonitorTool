@@ -38,6 +38,8 @@ void Home_WorkWid::createWid()
     mDev->id = Cfg::bulid()->initAddr();
     ui->addrSpin->setValue(mDev->id);
     ui->vrefCheck->setChecked(mItem->vref);
+    ui->printerCheck->setChecked(mItem->printer);
+    ui->guideCheck->setChecked(mItem->macCheck?true:false);
 
     timer = new QTimer(this);
     timer->start(100);
@@ -187,6 +189,8 @@ bool Home_WorkWid::initSerial()
     mDev->id = ui->addrSpin->value();
     mItem->eleCheck = ui->eleCheck->isChecked();
     mItem->vref = ui->vrefCheck->isChecked();
+    mItem->printer = ui->printerCheck->isChecked();
+    mItem->macCheck = ui->guideCheck->isChecked()?1:0;
     Cfg::bulid()->setAddr(mDev->id);
 
     bool ret = coms->ser2->isOpened();
@@ -208,6 +212,24 @@ bool Home_WorkWid::initWid()
 
     if(!mFirst) {
         ret = MsgBox::information(this, tr("请确认首件测试，人工已验证通过？"));
+        if(ui->printerCheck->isChecked()) {
+            ret = MsgBox::question(this, tr("已启动打印，请确认？"));
+            if( ret ){
+                if(mItem->sw_ver.isEmpty()){
+                    ret = MsgBox::question(this, tr("请确认填写设备版本？"));
+                    return ret;
+                }
+                if(mItem->hw_ver.isEmpty()){
+                    ret = MsgBox::question(this, tr("请确认填写硬件版本？"));
+                    return ret;
+                }
+                if(mItem->pn.isEmpty()){
+                    ret = MsgBox::question(this, tr("请确认填写物料编码？"));
+                    return ret;
+                }
+            }
+        }
+
         if(ret) mFirst++; else return false;
         on_setBtn_clicked();
     }
@@ -219,6 +241,9 @@ bool Home_WorkWid::initWid()
 
     if(mItem->cnt.num < 1) {
         MsgBox::critical(this, tr("请先填写订单剩余数量！"));
+        if(ui->printerCheck->isChecked()) {
+            MsgBox::question(this, tr("已启动打印，请确认？"));
+        }
         return false;
     }
 
@@ -226,16 +251,16 @@ bool Home_WorkWid::initWid()
         ret = MsgBox::question(this, tr("测试软件会自动修改，设备报警阈值，请确认？"));
     }
 
-    if(ret) ret = ui->guideCheck->isChecked();
-    if(ret) ret = mManualDlg->exec(); else ret = true;
-    if(ret) {
-        mPacket->init();
-        emit startSig();
-        ui->textEdit->clear();
-        ui->groupBox_4->setEnabled(false);
-    } else {
-        MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));
-    }
+//    if(ret) ret = ui->guideCheck->isChecked();
+//    if(ret) ret = mManualDlg->exec(); else ret = true;
+//    if(ret) {
+    mPacket->init();
+    emit startSig();
+    ui->textEdit->clear();
+    ui->groupBox_4->setEnabled(false);
+//    } else {
+//        MsgBox::warning(this, tr("经人工确认，设备出现问题，测试结束！！！"));
+//    }
 
     return ret;
 }
@@ -253,13 +278,13 @@ void Home_WorkWid::on_startBtn_clicked()
     }
 }
 
-void Home_WorkWid::on_readBtn_clicked()
-{
-    mPro->step = Collect_Start;
-    bool ret = initSerial();
-    if(ret) {
-        ui->textEdit->clear();
-        Test_DevRead::bulid(this)->start();
-        //MsgBox::information(this, tr("已开始读取设备数据，请等待5抄！！！"));
-    }
-}
+//void Home_WorkWid::on_readBtn_clicked()
+//{
+//    mPro->step = Collect_Start;
+//    bool ret = initSerial();
+//    if(ret) {
+//        ui->textEdit->clear();
+//        Test_DevRead::bulid(this)->start();
+//        //MsgBox::information(this, tr("已开始读取设备数据，请等待5抄！！！"));
+//    }
+//}

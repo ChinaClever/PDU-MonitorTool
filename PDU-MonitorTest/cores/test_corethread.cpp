@@ -4,6 +4,7 @@
  *      Author: Lzy
  */
 #include "test_corethread.h"
+#include "printer_bartender.h"
 
 Test_CoreThread::Test_CoreThread(QObject *parent) : Test_Object(parent)
 {
@@ -18,6 +19,7 @@ void Test_CoreThread::initFunSlot()
     mRead = Test_DevRead::bulid(this);
     mCtrl = Test_DevCtrl::bulid(this);
     mNetWork = Test_NetWork::bulid(this);
+    Printer_BarTender::bulid(this);
 }
 
 
@@ -176,16 +178,16 @@ bool Test_CoreThread::oneLineCheck()
         value = mDev->line.pow;
         if( crate == 10 )
         {
-           if(SI_PDU == mDev->devType.devType)
-               str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
-                                .arg((value[1]+value[2])/COM_RATE_PF).arg(value[0]/COM_RATE_PF);
-           else
-               str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
-                   .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
+            if(SI_PDU == mDev->devType.devType)
+                str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                        .arg((value[1]+value[2])/COM_RATE_PF).arg(value[0]/COM_RATE_PF);
+            else
+                str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                        .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
         }
         else
             str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
-                .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
+                    .arg((value[1]+value[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
 
@@ -322,7 +324,7 @@ bool Test_CoreThread::factorySet()
     } else {
         ret = mRead->checkNet(); if(!ret) return ret;
         mLogs->updatePro(tr("启动Web，开始网页检查"));
-        Ctrl_IpRtu::bulid(this)->start();        
+        Ctrl_IpRtu::bulid(this)->start();
         Ctrl_IpRtu::bulid(this)->wait();
         mLogs->updatePro(tr("退出Web，网页检查结束"));
     }
@@ -349,6 +351,16 @@ void Test_CoreThread::workDown()
             ret = checkAlarmErr();
         }
         if(ret) ret = factorySet();
+        if(ret){
+            if(mItem->printer){
+                sBarTend it;
+                it.fw = mItem->sw_ver;it.hw = mItem->hw_ver;it.pn = mItem->pn;
+                ret = Printer_BarTender::bulid(this)->printer(it);
+                if(!ret) ret = Printer_BarTender::bulid(this)->printer(it);
+                if(ret) mLogs->updatePro(tr("标签打印成功"), ret);
+                else mLogs->updatePro(tr("标签打印失败"), ret);
+            }
+        }else mLogs->updatePro(tr("因测试未通过，标签未打印"), ret);
     }
     workResult(ret);
 }
