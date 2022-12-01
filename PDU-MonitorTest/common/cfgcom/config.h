@@ -107,10 +107,14 @@ struct sCfgItem
     uchar pcNum;
     QString user; // 客户名称
     QString sw_ver;
+    QString hw_ver;
+    QString pn;
     sSerial coms;
     ushort currentNum;
     bool eleCheck;
     bool vref;
+    bool printer;
+    uchar macCheck;
 };
 
 
