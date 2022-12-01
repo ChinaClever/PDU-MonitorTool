@@ -19,9 +19,16 @@ void Test_CoreThread::initFunSlot()
     mRead = Test_DevRead::bulid(this);
     mCtrl = Test_DevCtrl::bulid(this);
     mNetWork = Test_NetWork::bulid(this);
+    connect(mNetWork , SIGNAL(sendMACSig(QString)) , this , SLOT(getMacSlot(QString)));
     Printer_BarTender::bulid(this);
 }
 
+void Test_CoreThread::getMacSlot(QString str)
+{
+    QStringList temp = str.split(" ");
+    if( temp.size() == 2 )
+        this->mMacStr = temp.at(1);
+}
 
 bool Test_CoreThread::hubPort()
 {
@@ -352,6 +359,11 @@ void Test_CoreThread::workDown()
         }
         if(ret) ret = factorySet();
         if(ret){
+            if(mItem->macprinter){
+                ret = Printer_BarTender::bulid(this)->print(this->mMacStr);
+                if(ret) mLogs->updatePro(tr("MAC标签打印成功"), ret);
+                else mLogs->updatePro(tr("MAC标签打印失败"), ret);
+            }
             if(mItem->printer){
                 sBarTend it;
                 it.fw = mItem->sw_ver;it.hw = mItem->hw_ver;it.pn = mItem->pn;

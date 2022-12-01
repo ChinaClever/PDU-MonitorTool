@@ -29,16 +29,26 @@ Cfg *Cfg::bulid()
 int Cfg::initAddr()
 {
     item->vref = read("vref", false,"Sys").toBool();
-    item->printer = read("printer", false ).toBool();
     item->macCheck = read("maccheck" , 1).toInt();
     return read("addr", 1,"Sys").toInt();
+}
+
+void Cfg::initPrint()
+{
+    item->printer = read("printer", false ).toBool();
+    item->macprinter = read("macprinter", false ).toBool();
+}
+
+void Cfg::setPrinter()
+{
+    write("macprinter", item->macprinter);
+    write("printer", item->printer);
 }
 
 void Cfg::setAddr(int addr)
 {
     write("addr", addr, "Sys");
     write("vref", item->vref,"Sys");
-    write("printer", item->printer);
     write("maccheck", item->macCheck);
 }
 

@@ -5,12 +5,15 @@
  */
 #include "printer_bartender.h"
 #include "common.h"
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
+#include <QtPrintSupport/QPrinterInfo>
 
 Printer_BarTender::Printer_BarTender(QObject *parent) : QObject(parent)
 {
-    mSocket = new QUdpSocket(this);
-    mSocket->bind(QHostAddress::AnyIPv4, 47755);
-    connect(mSocket,SIGNAL(readyRead()),this,SLOT(recvSlot()));
+//    mSocket = new QUdpSocket(this);
+//    mSocket->bind(QHostAddress::AnyIPv4, 47755);
+//    connect(mSocket,SIGNAL(readyRead()),this,SLOT(recvSlot()));
 }
 
 Printer_BarTender *Printer_BarTender::bulid(QObject *parent)
@@ -71,4 +74,70 @@ void Printer_BarTender::recvSlot()
         QNetworkDatagram datagram = mSocket->receiveDatagram();
         if(datagram.data().size()) mRes = true;
     }
+}
+
+/**
+ * @brief Print::RawDataToPrinter
+ * 发送ZPL指令直接与打印机通信
+ * @param szPrinterName 打印机名称
+ * @param lpData  ZPL指令
+ * @param dwCount
+ * @return ZPL指令发送成功，返回true，ZPL指令发送失败，返回false
+ */
+bool Printer_BarTender::RawDataToPrinter(LPSTR szPrinterName, LPBYTE lpData, DWORD dwCount)
+{
+    bool        bStatus = FALSE;
+    HANDLE      hPrinter = NULL;
+    DOC_INFO_1A DocInfo;
+    DWORD       dwJob = 0L;
+    DWORD       dwBytesWritten = 0L;
+
+    // 打开打印机的手柄，这里使用OpenPrinterA()而不是OpenPrinter()是因为当前Qt编码是ANSI
+    bStatus = OpenPrinterA(szPrinterName, &hPrinter, NULL);
+    if (bStatus)
+    {
+        // 填写打印文档信息
+        DocInfo.pDocName = (LPSTR)"Raw Document";
+        DocInfo.pOutputFile = NULL;
+        DocInfo.pDatatype = (LPSTR)"RAW";
+
+
+        // 通知后台处理程序文档正在开始
+        dwJob = StartDocPrinterA(hPrinter, 1, (LPBYTE)&DocInfo);
+        if (dwJob > 0)
+        {
+            // 开始一页的打印
+            bStatus = StartPagePrinter(hPrinter);
+            if (bStatus)
+            {
+                // 发送数据到打印机
+                bStatus = WritePrinter(hPrinter, lpData, dwCount, &dwBytesWritten);
+                EndPagePrinter (hPrinter);
+            }
+            // 通知后台处理程序文档正在结束
+            EndDocPrinter(hPrinter);
+        }
+        // 关闭打印机手柄
+        ClosePrinter(hPrinter);
+    }
+    // 检查是否写入了正确的字节数
+    if (!bStatus || (dwBytesWritten != dwCount))
+    {
+        bStatus = false;
+    }
+    else
+    {
+        bStatus = true;
+    }
+    return bStatus;
+}
+
+bool Printer_BarTender::print(QString cmd)
+{
+    QString cmd1 = tr("^XA^PW1000^LL800^LH0,0^MD10^FO50,50^A0,55,55^FD%1^FS^XZ").arg(cmd);
+    int length = cmd1.length();
+    QString printerName = QPrinterInfo::defaultPrinterName();
+    bool ret = RawDataToPrinter((LPSTR)printerName.toLocal8Bit().data(),
+                            (LPBYTE)cmd1.toLocal8Bit().data(), (DWORD)length);
+    return ret;
 }

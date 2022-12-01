@@ -15,6 +15,9 @@ protected:
     void run();
     void workDown();
 
+signals:
+    void sendMACSig(QString str);
+
 protected slots:
     void initFunSlot();
 

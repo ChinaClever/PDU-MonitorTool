@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtNetwork>
+#include <windows.h>
 
 struct sBarTend {
     QString pn;//"物料编码"
@@ -20,6 +21,7 @@ public:
     static Printer_BarTender *bulid(QObject *parent = nullptr);
     bool printer(sBarTend &it);
     QString createOrder(sBarTend &it);
+    bool print(QString cmd);
 
 protected:
     void delay(int msec);
@@ -27,9 +29,11 @@ protected:
 
     int sendMsg(const QByteArray &msg, quint16 port,
                 const QHostAddress &host=QHostAddress::LocalHost);
+    bool RawDataToPrinter(LPSTR szPrinterName, LPBYTE lpData, DWORD dwCount);
 
 protected slots:
     void recvSlot();
+
 
 private:
     bool mRes;

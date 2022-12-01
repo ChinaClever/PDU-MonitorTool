@@ -114,6 +114,7 @@ struct sCfgItem
     bool eleCheck;
     bool vref;
     bool printer;
+    bool macprinter;
     uchar macCheck;
 };
 
@@ -135,6 +136,8 @@ public:
     void setLoginName(const QString &name);
 
     int initAddr();
+    void initPrint();
+    void setPrinter();
     void writeCnt();
     void writeErrData();
     void writeCfgDev();

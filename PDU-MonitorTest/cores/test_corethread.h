@@ -11,6 +11,7 @@ public:
 
 protected slots:
     void initFunSlot();
+    void getMacSlot(QString str);
 
 protected:
     void run();    
@@ -44,6 +45,7 @@ private:
     Test_DevRead *mRead;
     Test_DevCtrl *mCtrl;
     Test_NetWork *mNetWork;
+    QString mMacStr;
 };
 
 #endif // TEST_CORETHREAD_H

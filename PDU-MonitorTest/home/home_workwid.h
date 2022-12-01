@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "home_manualdlg.h"
 #include "test_corethread.h"
+#include "home_printdlg.h"
 
 namespace Ui {
 class Home_WorkWid;
@@ -34,14 +35,14 @@ protected:
 
     bool initSerial();
     bool initWid();
-    bool print();
-
 
 private slots:
     void timeoutDone();
     void on_setBtn_clicked();
     void on_startBtn_clicked();
 //    void on_readBtn_clicked();
+
+    void on_printBtn_clicked();
 
 private:
     Ui::Home_WorkWid *ui;
@@ -52,7 +53,8 @@ private:
     sProgress *mPro;
     sCfgItem *mItem;
     sDataPacket *mPacket;
-    Home_SetDlg *mSetDlg;    
+    Home_SetDlg *mSetDlg;
+    Home_PrintDlg *mPrintDlg;
     Home_ManualDlg *mManualDlg;
     Test_CoreThread *mCoreThread;
 };
