@@ -43,6 +43,7 @@ void MainWindow::initWid()
 
     mNavBarWid = new NavBarWid(ui->barWid);
     connect(mNavBarWid, SIGNAL(navBarSig(int)), this, SLOT(navBarSlot(int)));
+
 }
 
 void MainWindow::navBarSlot(int id)

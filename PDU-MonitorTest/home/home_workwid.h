@@ -34,6 +34,7 @@ protected:
 
     bool initSerial();
     bool initWid();
+    bool print();
 
 
 private slots:

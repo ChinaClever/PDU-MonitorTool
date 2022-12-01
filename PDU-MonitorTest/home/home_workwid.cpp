@@ -5,6 +5,10 @@
  */
 #include "home_workwid.h"
 #include "ui_home_workwid.h"
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
+#include <QtPrintSupport/QPrinterInfo>
+
 
 Home_WorkWid::Home_WorkWid(QWidget *parent) :
     QWidget(parent),
@@ -240,8 +244,88 @@ bool Home_WorkWid::initWid()
     return ret;
 }
 
+
+/**
+ * @brief Print::RawDataToPrinter
+ * 发送ZPL指令直接与打印机通信
+ * @param szPrinterName 打印机名称
+ * @param lpData  ZPL指令
+ * @param dwCount
+ * @return ZPL指令发送成功，返回true，ZPL指令发送失败，返回false
+ */
+bool RawDataToPrinter(LPSTR szPrinterName, LPBYTE lpData, DWORD dwCount)
+{
+    bool        bStatus = FALSE;
+    HANDLE      hPrinter = NULL;
+    DOC_INFO_1A DocInfo;
+    DWORD       dwJob = 0L;
+    DWORD       dwBytesWritten = 0L;
+
+    // 打开打印机的手柄，这里使用OpenPrinterA()而不是OpenPrinter()是因为当前Qt编码是ANSI
+    bStatus = OpenPrinterA(szPrinterName, &hPrinter, NULL);
+    if (bStatus)
+    {
+        // 填写打印文档信息
+        DocInfo.pDocName = (LPSTR)"Raw Document";
+        DocInfo.pOutputFile = NULL;
+        DocInfo.pDatatype = (LPSTR)"RAW";
+
+
+        // 通知后台处理程序文档正在开始
+        dwJob = StartDocPrinterA(hPrinter, 1, (LPBYTE)&DocInfo);
+        if (dwJob > 0)
+        {
+            // 开始一页的打印
+            bStatus = StartPagePrinter(hPrinter);
+            if (bStatus)
+            {
+                // 发送数据到打印机
+                bStatus = WritePrinter(hPrinter, lpData, dwCount, &dwBytesWritten);
+                EndPagePrinter (hPrinter);
+            }
+            // 通知后台处理程序文档正在结束
+            EndDocPrinter(hPrinter);
+        }
+        // 关闭打印机手柄
+        ClosePrinter(hPrinter);
+    }
+    // 检查是否写入了正确的字节数
+    if (!bStatus || (dwBytesWritten != dwCount))
+    {
+        bStatus = false;
+    }
+    else
+    {
+        bStatus = true;
+    }
+    return bStatus;
+}
+
+bool Home_WorkWid::print()
+{
+    QString cmd = tr("^XA^PW1000^LL800^LH0,0^MD10^FO50,50^A0,55,55^FD11:EF:FF:FF:FF:FF:FE^FS^XZ");
+    int length = cmd.length();
+    QString printerName = QPrinterInfo::defaultPrinterName();
+    bool ret = RawDataToPrinter((LPSTR)printerName.toLocal8Bit().data(),
+                            (LPBYTE)cmd.toLocal8Bit().data(), (DWORD)length);
+    return ret;
+}
+
 void Home_WorkWid::on_startBtn_clicked()
 {
+    bool ret = print();
+    qDebug()<<ret <<endl;
+//    QPrinter printer(QPrinter::PrinterResolution);
+//    //printer.setPrinterName(tr("ZDesigner GT800-300dpi EPL"));
+//    QPrintDialog *dlg = new QPrintDialog(&printer,this);
+//    if(dlg->exec() == QDialog::Accepted){
+//        QPainter p(&printer);
+
+//        //qDebug()<<printer.printerName() << "       "<<printer.paperSize();
+//        //p.drawText(0,0,"$(^XA^XZ)$");
+//        p.drawText(0,0,"$(^XA^PW1000^LL800^LH0,0^MD10^FO50,50^A0,55,55^FDEF:FF:FF:FF:FF:FE^FS^XZ)$");
+//        //p.drawText(0,0,"$(^XA^PW1000^LL800^LH0,0^MD10^FO50,50^A0,55,55^FDSERENITY to accept the things^FS^XZ)$");
+//    }
     if(mPro->step == Test_End) {
         if(initWid()) mCoreThread->start();
     } else {

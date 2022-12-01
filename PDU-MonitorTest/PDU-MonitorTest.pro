@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -51,3 +51,8 @@ RESOURCES += \
 
 RC_FILE += \
     images/icon.rc
+
+win32: LIBS += -L$$PWD/./ -lwinspool
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.
