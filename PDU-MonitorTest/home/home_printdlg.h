@@ -28,6 +28,8 @@ private slots:
 
     void on_closeBtn_clicked();
 
+    void on_testPrintInfoBtn_clicked();
+
 private:
     Ui::Home_PrintDlg *ui;
     sCfgItem *mItem;

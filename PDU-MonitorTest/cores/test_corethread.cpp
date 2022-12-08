@@ -25,9 +25,8 @@ void Test_CoreThread::initFunSlot()
 
 void Test_CoreThread::getMacSlot(QString str)
 {
-    QStringList temp = str.split(" ");
-    if( temp.size() == 2 )
-        this->mMacStr = temp.at(1);
+    if( str.size() >= 17 )
+        this->mMacStr = str.right(17);
 }
 
 bool Test_CoreThread::hubPort()
@@ -360,15 +359,18 @@ void Test_CoreThread::workDown()
         if(ret) ret = factorySet();
         if(ret){
             if(mItem->macprinter){
-                ret = Printer_BarTender::bulid(this)->print(this->mMacStr);
-                if(ret) mLogs->updatePro(tr("MAC标签打印成功"), ret);
-                else mLogs->updatePro(tr("MAC标签打印失败"), ret);
+                if( !this->mMacStr.isEmpty() && IP_PDU == mDt->devType){
+                    ret = Printer_BarTender::bulid()->printMAC(this->mMacStr);
+                    if(!ret) ret = Printer_BarTender::bulid()->printMAC(this->mMacStr);
+                    if(ret) mLogs->updatePro(tr("MAC标签打印成功"), ret);
+                    else mLogs->updatePro(tr("MAC标签打印失败"), ret);
+                }
             }
             if(mItem->printer){
                 sBarTend it;
                 it.fw = mItem->sw_ver;it.hw = mItem->hw_ver;it.pn = mItem->pn;
-                ret = Printer_BarTender::bulid(this)->printer(it);
-                if(!ret) ret = Printer_BarTender::bulid(this)->printer(it);
+                ret = Printer_BarTender::bulid()->printerInfo(it);
+                if(!ret) ret = Printer_BarTender::bulid()->printerInfo(it);
                 if(ret) mLogs->updatePro(tr("标签打印成功"), ret);
                 else mLogs->updatePro(tr("标签打印失败"), ret);
             }

@@ -21,7 +21,8 @@ public:
     static Printer_BarTender *bulid(QObject *parent = nullptr);
     bool printer(sBarTend &it);
     QString createOrder(sBarTend &it);
-    bool print(QString cmd);
+    bool printMAC(QString cmd);
+    bool printerInfo(sBarTend &it);
 
 protected:
     void delay(int msec);

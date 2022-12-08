@@ -26,7 +26,7 @@ void Home_PrintDlg::initFunSlot()
 void Home_PrintDlg::on_testPrintBtn_clicked()
 {
     QString cmd = "DF:DF:DF:DF:DF:1F";
-    bool ret = Printer_BarTender::bulid()->print(cmd);
+    bool ret = Printer_BarTender::bulid()->printMAC(cmd);
     qDebug()<<ret <<endl;
 }
 
@@ -41,4 +41,12 @@ void Home_PrintDlg::on_saveBtn_clicked()
 void Home_PrintDlg::on_closeBtn_clicked()
 {
     this->close();
+}
+
+void Home_PrintDlg::on_testPrintInfoBtn_clicked()
+{
+    sBarTend it;
+    it.fw = "V0.0.4-HCD";it.hw = "V0.0.4-HCD";it.pn = "J50002L00ACC090401";
+    bool ret = Printer_BarTender::bulid()->printerInfo(it);
+    qDebug()<<ret <<endl;
 }
