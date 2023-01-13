@@ -679,6 +679,11 @@
         <string>IP-PDUV1-华大</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>IP-V3-BYTE</string>
+       </property>
+      </item>
      </widget>
     </item>
     <item row="2" column="1">

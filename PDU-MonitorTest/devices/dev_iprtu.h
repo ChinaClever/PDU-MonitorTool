@@ -20,7 +20,8 @@ protected:
     int recvDataV1(uchar *ptr);
     int recvDataV3(uchar *ptr);
     uchar *getSwitch(uchar *ptr, int line, uchar *value);
-
+    uchar *calcaPow(uchar *ptr, int line, ushort *value , ushort *vol, ushort *cur);
+    uchar *toCurThreshold(uchar *ptr, int line, sDataUnit &unit);
 };
 
 #endif // DEV_IPTHREAD_H
