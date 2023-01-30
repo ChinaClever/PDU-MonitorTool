@@ -321,4 +321,5 @@ class IpWeb:
             if (size == 2 and num == 2):
                 max = int((int(max) + 1) // 2)
             self.itemCheck("Lmax" + str(num), round(int(max)/10*0.8,1), p)
+        time.sleep(1.2)
 
