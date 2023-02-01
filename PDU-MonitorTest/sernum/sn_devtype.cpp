@@ -45,6 +45,7 @@ int Sn_DevType::getDevType(const QString &str)
         if(str.contains("SNMPV3")){
             if(str.contains("C3")) mDt->version = IP_PDUV3_C3;
             else if(str.contains("EATON")) mDt->version = IP_PDUV3_EATON;
+            else if(str.contains("BYTE")) mDt->version = IP_PDUV3_BYTE;
             else
             mDt->version = IP_PDUV3;
         }else if(str.contains("V6")){

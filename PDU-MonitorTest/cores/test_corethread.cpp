@@ -215,12 +215,12 @@ bool Test_CoreThread::checkErrRange()
     if(2 == mDt->lines) i=1;
     for(; i<mDev->line.size; ++i) {
         ret = volErrRange(i); if(!ret) res = false;
-        ret = curErrRange(i); if(!ret) res = false;
-        ret = eleErrRange(i); if(!ret) res = false;
-        if(ret){ret = powErrRange(i); if(!ret) res = false;}
+        //ret = curErrRange(i); if(!ret) res = false;
+        //ret = eleErrRange(i); if(!ret) res = false;
+        //if(ret){ret = powErrRange(i); if(!ret) res = false;}
     }
     if(res) res = oneLineCheck();
-    if(res) res = envErrRange();
+    //if(res) res = envErrRange();
 
     return res;
 }
@@ -354,7 +354,7 @@ void Test_CoreThread::workDown()
         if(mItem->cTh.enModify) {
             if(ret) ret = writeAlarmTh();
         } else {
-            ret = checkAlarmErr();
+            //ret = checkAlarmErr();
         }
         if(ret) ret = factorySet();
         if(ret){

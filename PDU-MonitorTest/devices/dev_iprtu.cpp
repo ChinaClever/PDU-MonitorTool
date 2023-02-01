@@ -48,6 +48,8 @@ void Dev_IpRtu::initRtuItem(sRtuItem &it)
     if(mDev->devType.version >= 3 && mDev->devType.version <= 5) {
         it.num = IP_RTU_THREE_LEN;  // V3
     }
+    qDebug()<<"mDev->version   "<<mDev->version <<" IP_PDUV3_BYTE  "<<IP_PDUV3_BYTE;
+    if(mDev->devType.version == IP_PDUV3_BYTE) it.num = IP_RTU_THREE_LEN;  // V3
 }
 
 
@@ -116,34 +118,66 @@ int Dev_IpRtu::recvDataV3(uchar *ptr)
     int line = IP_LINE_NUM;
 
     sObjData *obj = &(mDev->line);
-    ptr =  toShort(ptr, line, obj->vol.value);
-    ptr =  toShort(ptr, line, obj->cur.value);
-    ptr =  getShort(ptr, line, obj->pf);
-    ptr =  toShort(ptr, line, obj->pow);
-    ptr =  toShort(ptr, line, obj->aPow);
-    ptr =  toInt(ptr, line, obj->ele);
-    mDev->hz = getShort(ptr); ptr +=2;
-    ptr = getSwitch(ptr, line, obj->sw); // 开关状态
+    if(mDt->version != IP_PDUV3_BYTE){
+        ptr =  toShort(ptr, line, obj->vol.value);
+        ptr =  toShort(ptr, line, obj->cur.value);
+        ptr =  getShort(ptr, line, obj->pf);
+        ptr =  toShort(ptr, line, obj->pow);
+        ptr =  toShort(ptr, line, obj->aPow);
+        ptr =  toInt(ptr, line, obj->ele);
+        mDev->hz = getShort(ptr); ptr +=2;
+        ptr = getSwitch(ptr, line, obj->sw); // 开关状态
 
-    sEnvData *env = &(mDev->env);
-    env->size = env->tem.size = env->hum.size = 1;
-    ptr =  toShort(ptr, 1, env->tem.value);
-    ptr =  toShort(ptr, 1, env->hum.value);
-    env->tem.max[0] = 40; env->hum.max[0] = 99;
+        sEnvData *env = &(mDev->env);
+        env->size = env->tem.size = env->hum.size = 1;
+        ptr =  toShort(ptr, 1, env->tem.value);
+        ptr =  toShort(ptr, 1, env->hum.value);
+        env->tem.max[0] = 40; env->hum.max[0] = 99;
 
-    ptr = toThreshold(ptr, line, obj->vol);
-    ptr = toThreshold(ptr, line, obj->cur);
-    ptr += 8 + (2*2*line + 2 + 2); // 报警
+        ptr = toThreshold(ptr, line, obj->vol);
+        ptr = toThreshold(ptr, line, obj->cur);
+        ptr += 8 + (2*2*line + 2 + 2); // 报警
 
-    obj->size = getShort(ptr); ptr +=2;
-    mDev->version = getShort(ptr); ptr +=2;
-    mDev->br = getShort(ptr); ptr +=2;
-    ptr = toChar(ptr, 8, mDev->devType.ip);
-    mDev->reserve = getShort(ptr); ptr +=2;
+        obj->size = getShort(ptr); ptr +=2;
+        mDev->version = getShort(ptr); ptr +=2;
+        mDev->br = getShort(ptr); ptr +=2;
+        ptr = toChar(ptr, 8, mDev->devType.ip);
+        mDev->reserve = getShort(ptr); ptr +=2;
 
-    mDt->lines = obj->size;
-    if(obj->size == 2)  obj->size = 3;
-    obj->vol.size = obj->cur.size = obj->size;
+        mDt->lines = obj->size;
+        if(obj->size == 2)  obj->size = 3;
+        obj->vol.size = obj->cur.size = obj->size;
+    }else{
+        ptr =  toShort(ptr, line, obj->vol.value);
+        ptr =  toShort(ptr, line, obj->cur.value);
+        ptr =  getShort(ptr, line, obj->pf);
+        ptr =  toShort(ptr, line, obj->pow);
+        ptr =  calcaPow(ptr, line, obj->aPow, obj->vol.value , obj->cur.value);
+        ptr =  toInt(ptr, line, obj->ele);
+        mDev->hz = getShort(ptr); ptr +=2;
+        ptr = getSwitch(ptr, line, obj->sw); // 开关状态
+
+        sEnvData *env = &(mDev->env);
+        env->size = env->tem.size = env->hum.size = 1;
+        ptr =  toShort(ptr, 1, env->tem.value);
+        ptr =  toShort(ptr, 1, env->hum.value);
+        env->tem.max[0] = 40; env->hum.max[0] = 99;
+
+        ptr = toThreshold(ptr, line, obj->vol);
+        ptr = toCurThreshold(ptr, line, obj->cur);
+        ptr += 8 + (2*2*line + 2 + 2); // 报警
+
+        obj->size = getShort(ptr); ptr +=2;
+        mDev->version = getShort(ptr); ptr +=2;
+        mDev->br = getShort(ptr); ptr +=2;
+        ptr = toChar(ptr, 8, mDev->devType.ip);
+        mDev->reserve = getShort(ptr); ptr +=2;
+
+        mDt->lines = obj->size;
+        qDebug()<<"mDt->lines   "<<mDt->lines;
+        if(obj->size == 2)  obj->size = 3;
+        obj->vol.size = obj->cur.size = obj->size;
+    }
 
     return ptr-ret;
 }
@@ -170,4 +204,24 @@ bool Dev_IpRtu::readPduData()
     initRtuItem(it);
     int len = mModbus->read(it, recv);
     return recvPacket(recv, len);
+}
+
+
+uchar* Dev_IpRtu::calcaPow(uchar *ptr, int line, ushort *value , ushort *vol, ushort *cur)
+{
+    for(int i=0; i<line; ++i) {
+        value[i] =  vol[i]*cur[i]/1000.0;  ptr += 2;
+    }
+    return ptr;
+}
+
+uchar* Dev_IpRtu::toCurThreshold(uchar *ptr, int line,sDataUnit &unit)
+{
+    for(int i=0; i<line; ++i) {
+        ptr = toShort(ptr, 1, &unit.min[i]);
+        ptr += 2;
+        ptr = toShort(ptr, 1, &unit.max[i]);
+    }
+
+    return ptr;
 }

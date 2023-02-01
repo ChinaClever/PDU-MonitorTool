@@ -170,6 +170,11 @@ void Home_SetDlg::on_resBtn_clicked()
 void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
 {
     bool res = true;
+    if( index == IP_PDUV3_BYTE - 2 ) index = 1;
+    if(index <= IP_PDUV3_EATON - 2 || index == IP_PDUV1_HUADA - 2)  res = false;
+    ui->label_9->setHidden(res);
+    ui->lcdBox->setHidden(res);
+
     res = false;
     if(index >= IP_PDUV3_C3 - 2)  res = true;
     ui->label_8->setHidden(res);
@@ -180,6 +185,12 @@ void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
     ui->logBox->setHidden(res);
 
     res = true;
+    ui->label_14->setHidden(res);
+    ui->InFirst->setHidden(res);
+    ui->InSecond->setHidden(res);
+    ui->label_16->setHidden(res);
+    ui->OutFirst->setHidden(res);
+    ui->OutSecond->setHidden(res);
     if(index == IP_PDUV3 - 2 )  res = false;
 
     ui->sBox->setHidden(res);
