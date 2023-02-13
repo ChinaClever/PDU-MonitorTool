@@ -65,11 +65,30 @@ uchar *Dev_Object::toChar(uchar *ptr, int line, uchar *value)
     return ptr;
 }
 
+uchar *Dev_Object::toShort10(uchar *ptr, int line, ushort *value,int v)
+{
+    for(int i=0; i<line; ++i) {
+        value[i] =  ((*ptr) * 256 + *(ptr+1))*v;  ptr += 2;
+    }
+
+    return ptr;
+}
+
 uchar *Dev_Object::toThreshold(uchar *ptr, int line, sDataUnit &unit)
 {
     for(int i=0; i<line; ++i) {
         ptr = toShort(ptr, 1, &unit.min[i]);
         ptr = toShort(ptr, 1, &unit.max[i]);
+    }
+
+    return ptr;
+}
+
+uchar *Dev_Object::toThreshold10(uchar *ptr, int line, sDataUnit &unit)
+{
+    for(int i=0; i<line; ++i) {
+        ptr = toShort10(ptr, 1, &unit.min[i] , 10);
+        ptr = toShort10(ptr, 1, &unit.max[i] , 10);
     }
 
     return ptr;

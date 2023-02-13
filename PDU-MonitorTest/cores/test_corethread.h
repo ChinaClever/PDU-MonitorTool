@@ -23,6 +23,7 @@ protected:
     bool curErrRange(int i);
     bool powErrRange(int i);
     bool eleErrRange(int i);
+    bool eleErrRange0(int i);
     bool envErrRange();
     bool checkErrRange();
     bool oneLineCheck();

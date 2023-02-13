@@ -126,6 +126,21 @@ bool Test_CoreThread::eleErrRange(int i)
     return mLogs->updatePro(str, ret);
 }
 
+bool Test_CoreThread::eleErrRange0(int i)
+{
+    QString str = tr("电能 L%1，实测电能=%2Kwh").arg(i+1).arg(mDev->line.ele[i]/COM_RATE_ELE);
+    bool ret = false;
+    if(0 != mDev->line.ele[i]) {
+        str += tr("错误");
+        ret = false;
+    } else {
+        str += tr("正常");
+        ret = true;
+    }
+
+    return mLogs->updatePro(str, ret);
+}
+
 bool Test_CoreThread::powErrRange(int i)
 {
     bool ret = true;
@@ -215,12 +230,12 @@ bool Test_CoreThread::checkErrRange()
     if(2 == mDt->lines) i=1;
     for(; i<mDev->line.size; ++i) {
         ret = volErrRange(i); if(!ret) res = false;
-        //ret = curErrRange(i); if(!ret) res = false;
-        //ret = eleErrRange(i); if(!ret) res = false;
-        //if(ret){ret = powErrRange(i); if(!ret) res = false;}
+        ret = curErrRange(i); if(!ret) res = false;
+        ret = eleErrRange(i); if(!ret) res = false;
+        if(ret){ret = powErrRange(i); if(!ret) res = false;}
     }
     if(res) res = oneLineCheck();
-    //if(res) res = envErrRange();
+    if(res) res = envErrRange();
 
     return res;
 }
@@ -314,12 +329,18 @@ bool Test_CoreThread::writeAlarmTh()
 
 bool Test_CoreThread::factorySet()
 {
-    bool ret = true;
+    bool ret = true , res = true;
     if(SI_PDU == mDt->devType) {
         ret = mCtrl->eleClean();
+        int i = 0;
+        if(2 == mDt->lines) i=1;
+        Sleep(2);
+        for( ; i<mDev->line.size; ++i) {
+            ret = eleErrRange0(i); if(!ret) res = false;
+        }
         QString str = tr("清除电能");
-        if(ret) str += tr("成功"); else str += tr("失败");
-        mLogs->updatePro(str, ret);
+        if(res) str += tr("成功"); else str += tr("L%1 失败").arg(i);
+        mLogs->updatePro(str, res);
 
         if(1 != mDev->id) {
             ret = mCtrl->factorySet();
@@ -354,7 +375,7 @@ void Test_CoreThread::workDown()
         if(mItem->cTh.enModify) {
             if(ret) ret = writeAlarmTh();
         } else {
-            //ret = checkAlarmErr();
+            ret = checkAlarmErr();
         }
         if(ret) ret = factorySet();
         if(ret){

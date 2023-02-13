@@ -23,6 +23,8 @@ protected:
     uchar *toOutputEle(uchar *ptr, int line, uint *value);
     uchar *toThreshold(uchar *ptr, int line, sDataUnit &unit);
     uchar *toEnvTh(uchar *ptr, sDataUnit &unit);
+    uchar *toShort10(uchar *ptr, int line, ushort *value, int v);
+    uchar *toThreshold10(uchar *ptr, int line, sDataUnit &unit);
 
 protected slots:
     virtual void initFunSlot();

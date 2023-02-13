@@ -163,7 +163,7 @@ int Dev_IpRtu::recvDataV3(uchar *ptr)
         ptr =  toShort(ptr, 1, env->hum.value);
         env->tem.max[0] = 40; env->hum.max[0] = 99;
 
-        ptr = toThreshold(ptr, line, obj->vol);
+        ptr = toThreshold10(ptr, line, obj->vol);
         ptr = toCurThreshold(ptr, line, obj->cur);
         ptr += 8 + (2*2*line + 2 + 2); // 报警
 
@@ -174,7 +174,6 @@ int Dev_IpRtu::recvDataV3(uchar *ptr)
         mDev->reserve = getShort(ptr); ptr +=2;
 
         mDt->lines = obj->size;
-        qDebug()<<"mDt->lines   "<<mDt->lines;
         if(obj->size == 2)  obj->size = 3;
         obj->vol.size = obj->cur.size = obj->size;
     }
@@ -218,9 +217,9 @@ uchar* Dev_IpRtu::calcaPow(uchar *ptr, int line, ushort *value , ushort *vol, us
 uchar* Dev_IpRtu::toCurThreshold(uchar *ptr, int line,sDataUnit &unit)
 {
     for(int i=0; i<line; ++i) {
-        ptr = toShort(ptr, 1, &unit.min[i]);
+        ptr = toShort10(ptr, 1, &unit.min[i] , 10);
+        ptr = toShort10(ptr, 1, &unit.max[i] , 10);
         ptr += 2;
-        ptr = toShort(ptr, 1, &unit.max[i]);
     }
 
     return ptr;
