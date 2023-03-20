@@ -48,15 +48,20 @@ bool Test_CoreThread::hubPort()
 bool Test_CoreThread::initDev()
 {
     mLogs->updatePro(tr("即将开始"));
-    bool ret  = mRead->readSn();
-    if(ret) {
-        ret = mRead->readDev();
-        QString str = tr("设备 LINK 级联口连接");
-        if(ret) str += tr("成功"); else str += tr("失败");
-        mLogs->updatePro(str, ret);
+    bool ret  = false;
+    if(IP_PDUV3_SHATE == mItem->ip.version)
+        ret = true;
+    else{
+        ret = mRead->readSn();
+        if(ret) {
+            ret = mRead->readDev();
+            QString str = tr("设备 LINK 级联口连接");
+            if(ret) str += tr("成功"); else str += tr("失败");
+            mLogs->updatePro(str, ret);
+        }
+        if(ret) ret = mRead->readNet();
+        if(ret) ret = hubPort();
     }
-    if(ret) ret = mRead->readNet();
-    if(ret) ret = hubPort();
 
     return ret;
 }
@@ -369,13 +374,16 @@ void Test_CoreThread::workResult(bool)
 void Test_CoreThread::workDown()
 {
     mPro->step = Test_Start;
-    bool ret = initDev();
+    bool ret = false;
+    ret = initDev();
     if(ret) {
-        ret = checkErrRange();
-        if(mItem->cTh.enModify) {
-            if(ret) ret = writeAlarmTh();
-        } else {
-            ret = checkAlarmErr();
+        if(IP_PDUV3_SHATE != mItem->ip.version){
+            ret = checkErrRange();
+            if(mItem->cTh.enModify) {
+                if(ret) ret = writeAlarmTh();
+            } else {
+                ret = checkAlarmErr();
+            }
         }
         if(ret) ret = factorySet();
         if(ret){

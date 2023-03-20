@@ -92,6 +92,8 @@ void Cfg::initCfgDev()
     item->cTh.vol_max = read("vol_max", 276).toInt();
     item->cTh.cur_min = read("cur_min", 0).toInt();
     item->cTh.cur_max = read("cur_max", 320).toInt();
+    item->cTh.loopcur_min = read("loopcur_min", 0).toInt();
+    item->cTh.loopcur_max = read("loopcur_max", 320).toInt();
     item->cTh.enModify = read("en_modify", 0).toInt();
     item->hw_ver = read("hw_ver", "").toString();
     item->pn = read("pn", "").toString();
@@ -128,6 +130,8 @@ void Cfg::writeCfgDev()
     write("vol_max", item->cTh.vol_max);
     write("cur_min", item->cTh.cur_min);
     write("cur_max", item->cTh.cur_max);
+    write("loopcur_min", item->cTh.loopcur_min);
+    write("loopcur_max", item->cTh.loopcur_max);
     write("en_modify", item->cTh.enModify);
     write("hw_ver", item->hw_ver);
     write("pn", item->pn);

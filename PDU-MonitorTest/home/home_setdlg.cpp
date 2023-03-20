@@ -65,6 +65,8 @@ bool Home_SetDlg::getThresholdWid()
     cth->vol_max = ui->volMaxSpin->value();
     cth->cur_min = ui->curMinSpin->value()*10;
     cth->cur_max = ui->curMaxSpin->value()*10;
+    cth->loopcur_min = ui->loopCurMinSpin->value()*10;
+    cth->loopcur_max = ui->loopCurMaxSpin->value()*10;
 
     mItem->user = ui->userEdit->text();
     mItem->cnt.num = ui->numSpin->value();
@@ -109,6 +111,8 @@ void Home_SetDlg::setThresholdWid()
     ui->volMaxSpin->setValue(cth->vol_max);
     ui->curMinSpin->setValue(cth->cur_min/10.0);
     ui->curMaxSpin->setValue(cth->cur_max/10.0);
+    ui->loopCurMinSpin->setValue(cth->loopcur_min/10.0);
+    ui->loopCurMaxSpin->setValue(cth->loopcur_max/10.0);
 }
 
 void Home_SetDlg::on_comboBox_currentIndexChanged(int index)
@@ -170,7 +174,7 @@ void Home_SetDlg::on_resBtn_clicked()
 void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
 {
     bool res = true;
-    if( index == IP_PDUV3_BYTE - 2 ) index = 1;
+    if( index == IP_PDUV3_BYTE - 2 || index == IP_PDUV3_SHATE - 2) index = 1;
     if(index <= IP_PDUV3_EATON - 2 || index == IP_PDUV1_HUADA - 2)  res = false;
     ui->label_9->setHidden(res);
     ui->lcdBox->setHidden(res);
