@@ -30,7 +30,8 @@ enum eIpTypes {
     IP_PDUV6_HUAWEI,     // IPV6华为
     IP_PDUV1_YIXIN,      // IPV1易信
     IP_PDUV1_HUADA,     // IPV1华大    9
-    IP_PDUV3_BYTE     // IPV3字节    10
+    IP_PDUV3_BYTE,    // IPV3字节    10
+    IP_PDUV3_SHATE     // IPV3沙特    11
 };
 
 struct sIpCfg {
@@ -64,6 +65,8 @@ struct sCfgDev {
     ushort vol_max;
     ushort cur_min;
     ushort cur_max;
+    ushort loopcur_min;
+    ushort loopcur_max;
 };
 
 

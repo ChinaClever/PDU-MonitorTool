@@ -197,13 +197,18 @@ bool Home_WorkWid::initSerial()
     mItem->macCheck = ui->guideCheck->isChecked()?1:0;
     Cfg::bulid()->setAddr(mDev->id);
 
-    bool ret = coms->ser2->isOpened();
-    if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}
-    if(mPro->step < Test_End) {
-        ret = coms->source->isOpened();
-        if(!ret){MsgBox::critical(this, tr("请先打开 SI-PDU 参考源串口")); return ret;}
-        //ret = coms->ser1->isOpened();
-        //if(!ret){MsgBox::critical(this, tr("请先打 SER 级联口")); return ret;}
+    bool ret = false;
+    if(mItem->ip.version == IP_PDUV3_SHATE)
+        ret = true;
+    else{
+        ret = coms->ser2->isOpened();
+        if(!ret){MsgBox::critical(this, tr("请先打 LINK 级联串")); return ret;}
+        if(mPro->step < Test_End) {
+            ret = coms->source->isOpened();
+            if(!ret){MsgBox::critical(this, tr("请先打开 SI-PDU 参考源串口")); return ret;}
+            //ret = coms->ser1->isOpened();
+            //if(!ret){MsgBox::critical(this, tr("请先打 SER 级联口")); return ret;}
+        }
     }
 
     return ret;
