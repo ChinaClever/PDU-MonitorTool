@@ -332,6 +332,7 @@ bool Test_CoreThread::factorySet()
     bool ret = true , res = true;
     if(SI_PDU == mDt->devType) {
         ret = mCtrl->eleClean();
+        mRead->readDev();
         int i = 0;
         if(2 == mDt->lines) i=1;
         Sleep(2);
