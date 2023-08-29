@@ -29,6 +29,7 @@ Cfg *Cfg::bulid()
 int Cfg::initAddr()
 {
     item->vref = read("vref", false,"Sys").toBool();
+    item->temCheck = read("temcheck", true,"Sys").toBool();
     item->macCheck = read("maccheck" , 1).toInt();
     return read("addr", 1,"Sys").toInt();
 }
@@ -49,6 +50,7 @@ void Cfg::setAddr(int addr)
 {
     write("addr", addr, "Sys");
     write("vref", item->vref,"Sys");
+    write("temcheck", item->temCheck,"Sys");
     write("maccheck", item->macCheck);
 }
 

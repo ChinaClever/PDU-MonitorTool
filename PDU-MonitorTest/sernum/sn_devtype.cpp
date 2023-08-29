@@ -14,6 +14,7 @@ Sn_DevType::Sn_DevType()
 
     QJsonObject json;
     Json_Build::bulid()->getJson(json);
+    //Json_Recv::bulid()->recv("pdu_id_eaton");
     Json_Recv::bulid()->recv("pdu_id");
 }
 
@@ -46,6 +47,7 @@ int Sn_DevType::getDevType(const QString &str)
             if(str.contains("C3")) mDt->version = IP_PDUV3_C3;
             else if(str.contains("EATON")) mDt->version = IP_PDUV3_EATON;
             else if(str.contains("BYTE")) mDt->version = IP_PDUV3_BYTE;
+            else if(str.contains("前海")) mDt->version = IP_PDUV3_ECC;
             else
             mDt->version = IP_PDUV3;
         }else if(str.contains("V6")){

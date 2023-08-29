@@ -31,7 +31,8 @@ enum eIpTypes {
     IP_PDUV1_YIXIN,      // IPV1易信
     IP_PDUV1_HUADA,     // IPV1华大    9
     IP_PDUV3_BYTE,    // IPV3字节    10
-    IP_PDUV3_SHATE     // IPV3沙特    11
+    IP_PDUV3_SHATE,     // IPV3沙特    11
+    IP_PDUV3_ECC    // IPV3前海    12
 };
 
 struct sIpCfg {
@@ -116,6 +117,7 @@ struct sCfgItem
     sSerial coms;
     ushort currentNum;
     bool eleCheck;
+    bool temCheck;
     bool vref;
     bool printer;
     bool macprinter;

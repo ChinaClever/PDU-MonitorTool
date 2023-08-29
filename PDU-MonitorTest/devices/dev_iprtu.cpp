@@ -12,7 +12,7 @@
 
 Dev_IpRtu::Dev_IpRtu(QObject *parent) : Dev_Object(parent)
 {
-
+    m_Line = 1;
 }
 
 Dev_IpRtu *Dev_IpRtu::bulid(QObject *parent)
@@ -198,11 +198,46 @@ bool Dev_IpRtu::recvPacket(uchar *buf, int len)
 bool Dev_IpRtu::readPduData()
 {
     sRtuItem it;
-    uchar recv[MODBUS_RTU_SIZE] = {0};    
+    uchar recv[MODBUS_RTU_SIZE] = {0};
+    if(IP_PDUV3_ECC == mDt->version){
+        initRtuLineNumItem(it);
+        mModbus->read(it, recv);
+        recvLineNumPacket(recv);
+        memset(recv , 0 , strlen((char*)recv));
 
-    initRtuItem(it);
-    int len = mModbus->read(it, recv);
-    return recvPacket(recv, len);
+        initRtuBaseValueItem(it);
+        mModbus->read(it, recv);
+        recvBaseValuePacket(recv);
+        memset(recv , 0 , strlen((char*)recv));
+
+        initRtuCurRangeItem(it);
+        mModbus->read(it, recv);
+        recvCurRangePacket(recv);
+        memset(recv , 0 , strlen((char*)recv));
+
+        initRtuVolRangeItem(it);
+        mModbus->read(it, recv);
+        recvVolRangePacket(recv);
+        memset(recv , 0 , strlen((char*)recv));
+
+        initRtuCurTemHumItem(it);
+        mModbus->read(it, recv);
+        recvCurTemHumPacket(recv);
+        memset(recv , 0 , strlen((char*)recv));
+
+        initRtuTemRangeItem(it);
+        mModbus->read(it, recv);
+        recvTemRangePacket(recv);
+        memset(recv , 0 , strlen((char*)recv));
+
+        initRtuHumRangeItem(it);
+        mModbus->read(it, recv);
+        return recvHumRangePacket(recv);
+    }else{
+        initRtuItem(it);
+        int len = mModbus->read(it, recv);
+        return recvPacket(recv, len);
+    }
 }
 
 
@@ -223,4 +258,135 @@ uchar* Dev_IpRtu::toCurThreshold(uchar *ptr, int line,sDataUnit &unit)
     }
 
     return ptr;
+}
+
+
+void Dev_IpRtu::initRtuBaseValueItem(sRtuItem &it)
+{
+    it.addr = mDev->id;
+    it.fn = 0x03;
+    it.reg = 0x23;
+    it.num = 0x08;
+}
+
+void Dev_IpRtu::initRtuLineNumItem(sRtuItem &it)
+{
+    it.addr = mDev->id;
+    it.fn = 0x03;
+    it.reg = 0x015A;
+    it.num = 0x01;
+}
+
+void Dev_IpRtu::initRtuCurRangeItem(sRtuItem &it)
+{
+    it.addr = mDev->id;
+    it.fn = 0x03;
+    it.reg = 0x03EB;
+    it.num = 0x02;
+}
+
+void Dev_IpRtu::initRtuVolRangeItem(sRtuItem &it)
+{
+    it.addr = mDev->id;
+    it.fn = 0x03;
+    it.reg = 0x0475;
+    it.num = 0x02;
+}
+
+void Dev_IpRtu::initRtuCurTemHumItem(sRtuItem &it)
+{
+    it.addr = mDev->id;
+    it.fn = 0x03;
+    it.reg = 0x01F4;
+    it.num = 0x02;
+}
+
+void Dev_IpRtu::initRtuTemRangeItem(sRtuItem &it)
+{
+    it.addr = mDev->id;
+    it.fn = 0x03;
+    it.reg = 0x0453;
+    it.num = 0x02;
+}
+
+void Dev_IpRtu::initRtuHumRangeItem(sRtuItem &it)
+{
+    it.addr = mDev->id;
+    it.fn = 0x03;
+    it.reg = 0x0463;
+    it.num = 0x02;
+}
+
+int Dev_IpRtu::recvLineNumPacket(uchar *buf)
+{
+    sObjData *obj = &(mDev->line);
+    sEnvData *envobj = &(mDev->env);
+    obj->size = m_Line =  (*buf) * 256 + *(buf+1);
+    mDt->lines = 2;
+    obj->vol.size = obj->cur.size = obj->size;
+    envobj->tem.size = envobj->hum.size = 1;
+    return 2;
+}
+
+int Dev_IpRtu::recvBaseValuePacket(uchar *buf)
+{
+    sObjData *obj = &(mDev->line);
+    int len = 0;
+    obj->vol.value[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    obj->cur.value[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    obj->pow[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    buf += 2; len += 2;//无功功率不解析
+    obj->pf[0] =  ((*buf) * 256 + *(buf+1))/10;  buf += 2; len += 2;
+    obj->ele[0] =  (*buf) * 256 + *(buf+1);  buf += 2;len += 2; // 读取电能高8位
+    obj->ele[0] <<= 16; // 左移8位
+    obj->ele[0] +=  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;// 读取电能底8位
+    return len;
+}
+
+int Dev_IpRtu::recvCurRangePacket(uchar *buf)
+{
+    sObjData *obj = &(mDev->line);
+    int len = 0;
+    obj->cur.max[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    obj->cur.min[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    return len;
+}
+
+int Dev_IpRtu::recvVolRangePacket(uchar *buf)
+{
+    sObjData *obj = &(mDev->line);
+    int len = 0;
+    obj->vol.max[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    obj->vol.min[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    return len;
+}
+
+int Dev_IpRtu::recvTemRangePacket(uchar *buf)
+{
+    sEnvData *obj = &(mDev->env);
+    int len = 0;
+    obj->tem.max[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    obj->tem.min[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    obj->tem.max[0] -= 40;
+    obj->tem.min[0] -= 40;
+    return len;
+}
+
+int Dev_IpRtu::recvHumRangePacket(uchar *buf)
+{
+    sEnvData *obj = &(mDev->env);
+    int len = 0;
+    obj->hum.max[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    obj->hum.min[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    return len;
+}
+
+int Dev_IpRtu::recvCurTemHumPacket(uchar *buf)
+{
+    sEnvData *obj = &(mDev->env);
+    int len = 0;
+    obj->tem.value[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    if(obj->tem.value[0])obj->tem.value[0] -= 40;
+    obj->hum.value[0] =  (*buf) * 256 + *(buf+1);  buf += 2; len += 2;
+    return len;
 }

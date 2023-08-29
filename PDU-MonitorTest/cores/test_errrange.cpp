@@ -116,6 +116,68 @@ bool Test_ErrRange::oneLinePowErr()
     return ret;
 }
 
+bool Test_ErrRange::oneLineECCVolErr()
+{
+    int pass = Test_Fail;
+    int crate = 1;
+    if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
+    int err = (2*mItem->err.volErr+1)*crate;
+    ushort *ptr = mDev->line.vol.value;
+    ushort *ptr1 = mSour->line.vol.value;
+    int exValue = 2*ptr[0];
+    int value = ptr1[1] + ptr1[2];
+    bool ret = checkErrRange(exValue, value, err);
+    if(ret) pass = Test_Pass;
+    mDev->line.vol.status[0] = pass;
+
+    return ret;
+}
+
+bool Test_ErrRange::oneLineECCCurErr()
+{
+    int pass = Test_Fail;
+    int crate = 1;
+    if(mDev->devType.screen == 1) crate = 10;
+    if(mDev->devType.screen == 3 && mItem->ip.log  == 0 && mItem->ip.security  == 1) crate = 10;
+    int err = (2*mItem->err.curErr+1)*crate;
+    ushort *ptr = mDev->line.cur.value;
+    ushort *ptr1 = mSour->line.cur.value;
+    int exValue = ptr[0];
+    int value = ptr1[1] + ptr1[2];
+
+    bool ret = checkErrRange(exValue, value, err);
+    if(ret) pass = Test_Pass;
+    mDev->line.cur.status[0] = pass;
+
+    return ret;
+}
+
+
+bool Test_ErrRange::oneLineECCPowErr()
+{
+    int pass = Test_Fail;
+    int crate = 1;
+    if(mDev->devType.screen == 1) crate = 10;
+    ushort *ptr = mDev->line.pow;
+    ushort *ptr1 = mSour->line.pow;
+    int exValue = ptr[0];
+    int value = ptr1[1] + ptr1[2];
+    int err = exValue * (2*mItem->err.powErr+1);
+    if(crate == 10)
+    {
+      if(mDev->devType.devType == SI_PDU) err /= 100.0;
+      else err /= 1000.0;
+      //if(mDev->devType.devType == IP_PDU) value /= 10;
+    }
+    else err /= 1000.0;
+    bool ret = checkErrRange(exValue, value, err);
+    if(ret) pass = Test_Pass;
+    mDev->line.powStatus[0] = pass;
+
+    return ret;
+}
+
 bool Test_ErrRange::powErr(int id)
 {
     int pass = Test_Fail;

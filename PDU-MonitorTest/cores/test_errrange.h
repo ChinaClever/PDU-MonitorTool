@@ -26,6 +26,10 @@ public:
     bool oneLineCurErr();
     bool oneLineVolErr();
 
+    bool oneLineECCVolErr();
+    bool oneLineECCCurErr();
+    bool oneLineECCPowErr();
+
 protected:
     bool checkErrRange(int exValue, int value, int err);
 

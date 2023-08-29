@@ -734,7 +734,7 @@
       </item>
       <item>
        <property name="text">
-        <string>IP-PDUV1-YIXIN</string>
+        <string>IP-PDUV1-易信</string>
        </property>
       </item>
       <item>
@@ -744,12 +744,17 @@
       </item>
       <item>
        <property name="text">
-        <string>IP-V3-BYTE</string>
+        <string>IP-V3-字节</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>IP-V3-SHATE</string>
+        <string>IP-V3-沙特</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>IP-V3-前海</string>
        </property>
       </item>
      </widget>

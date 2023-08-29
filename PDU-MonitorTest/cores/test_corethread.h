@@ -24,9 +24,11 @@ protected:
     bool powErrRange(int i);
     bool eleErrRange(int i);
     bool eleErrRange0(int i);
+    bool eleErrRange2(int i);
     bool envErrRange();
     bool checkErrRange();
     bool oneLineCheck();
+    bool oneLineECCCheck();
 
     bool volAlarmErr(int i);
     bool curAlarmErr(int i);

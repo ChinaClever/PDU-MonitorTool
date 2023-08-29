@@ -131,6 +131,26 @@ bool Test_CoreThread::eleErrRange(int i)
     return mLogs->updatePro(str, ret);
 }
 
+bool Test_CoreThread::eleErrRange2(int i)
+{
+    bool ret = mItem->eleCheck;
+    QString str = tr("电能 L%1，实测电能=%2Kwh").arg(i+1).arg(mDev->line.ele[i]/COM_RATE_ELE);
+    if(ret) {
+        if(2 != mDev->line.ele[i]) {
+            str += tr("错误");
+            ret = false;
+        } else {
+            str += tr("正常");
+            ret = true;
+        }
+    } else {
+        str += tr("跳过");
+        ret = true;
+    }
+
+    return mLogs->updatePro(str, ret);
+}
+
 bool Test_CoreThread::eleErrRange0(int i)
 {
     QString str = tr("电能 L%1，实测电能=%2Kwh").arg(i+1).arg(mDev->line.ele[i]/COM_RATE_ELE);
@@ -164,26 +184,29 @@ bool Test_CoreThread::powErrRange(int i)
 
 bool Test_CoreThread::envErrRange()
 {
-    bool ret = mErr->temErr();
-    QString str = tr("传感器温度，温度=%1").arg(mDev->env.tem.value[0]);
-    if(ret) str += tr("正常");
-    else {
-        if(mDev->env.tem.value[0]) {
-            str += tr("错误");
-        } else {
-            str = tr("请插入传感器，实测温度=0");
+    bool ch = mItem->temCheck;
+    bool ret = true;
+    if(ch){
+        ret = mErr->temErr();
+        QString str = tr("传感器温度，温度=%1").arg(mDev->env.tem.value[0]);
+        if(ret) str += tr("正常");
+        else {
+            if(mDev->env.tem.value[0]) {
+                str += tr("错误");
+            } else {
+                str = tr("请插入传感器，实测温度=0");
+            }
+        }
+
+        ret = mLogs->updatePro(str, ret);
+        if(ret) {
+            str = tr("传感器湿度，湿度=%2").arg(mDev->env.hum.value[0]);
+            ret = mErr->humErr();
+            if(ret) str += tr("正常");
+            else str += tr("错误");
+            ret = mLogs->updatePro(str, ret);
         }
     }
-
-    ret = mLogs->updatePro(str, ret);
-    if(ret) {
-        str = tr("传感器湿度，湿度=%2").arg(mDev->env.hum.value[0]);
-        ret = mErr->humErr();
-        if(ret) str += tr("正常");
-        else str += tr("错误");
-        ret = mLogs->updatePro(str, ret);
-    }
-
     return ret;
 }
 
@@ -223,6 +246,53 @@ bool Test_CoreThread::oneLineCheck()
                 .arg((value[1]+value[2])/2/COM_RATE_VOL/crate).arg(value[0]/COM_RATE_VOL/crate);
         if(ret) str += tr("正常"); else str += tr("错误");
         mLogs->updatePro(str, ret);
+        ret = eleErrRange2(0);
+    }
+
+    return ret;
+}
+
+bool Test_CoreThread::oneLineECCCheck()
+{
+    bool ret = true;
+    if(2 == mDt->lines){
+        int crate = 1;
+        if(mDev->devType.screen == 1) crate = 10;
+        ret = mErr->oneLineCurErr();
+        ushort *value = mDev->line.cur.value;
+        ushort *value1 = mSour->line.cur.value;
+        QString str = tr("电流 L%1 ，期望电流=%2A，实测电流=%3A").arg(1)
+                .arg((value1[1]+value1[2])/COM_RATE_CUR/crate).arg(value[0]/COM_RATE_CUR/crate);
+        if(ret) str += tr("正常"); else str += tr("错误");
+        mLogs->updatePro(str, ret);
+
+        ret = mErr->oneLineECCPowErr();
+        value = mDev->line.pow;
+        value1 = mSour->line.pow;
+        if( crate == 10 )
+        {
+            if(SI_PDU == mDev->devType.devType)
+                str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                        .arg((value1[1]+value1[2])/COM_RATE_PF).arg(value[0]/COM_RATE_PF);
+            else
+                str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                        .arg((value1[1]+value1[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
+        }
+        else
+            str = tr("功率 L%1 ，期望功率=%2kW，实测功率=%3kW").arg(1)
+                    .arg((value1[1]+value1[2])/COM_RATE_POW).arg(value[0]/COM_RATE_POW);
+        if(ret) str += tr("正常"); else str += tr("错误");
+        mLogs->updatePro(str, ret);
+
+        ret = mErr->oneLineECCVolErr();
+        value = mDev->line.vol.value;
+        value1 = mSour->line.vol.value;
+        str = tr("电压 L%1 ，期望电压=%2V，实测电压=%3V").arg(1)
+                .arg((value1[1]+value1[2])/2/COM_RATE_VOL/crate).arg(value[0]/COM_RATE_VOL/crate);
+        if(ret) str += tr("正常"); else str += tr("错误");
+        mLogs->updatePro(str, ret);
+
+        ret = eleErrRange2(0);
     }
 
     return ret;
@@ -239,7 +309,12 @@ bool Test_CoreThread::checkErrRange()
         ret = eleErrRange(i); if(!ret) res = false;
         if(ret){ret = powErrRange(i); if(!ret) res = false;}
     }
-    if(res) res = oneLineCheck();
+    if(IP_PDUV3_ECC == mDt->version){
+        if(res) res = oneLineECCCheck();
+    }
+    else{
+        if(res) res = oneLineCheck();
+    }
     if(res) res = envErrRange();
 
     return res;

@@ -42,7 +42,7 @@ void Home_WorkWid::createWid()
     Cfg::bulid()->initPrint();
     ui->addrSpin->setValue(mDev->id);
     ui->vrefCheck->setChecked(mItem->vref);
-    ui->printerCheck->hide();//暂时没有用
+    ui->temCheck->setChecked(mItem->temCheck);
 
     ui->guideCheck->setChecked(mItem->macCheck?true:false);
 
@@ -195,6 +195,7 @@ bool Home_WorkWid::initSerial()
     mItem->eleCheck = ui->eleCheck->isChecked();
     mItem->vref = ui->vrefCheck->isChecked();
     mItem->macCheck = ui->guideCheck->isChecked()?1:0;
+    mItem->temCheck = ui->temCheck->isChecked();
     Cfg::bulid()->setAddr(mDev->id);
 
     bool ret = false;
@@ -250,9 +251,9 @@ bool Home_WorkWid::initWid()
 
     if(mItem->cnt.num < 1) {
         MsgBox::critical(this, tr("请先填写订单剩余数量！"));
-        if(ui->printerCheck->isChecked()) {
-            MsgBox::question(this, tr("已启动打印，请确认？"));
-        }
+//        if(ui->printerCheck->isChecked()) {
+//            MsgBox::question(this, tr("已启动打印，请确认？"));
+//        }
         return false;
     }
 

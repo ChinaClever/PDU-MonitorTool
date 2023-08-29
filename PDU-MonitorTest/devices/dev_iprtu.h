@@ -11,6 +11,7 @@ protected:
 public:
     static Dev_IpRtu *bulid(QObject *parent = nullptr);
     bool readPduData();
+    int m_Line;
 
 protected:
     int recvLine(int len);
@@ -22,6 +23,23 @@ protected:
     uchar *getSwitch(uchar *ptr, int line, uchar *value);
     uchar *calcaPow(uchar *ptr, int line, ushort *value , ushort *vol, ushort *cur);
     uchar *toCurThreshold(uchar *ptr, int line, sDataUnit &unit);
+
+
+    void initRtuBaseValueItem(sRtuItem &it);
+    void initRtuLineNumItem(sRtuItem &it);
+    void initRtuCurRangeItem(sRtuItem &it);
+    void initRtuVolRangeItem(sRtuItem &it);
+    void initRtuTemRangeItem(sRtuItem &it);
+    void initRtuHumRangeItem(sRtuItem &it);
+    void initRtuCurTemHumItem(sRtuItem &it);
+
+    int recvBaseValuePacket(uchar *buf);
+    int recvLineNumPacket(uchar *buf);
+    int recvCurRangePacket(uchar *buf);
+    int recvVolRangePacket(uchar *buf);
+    int recvTemRangePacket(uchar *buf);
+    int recvHumRangePacket(uchar *buf);
+    int recvCurTemHumPacket(uchar *buf);
 };
 
 #endif // DEV_IPTHREAD_H
