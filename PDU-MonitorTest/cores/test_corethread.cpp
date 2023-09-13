@@ -258,7 +258,7 @@ bool Test_CoreThread::oneLineECCCheck()
     if(2 == mDt->lines){
         int crate = 1;
         if(mDev->devType.screen == 1) crate = 10;
-        ret = mErr->oneLineCurErr();
+        ret = mErr->oneLineECCCurErr();
         ushort *value = mDev->line.cur.value;
         ushort *value1 = mSour->line.cur.value;
         QString str = tr("电流 L%1 ，期望电流=%2A，实测电流=%3A").arg(1)
