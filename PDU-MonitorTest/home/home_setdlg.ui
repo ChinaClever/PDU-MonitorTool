@@ -744,17 +744,17 @@
       </item>
       <item>
        <property name="text">
-        <string>IP-V3-字节</string>
+        <string>IP-V3-马来字节，升点</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>IP-V3-沙特</string>
+        <string>IP-V3-南京宇正</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>IP-V3-前海</string>
+        <string>IP-V3-前海兼容ECC</string>
        </property>
       </item>
      </widget>

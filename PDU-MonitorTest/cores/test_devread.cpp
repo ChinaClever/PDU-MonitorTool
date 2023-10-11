@@ -113,7 +113,7 @@ bool Test_DevRead::checkIpVersion()
     if(ret) {
         QString str = tr("设备版本检查");
         if(mDt->version != mItem->ip.version) {
-            if( mItem->ip.version ==  IP_PDUV1_HUADA){
+            if( mItem->ip.version ==  IP_PDUV1_HUADA || mDt->version ==  IP_PDUV3){
                 str += tr("正常");
             }
             else{
