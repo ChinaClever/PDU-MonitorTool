@@ -34,6 +34,7 @@ void Home_SetDlg::initFunSlot()
     ui->ipModeBox->setCurrentIndex(mItem->ip.modbus);
     ui->sBox->setCurrentIndex(mItem->ip.standard);
     ui->logBox->setCurrentIndex(mItem->ip.log);
+    ui->PasswordTypeBox->setCurrentIndex(mItem->ip.ip_bytepassword);
     on_ipTypeBox_currentIndexChanged(v);
     ui->lcdBox->setCurrentIndex(mItem->ip.lcd);
     ui->protocolBox->setCurrentIndex(mItem->ip.protocol);
@@ -99,6 +100,7 @@ bool Home_SetDlg::getThresholdWid()
     mItem->ip.outSecond = ui->OutSecond->text();
     mItem->ip.lcd = ui->lcdBox->currentIndex();
     mItem->ip.protocol = ui->protocolBox->currentIndex();
+    mItem->ip.ip_bytepassword = ui->PasswordTypeBox->currentIndex();
 
     return true;
 }
@@ -174,6 +176,13 @@ void Home_SetDlg::on_resBtn_clicked()
 void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
 {
     bool res = true;
+    if(index == IP_PDUV3_BYTE - 2){
+        ui->label_26->show();
+        ui->PasswordTypeBox->show();
+    }else{
+        ui->label_26->hide();
+        ui->PasswordTypeBox->hide();
+    }
     if( index == IP_PDUV3_BYTE - 2 || index == IP_PDUV3_SHATE - 2 || index == IP_PDUV3_ECC - 2) index = 1;
     if(index <= IP_PDUV3_EATON - 2 || index == IP_PDUV1_HUADA - 2)  res = false;
     ui->label_9->setHidden(res);

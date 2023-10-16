@@ -46,6 +46,7 @@ struct sIpCfg {
     uchar security;
     uchar lcd;
     uchar protocol;//  0 表示静态协议 1表示DHCP
+    uchar ip_bytepassword;//  0 表示字节无默认密码 1表示升点智能需要默认密码
     QString inFirst;
     QString inSecond;
     QString outFirst;

@@ -578,10 +578,10 @@
   <widget class="QPushButton" name="okBtn">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>640</y>
-     <width>131</width>
-     <height>41</height>
+     <x>400</x>
+     <y>650</y>
+     <width>101</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -598,8 +598,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>570</y>
-     <width>491</width>
+     <y>620</y>
+     <width>371</width>
      <height>71</height>
     </rect>
    </property>
@@ -653,8 +653,8 @@
     <rect>
      <x>10</x>
      <y>340</y>
-     <width>491</width>
-     <height>221</height>
+     <width>505</width>
+     <height>253</height>
     </rect>
    </property>
    <property name="font">
@@ -667,23 +667,6 @@
     <string>IP-PDU参数</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_4">
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_14">
-      <property name="text">
-       <string>IN:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_8">
-      <property name="text">
-       <string>标准/中性</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label_12">
       <property name="text">
@@ -744,7 +727,7 @@
       </item>
       <item>
        <property name="text">
-        <string>IP-V3-马来字节，升点</string>
+        <string>IP-V3-马来字节，预警功能</string>
        </property>
       </item>
       <item>
@@ -757,6 +740,116 @@
         <string>IP-V3-前海兼容ECC</string>
        </property>
       </item>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>语言选择</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QComboBox" name="languageBox">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>英文</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>中文</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>相数选择</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="lineBox">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>直流</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>单相</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>两路</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>三相</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>模式选择</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QComboBox" name="ipModeBox">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>网络一带四</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Modbus RTU 级联</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>标准/中性</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="2" column="1">
@@ -794,13 +887,6 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="3">
-     <widget class="QLineEdit" name="InSecond">
-      <property name="text">
-       <string>18A</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="3">
      <widget class="QComboBox" name="logBox">
       <property name="minimumSize">
@@ -821,70 +907,10 @@
       </item>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_7">
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_14">
       <property name="text">
-       <string>相数选择</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_16">
-      <property name="text">
-       <string>OUT:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
-     <widget class="QComboBox" name="languageBox">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <item>
-       <property name="text">
-        <string>英文</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>中文</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QComboBox" name="ipModeBox">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <item>
-       <property name="text">
-        <string>网络一带四</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Modbus RTU 级联</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>模式选择</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <string>IN:</string>
       </property>
      </widget>
     </item>
@@ -895,44 +921,18 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="label_2">
+    <item row="3" column="3">
+     <widget class="QLineEdit" name="InSecond">
       <property name="text">
-       <string>语言选择</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <string>18A</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="lineBox">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_16">
+      <property name="text">
+       <string>OUT:</string>
       </property>
-      <item>
-       <property name="text">
-        <string>直流</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>单相</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>两路</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>三相</string>
-       </property>
-      </item>
      </widget>
     </item>
     <item row="4" column="1">
@@ -947,6 +947,36 @@
       <property name="text">
        <string>4xC19</string>
       </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_26">
+      <property name="text">
+       <string>类型选择</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1" colspan="3">
+     <widget class="QComboBox" name="PasswordTypeBox">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>字节抖音默认密码admin123</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>升点智能需要账号密码admin123</string>
+       </property>
+      </item>
      </widget>
     </item>
    </layout>
