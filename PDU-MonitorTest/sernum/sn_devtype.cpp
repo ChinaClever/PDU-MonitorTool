@@ -48,6 +48,7 @@ int Sn_DevType::getDevType(const QString &str)
             else if(str.contains("EATON")) mDt->version = IP_PDUV3_EATON;
             else if(str.contains("BYTE")) mDt->version = IP_PDUV3_BYTE;
             else if(str.contains("前海")) mDt->version = IP_PDUV3_ECC;
+            else if(str.contains("DCL")) mDt->version = IP_PDUV3_DCL;
             else
             mDt->version = IP_PDUV3;
         }else if(str.contains("V6")){

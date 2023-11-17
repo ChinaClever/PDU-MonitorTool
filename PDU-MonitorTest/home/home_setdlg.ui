@@ -740,6 +740,11 @@
         <string>IP-V3-前海兼容ECC</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>IP-V3-香港DCL</string>
+       </property>
+      </item>
      </widget>
     </item>
     <item row="0" column="2">

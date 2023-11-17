@@ -183,7 +183,8 @@ void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
         ui->label_26->hide();
         ui->PasswordTypeBox->hide();
     }
-    if( index == IP_PDUV3_BYTE - 2 || index == IP_PDUV3_SHATE - 2 || index == IP_PDUV3_ECC - 2) index = 1;
+    if( index == IP_PDUV3_BYTE - 2 || index == IP_PDUV3_SHATE - 2
+            || index == IP_PDUV3_ECC - 2 || index == IP_PDUV3_DCL - 2) index = 1;
     if(index <= IP_PDUV3_EATON - 2 || index == IP_PDUV1_HUADA - 2)  res = false;
     ui->label_9->setHidden(res);
     ui->lcdBox->setHidden(res);
