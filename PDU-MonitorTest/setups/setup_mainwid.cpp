@@ -6,6 +6,7 @@
 #include "setup_mainwid.h"
 #include "ui_setup_mainwid.h"
 #include "versiondlg.h"
+#include "datapacket.h"
 
 Setup_MainWid::Setup_MainWid(QWidget *parent) :
     QWidget(parent),
@@ -16,6 +17,7 @@ Setup_MainWid::Setup_MainWid(QWidget *parent) :
     QTimer::singleShot(rand()%13,this,SLOT(initFunSlot()));
     mItem = Cfg::bulid()->item;
     initSerial();
+    sDataPacket::bulid()->getPro()->softwareVersion = ui->verBtn->text() +" " +ui->label_date->text();
 }
 
 Setup_MainWid::~Setup_MainWid()

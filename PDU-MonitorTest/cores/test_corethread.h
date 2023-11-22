@@ -2,6 +2,7 @@
 #define TEST_CORETHREAD_H
 
 #include "test_errrange.h"
+#include "udpsendsocket.h"
 
 class Test_CoreThread : public Test_Object
 {
@@ -49,6 +50,7 @@ private:
     Test_DevCtrl *mCtrl;
     Test_NetWork *mNetWork;
     QString mMacStr;
+    UdpSendSocket *mSendUdp;
 };
 
 #endif // TEST_CORETHREAD_H

@@ -49,6 +49,9 @@ void Home_WorkWid::createWid()
     timer = new QTimer(this);
     timer->start(100);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutDone()));
+
+//    mSendUdp = new UdpSendSocket();
+//    mSendUdp->initSocket(47755);///test//////////////////////////////////
 }
 
 void Home_WorkWid::initLayout()
@@ -82,6 +85,7 @@ void Home_WorkWid::insertText()
 {
     if(mPro->status.size()) {
         setTextColor();
+        mPro->no <<QString::number(mId);
         QString str = QString::number(mId++) + "、"+ mPro->status.first() + "\n";
         ui->textEdit->insertPlainText(str);
         mPro->status.removeFirst();
@@ -281,8 +285,13 @@ bool Home_WorkWid::initWid()
 void Home_WorkWid::on_startBtn_clicked()
 {
 
+
+//    mSendUdp->dataSend();///test//////////////////////////////////
+
     if(mPro->step == Test_End) {
-        if(initWid()) mCoreThread->start();
+        if(initWid()) {
+           mCoreThread->start();
+        }
     } else {
         bool ret = MsgBox::question(this, tr("确定需要提前结束？"));
         if(ret) {

@@ -24,6 +24,7 @@ protected slots:
 private:
     Test_Logs *mLogs;
     UdpRecvSocket *mUdp;
+
 };
 
 #endif // TEST_NETWORK_H

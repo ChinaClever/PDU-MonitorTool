@@ -21,12 +21,16 @@ void Test_CoreThread::initFunSlot()
     mNetWork = Test_NetWork::bulid(this);
     connect(mNetWork , SIGNAL(sendMACSig(QString)) , this , SLOT(getMacSlot(QString)));
     Printer_BarTender::bulid(this);
+    mSendUdp = new UdpSendSocket(this);
+    mSendUdp->initSocket(47755);
 }
 
 void Test_CoreThread::getMacSlot(QString str)
 {
-    if( str.size() >= 17 )
+    if( str.size() >= 17 ){
         this->mMacStr = str.right(17);
+        mPro->macAddress = this->mMacStr;
+    }
 }
 
 bool Test_CoreThread::hubPort()
@@ -54,6 +58,9 @@ bool Test_CoreThread::initDev()
     else{
         ret = mRead->readSn();
         if(ret) {
+            mPro->productSN = mDt->sn;
+            mPro->productType = mDt->dev_type;
+
             ret = mRead->readDev();
             QString str = tr("设备 LINK 级联口连接");
             if(ret) str += tr("成功"); else str += tr("失败");
@@ -444,6 +451,7 @@ void Test_CoreThread::workResult(bool)
 {
     mLogs->saveLogs();
     mLogs->updatePro(tr("测试结束"));
+    mSendUdp->dataSend();
     mPro->step = Test_Over;
 }
 

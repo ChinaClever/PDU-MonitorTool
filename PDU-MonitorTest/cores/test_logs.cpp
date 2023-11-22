@@ -61,6 +61,7 @@ bool Test_Logs::writeLog()
     mItem->cnt.all += 1;
     if(mPro->result != Test_Fail) {
         it.result = tr("通过");
+        mPro->uploadPassResult = 1;
         mItem->cnt.ok += 1;
         if(mItem->cnt.num > 0) {
             mItem->cnt.num -= 1;
@@ -72,6 +73,7 @@ bool Test_Logs::writeLog()
     } else {
         mItem->cnt.err += 1;
         it.result = tr("失败");
+        mPro->uploadPassResult = 0;
     }
 
     Cfg::bulid()->writeCnt();

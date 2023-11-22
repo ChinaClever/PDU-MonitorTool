@@ -5,6 +5,7 @@
 #include "home_manualdlg.h"
 #include "test_corethread.h"
 #include "home_printdlg.h"
+#include "udpsendsocket.h"///test//////////////////////////////////
 
 namespace Ui {
 class Home_WorkWid;
@@ -57,6 +58,7 @@ private:
     Home_PrintDlg *mPrintDlg;
     Home_ManualDlg *mManualDlg;
     Test_CoreThread *mCoreThread;
+    UdpSendSocket *mSendUdp;///test//////////////////////////////////
 };
 
 #endif // HOME_WORKWID_H
