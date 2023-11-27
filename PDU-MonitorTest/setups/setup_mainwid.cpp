@@ -17,7 +17,7 @@ Setup_MainWid::Setup_MainWid(QWidget *parent) :
     QTimer::singleShot(rand()%13,this,SLOT(initFunSlot()));
     mItem = Cfg::bulid()->item;
     initSerial();
-    sDataPacket::bulid()->getPro()->softwareVersion = ui->verBtn->text() +" " +ui->label_date->text();
+//    sDataPacket::bulid()->getPro()->softwareVersion = ui->verBtn->text() +" " +ui->label_date->text();
 }
 
 Setup_MainWid::~Setup_MainWid()

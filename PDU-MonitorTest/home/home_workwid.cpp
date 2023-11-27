@@ -88,6 +88,8 @@ void Home_WorkWid::insertText()
         mPro->no <<QString::number(mId);
         QString str = QString::number(mId++) + "、"+ mPro->status.first() + "\n";
         ui->textEdit->insertPlainText(str);
+        if(mPro->status.first().contains(tr("版本")) && mPro->pass.first())
+        sDataPacket::bulid()->getPro()->softwareVersion = mItem->sw_ver;
         mPro->status.removeFirst();
         mPro->pass.removeFirst();
     }
