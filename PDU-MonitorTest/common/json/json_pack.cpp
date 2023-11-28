@@ -24,6 +24,9 @@ Json_Pack *Json_Pack::bulid()
 
 void Json_Pack::head(QJsonObject &obj)
 {
+    QDateTime t = QDateTime::currentDateTime();
+    mPro->testEndTime = t.toString("yyyy-MM-dd HH:mm:ss");
+    mPro->testTime = QString::number(QDateTime::fromString(mPro->testStartTime,"yyyy-MM-dd HH:mm:ss").secsTo(t));
     obj.insert("softwareType", mPro->softwareType);
     obj.insert("productType", mPro->productType);
     obj.insert("productSN", mPro->productSN);

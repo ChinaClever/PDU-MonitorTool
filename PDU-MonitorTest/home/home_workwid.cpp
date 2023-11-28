@@ -287,7 +287,7 @@ bool Home_WorkWid::initWid()
 void Home_WorkWid::on_startBtn_clicked()
 {
 
-
+//    mPacket->init();
 //    mSendUdp->dataSend();///test//////////////////////////////////
 
     if(mPro->step == Test_End) {
