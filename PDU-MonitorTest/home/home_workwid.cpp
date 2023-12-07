@@ -254,7 +254,6 @@ bool Home_WorkWid::initWid()
         MsgBox::critical(this, tr("请先填写客户名称！"));
         return false;
     }
-
     if(mItem->cnt.num < 1) {
         MsgBox::critical(this, tr("请先填写订单剩余数量！"));
 //        if(ui->printerCheck->isChecked()) {
