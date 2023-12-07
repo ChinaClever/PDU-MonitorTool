@@ -66,7 +66,7 @@ void sDataPacket::init()
     pro->result = Test_Info;
     pro->startTime = QTime::currentTime();
 
-    pro->softwareType = "表头质检工具";
+    pro->softwareType = "PDU-MonitorTest";
     pro->companyName = "clever";
     pro->protocolVersion = "V1.0";
     pro->testStartTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
