@@ -60,6 +60,8 @@ bool Test_CoreThread::initDev()
         if(ret) {
             mPro->productSN = mDt->sn;
             mPro->productType = mDt->dev_type;
+            mPro->clientName.clear();
+            mPro->clientName = mItem->user;
 
             ret = mRead->readDev();
             QString str = tr("设备 LINK 级联口连接");
