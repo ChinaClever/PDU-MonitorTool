@@ -54,7 +54,7 @@ int Json_Pack::objData(QJsonObject &obj)
     for(int i=0; i<num; ++i)
     {
         QJsonObject subObj;
-        subObj.insert("no",i+1);
+        subObj.insert("no",QString::number(i+1));
         subObj.insert("name", mPro->itemName.at(i));
         subObj.insert("result", mPro->uploadPass.at(i)?1:0);
 
