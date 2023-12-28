@@ -124,6 +124,7 @@ struct sCfgItem
     bool printer;
     bool macprinter;
     uchar macCheck;
+    QString sn;//成品序列号
 };
 
 

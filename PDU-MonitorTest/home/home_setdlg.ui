@@ -39,7 +39,11 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1">
-     <widget class="QLineEdit" name="userEdit"/>
+     <widget class="QLineEdit" name="userEdit">
+      <property name="clearButtonEnabled">
+       <bool>false</bool>
+      </property>
+     </widget>
     </item>
     <item row="1" column="5">
      <widget class="QComboBox" name="securityBox">
@@ -71,7 +75,7 @@
        </size>
       </property>
       <property name="text">
-       <string>客户名称</string>
+       <string>工单号</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -193,16 +197,6 @@
     </item>
     <item row="2" column="1">
      <widget class="QLineEdit" name="hwEdit"/>
-    </item>
-    <item row="2" column="2">
-     <widget class="QLabel" name="label_24">
-      <property name="text">
-       <string>物料编码</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="3" colspan="3">
-     <widget class="QLineEdit" name="pnEdit"/>
     </item>
    </layout>
   </widget>

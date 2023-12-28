@@ -30,6 +30,12 @@ private slots:
     void on_comboBox_currentIndexChanged(int index);
     void on_ipTypeBox_currentIndexChanged(int index);
 
+    void on_userEdit_textChanged(const QString &arg1);
+
+    void on_verEdit_textChanged(const QString &arg1);
+
+    void on_hwEdit_textChanged(const QString &arg1);
+
 private:
     Ui::Home_SetDlg *ui;
     sCfgItem *mItem;

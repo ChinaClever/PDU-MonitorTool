@@ -30,6 +30,7 @@ void Test_CoreThread::getMacSlot(QString str)
     if( str.size() >= 17 ){
         this->mMacStr = str.right(17);
         mPro->macAddress = this->mMacStr;
+        qDebug()<<"mPro->macAddress     "<<mPro->macAddress;
     }
 }
 
@@ -62,7 +63,7 @@ bool Test_CoreThread::initDev()
             mPro->productType = mDt->dev_type;
             mPro->clientName.clear();
             mPro->clientName = mItem->user;
-
+            mPro->softwareVersion = mItem->sw_ver;
             ret = mRead->readDev();
             QString str = tr("设备 LINK 级联口连接");
             if(ret) str += tr("成功"); else str += tr("失败");
@@ -451,9 +452,23 @@ bool Test_CoreThread::factorySet()
 
 void Test_CoreThread::workResult(bool)
 {
+    bool res = false;
     mLogs->saveLogs();
     mLogs->updatePro(tr("测试结束"));
-    mSendUdp->dataSend();
+    QString str = tr("最终结果 ");
+    if(mPro->result != Test_Fail) {
+        str += tr("通过");
+        res = true;
+        mPro->uploadPassResult = 1;
+    } else {
+        res = false;
+        str += tr("失败");
+        mPro->uploadPassResult = 0;
+    }
+    mPacket->updatePro(str, res);
+
+    sleep(2);
+    Json_Pack::bulid()->http_post("testdata/add","192.168.1.12");//全流程才发送记录(http)
     mPro->step = Test_Over;
 }
 
@@ -484,6 +499,7 @@ void Test_CoreThread::workDown()
             if(mItem->printer){
                 sBarTend it;
                 it.fw = mItem->sw_ver;it.hw = mItem->hw_ver;it.pn = mItem->pn;
+
                 ret = Printer_BarTender::bulid()->printerInfo(it);
                 if(!ret) ret = Printer_BarTender::bulid()->printerInfo(it);
                 if(ret) mLogs->updatePro(tr("标签打印成功"), ret);

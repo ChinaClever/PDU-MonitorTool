@@ -31,9 +31,11 @@ void Test_NetWork::workDown()
 {
     UdpBaseData *res = mUdp->getData();
     if(res) {
+        qDebug()<<"aaaaaa---";
         QStringList list = QString(res->datagram).split(";");
         if(list.size() ==2) {
             QString str = list.first();
+            qDebug()<<"bbbbbb---  "<<str;
             if(str.contains(("Mac")))
                 emit sendMACSig(str);
             bool pass = list.last().toInt();

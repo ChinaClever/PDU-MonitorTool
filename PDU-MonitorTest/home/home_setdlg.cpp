@@ -40,7 +40,6 @@ void Home_SetDlg::initFunSlot()
     ui->protocolBox->setCurrentIndex(mItem->ip.protocol);
 
     ui->hwEdit->setText(mItem->hw_ver);
-    ui->pnEdit->setText(mItem->pn);
 
     ui->InFirst->setText(mItem->ip.inFirst);
     ui->InSecond->setText(mItem->ip.inSecond);
@@ -93,7 +92,6 @@ bool Home_SetDlg::getThresholdWid()
     mItem->ip.log = ui->logBox->currentIndex();
     mItem->sw_ver = ui->verEdit->text();
     mItem->hw_ver = ui->hwEdit->text();
-    mItem->pn = ui->pnEdit->text();
     mItem->ip.inFirst = ui->InFirst->text();
     mItem->ip.inSecond = ui->InSecond->text();
     mItem->ip.outFirst = ui->OutFirst->text();
@@ -255,3 +253,19 @@ void Home_SetDlg::on_ipTypeBox_currentIndexChanged(int index)
         ui->logBox->setItemText(1 , tr("带日志"));
     }
 }
+
+void Home_SetDlg::on_userEdit_textChanged(const QString &arg1)
+{
+    ui->userEdit->setClearButtonEnabled(1);
+}
+
+void Home_SetDlg::on_verEdit_textChanged(const QString &arg1)
+{
+    ui->verEdit->setClearButtonEnabled(1);
+}
+
+void Home_SetDlg::on_hwEdit_textChanged(const QString &arg1)
+{
+    ui->hwEdit->setClearButtonEnabled(1);
+}
+
