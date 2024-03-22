@@ -104,9 +104,9 @@ bool Test_ErrRange::oneLinePowErr()
     int err = exValue * (2*mItem->err.powErr+1);
     if(crate == 10)
     {
-      if(mDev->devType.devType == SI_PDU) err /= 100.0;
-      else err /= 1000.0;
-      //if(mDev->devType.devType == IP_PDU) value /= 10;
+        if(mDev->devType.devType == SI_PDU) err /= 100.0;
+        else err /= 1000.0;
+        //if(mDev->devType.devType == IP_PDU) value /= 10;
     }
     else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
@@ -166,9 +166,9 @@ bool Test_ErrRange::oneLineECCPowErr()
     int err = exValue * (2*mItem->err.powErr+1);
     if(crate == 10)
     {
-      if(mDev->devType.devType == SI_PDU) err /= 100.0;
-      else err /= 1000.0;
-      //if(mDev->devType.devType == IP_PDU) value /= 10;
+        if(mDev->devType.devType == SI_PDU) err /= 100.0;
+        else err /= 1000.0;
+        //if(mDev->devType.devType == IP_PDU) value /= 10;
     }
     else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
@@ -188,9 +188,9 @@ bool Test_ErrRange::powErr(int id)
     int err = exValue * (mItem->err.powErr+1);
     if(crate == 10)
     {
-      if(mDev->devType.devType == SI_PDU) err /= 100.0;
-      else err /= 1000.0;
-      if(mDev->devType.devType == IP_PDU) value /= 10;
+        if(mDev->devType.devType == SI_PDU) err /= 100.0;
+        else err /= 1000.0;
+        if(mDev->devType.devType == IP_PDU) value /= 10;
     } else err /= 1000.0;
     bool ret = checkErrRange(exValue, value, err);
     if(ret) pass = Test_Pass;
@@ -266,8 +266,8 @@ bool Test_ErrRange::curAlarm(int id)
                 ret = true;
             else
                 ret = false;
-//            if( unit->max[id]/10 != (cth->cur_max/10)/2*crate)
-//                ret = false;
+            //            if( unit->max[id]/10 != (cth->cur_max/10)/2*crate)
+            //                ret = false;
         } else{
             if( unit->max[id]/10 != (cth->cur_max/10)/2*crate)
                 ret = false;
