@@ -1,14 +1,18 @@
 ﻿#ifndef JSONPACK_H
 #define JSONPACK_H
 #include "datapacket.h"
+#include "http/httpclient.h"
 
-
-class Json_Pack
+class Json_Pack:public QObject
 {
-    Json_Pack();
+    Q_OBJECT
+    explicit Json_Pack(QObject *parent = nullptr);
 public:
-    static Json_Pack *bulid();
+    static Json_Pack *bulid(QObject *parent = nullptr);
     void getJson(QJsonObject &json, QByteArray &ba);
+    void http_post(const QString &method, const QString &ip, int port=8000);
+signals:
+    void httpSig(const QString &msg, bool pass);
 protected:
     void head(QJsonObject &obj);
     void pduInfo(QJsonObject &json);

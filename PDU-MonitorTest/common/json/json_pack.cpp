@@ -7,16 +7,16 @@
 #include "json_pack.h"
 
 
-Json_Pack::Json_Pack()
+Json_Pack::Json_Pack(QObject *parent)
 {
     mPro = sDataPacket::bulid()->getPro();
 }
 
-Json_Pack *Json_Pack::bulid()
+Json_Pack *Json_Pack::bulid(QObject *parent)
 {
     static Json_Pack* sington = NULL;
     if(sington == NULL) {
-        sington = new Json_Pack();
+        sington = new Json_Pack(parent);
     }
     return sington;
 }
@@ -26,6 +26,9 @@ void Json_Pack::head(QJsonObject &obj)
 {
     QDateTime t = QDateTime::currentDateTime();
     mPro->testEndTime = t.toString("yyyy-MM-dd HH:mm:ss");
+    // QString str = mPro->pn + "+" + mPro->productSN;
+    // QString ba;
+    // ba = QString("a = %1, b = %2, c = %3").arg(mPro->productSN).arg(mPro->productSN).arg(mPro->productSN);
     mPro->testTime = QString::number(QDateTime::fromString(mPro->testStartTime,"yyyy-MM-dd HH:mm:ss").secsTo(t));
     obj.insert("softwareType", mPro->softwareType);
     obj.insert("productType", mPro->productType);
@@ -33,13 +36,15 @@ void Json_Pack::head(QJsonObject &obj)
     obj.insert("macAddress", mPro->macAddress);
     obj.insert("result", mPro->uploadPassResult);
     obj.insert("softwareVersion", mPro->softwareVersion);
-    obj.insert("clientName", mPro->clientName);
+    obj.insert("work_order", mPro->clientName);
     obj.insert("companyName", mPro->companyName);
     obj.insert("protocolVersion", mPro->protocolVersion);
     obj.insert("testStartTime", mPro->testStartTime);
     obj.insert("testEndTime", mPro->testEndTime);
     obj.insert("testTime", mPro->testTime);
-
+    obj.insert("goods_SN", mPro->goods_SN);//成品序列号
+    // obj.insert("product_code", str);
+    // obj.insert("module_sn", ba);
     pduInfo(obj);
 }
 
@@ -47,8 +52,6 @@ void Json_Pack::pduInfo(QJsonObject &obj)
 {
     objData(obj);
 }
-
-
 
 int Json_Pack::objData(QJsonObject &obj)
 {
@@ -73,6 +76,25 @@ void Json_Pack::getJson(QJsonObject &json , QByteArray &ba)
     head(json);
     QJsonDocument jsonDoc(json);
     ba = jsonDoc.toJson();
+}
+
+void Json_Pack::http_post(const QString &method, const QString &ip, int port)
+{
+    QJsonObject json; head(json);
+
+    AeaQt::HttpClient http;
+    http.clearAccessCache();
+    http.clearConnectionCache();
+    QString url = "http://%1:%2/%3";
+    http.post(url.arg(ip).arg(port).arg(method))
+        .header("content-type", "application/json")
+        .onSuccess([&](QString result) {qDebug()<<"result    "<<result;emit httpSig(result,true);})
+        .onFailed([&](QString error) {qDebug()<<"error    "<<error;emit httpSig(error,false); })
+        .onTimeout([&](QNetworkReply *) {qDebug()<<"http_post timeout    ";emit httpSig("http_post timeout",false); }) // 超时处理
+        .timeout(1000) // 1s超时
+        .block()
+        .body(json)
+        .exec();
 }
 
 //bool Json_Build::saveJson( QJsonObject &json)

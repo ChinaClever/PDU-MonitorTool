@@ -44,6 +44,8 @@ private slots:
 //    void on_readBtn_clicked();
 
     void on_printBtn_clicked();
+    void insertTextslot(QString str , bool ret);
+    void on_snEdit_textChanged(const QString &arg1);
 
 private:
     Ui::Home_WorkWid *ui;
