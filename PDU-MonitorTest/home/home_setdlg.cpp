@@ -38,6 +38,7 @@ void Home_SetDlg::initFunSlot()
     on_ipTypeBox_currentIndexChanged(v);
     ui->lcdBox->setCurrentIndex(mItem->ip.lcd);
     ui->protocolBox->setCurrentIndex(mItem->ip.protocol);
+    ui->TransformerBox->setCurrentIndex(mItem->ip.transformer);
 
     ui->hwEdit->setText(mItem->hw_ver);
 
@@ -99,6 +100,7 @@ bool Home_SetDlg::getThresholdWid()
     mItem->ip.lcd = ui->lcdBox->currentIndex();
     mItem->ip.protocol = ui->protocolBox->currentIndex();
     mItem->ip.ip_bytepassword = ui->PasswordTypeBox->currentIndex();
+    mItem->ip.transformer = ui->TransformerBox->currentIndex();
 
     return true;
 }

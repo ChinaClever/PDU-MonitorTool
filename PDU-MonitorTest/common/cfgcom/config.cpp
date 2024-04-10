@@ -118,6 +118,7 @@ void Cfg::initCfgDev()
     item->ip.ip_bytepassword = read("ip_bytepassword", 0, g).toInt();
     item->ip.lcd = read("lcd", 0, g).toInt();
     item->ip.protocol = read("protocol", 0, g).toInt();
+    item->ip.transformer = read("transformer", 1, g).toInt();
     item->sw_ver = read("sw_ver", "", g).toString();
     item->ip.inFirst = read("ip_infirst", "IEC309", g).toString();
     item->ip.inSecond = read("ip_insecond", "18A", g).toString();
@@ -156,6 +157,7 @@ void Cfg::writeCfgDev()
     write("ip_bytepassword", item->ip.ip_bytepassword, g);
     write("lcd", item->ip.lcd, g);
     write("protocol", item->ip.protocol, g);
+    write("transformer", item->ip.transformer, g);
     write("sw_ver", item->sw_ver, g);
     write("ip_infirst", item->ip.inFirst, g);
     write("ip_insecond", item->ip.inSecond, g);

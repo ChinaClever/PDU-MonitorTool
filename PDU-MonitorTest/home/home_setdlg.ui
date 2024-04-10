@@ -198,6 +198,27 @@
     <item row="2" column="1">
      <widget class="QLineEdit" name="hwEdit"/>
     </item>
+    <item row="2" column="2">
+     <widget class="QLabel" name="label_24">
+      <property name="text">
+       <string>类型</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QComboBox" name="TransformerBox">
+      <item>
+       <property name="text">
+        <string>锰铜</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>互感器</string>
+       </property>
+      </item>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QGroupBox" name="groupBox_1">
