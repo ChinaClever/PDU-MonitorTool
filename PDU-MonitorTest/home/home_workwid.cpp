@@ -292,14 +292,15 @@ void Home_WorkWid::on_startBtn_clicked()
 {
 
     if(mPro->step == Test_End) {
-        if(!ui->snEdit->text().isEmpty())
+        //if(!ui->snEdit->text().isEmpty())
         {
             if(initWid()) {
                mCoreThread->start();
             }
-        }else{
-            MsgBox::critical(this, tr("请先填写成品序列号！"));
         }
+//        else{
+//            MsgBox::critical(this, tr("请先填写成品序列号！"));
+//        }
     } else {
         bool ret = MsgBox::question(this, tr("确定需要提前结束？"));
         if(ret) {

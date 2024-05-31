@@ -21,8 +21,8 @@ void Test_CoreThread::initFunSlot()
     mNetWork = Test_NetWork::bulid(this);
     connect(mNetWork , SIGNAL(sendMACSig(QString)) , this , SLOT(getMacSlot(QString)));
     Printer_BarTender::bulid(this);
-    mSendUdp = new UdpSendSocket(this);
-    mSendUdp->initSocket(47755);
+//    mSendUdp = new UdpSendSocket(this);
+//    mSendUdp->initSocket(47755);
 }
 
 void Test_CoreThread::getMacSlot(QString str)
@@ -467,8 +467,8 @@ void Test_CoreThread::workResult(bool)
     }
     mPacket->updatePro(str, res);
 
-    sleep(2);
-    Json_Pack::bulid()->http_post("testdata/add","192.168.1.12");//全流程才发送记录(http)
+//    sleep(2);
+//    Json_Pack::bulid()->http_post("testdata/add","192.168.1.12");//全流程才发送记录(http)
     mPro->step = Test_Over;
 }
 

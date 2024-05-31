@@ -90,8 +90,8 @@ void Cfg::initCfgDev()
 {
     item->user = read("user", "", "User").toString();
     item->cTh.type = read("cth_type", 1).toInt();
-    item->cTh.vol_min = read("vol_min", 80).toInt();
-    item->cTh.vol_max = read("vol_max", 276).toInt();
+    item->cTh.vol_min = read("vol_min", 90).toInt();
+    item->cTh.vol_max = read("vol_max", 264).toInt();
     item->cTh.cur_min = read("cur_min", 0).toInt();
     item->cTh.cur_max = read("cur_max", 320).toInt();
     item->cTh.loopcur_min = read("loopcur_min", 0).toInt();

@@ -123,8 +123,8 @@ void Home_SetDlg::on_comboBox_currentIndexChanged(int index)
     sCfgDev *cth = &(mItem->cTh);
     cth->type = index;
     if(index) {
-        cth->vol_min = 80;
-        cth->vol_max = 276;
+        cth->vol_min = 90;
+        cth->vol_max = 264;
         cth->cur_min = 0;
         switch (index) {
         case 1:  cth->cur_max = 320; break;
