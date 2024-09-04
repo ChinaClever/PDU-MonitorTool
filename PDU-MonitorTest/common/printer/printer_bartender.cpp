@@ -134,7 +134,7 @@ bool Printer_BarTender::RawDataToPrinter(LPSTR szPrinterName, LPBYTE lpData, DWO
 
 bool Printer_BarTender::printMAC(QString cmd)
 {
-    QString cmd1 = tr("^XA^PW1000^LL800^LH0,0^MD13^PR2^FO250,30^A0,55,55^FD%1^FS^XZ").arg(cmd);
+    QString cmd1 = tr("^XA^PW1000^LL800^LH0,0^MD13^PR2^FO250,30^A0,55,55^FD%1^FS^XZ").arg("MAC: "+cmd);
     int length = cmd1.length();
     QString printerName = QPrinterInfo::defaultPrinterName();
     bool ret = RawDataToPrinter((LPSTR)printerName.toLocal8Bit().data(),
