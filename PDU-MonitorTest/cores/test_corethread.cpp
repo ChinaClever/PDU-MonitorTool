@@ -30,7 +30,6 @@ void Test_CoreThread::getMacSlot(QString str)
     if( str.size() >= 17 ){
         this->mMacStr = str.right(17);
         mPro->macAddress = this->mMacStr;
-        qDebug()<<"mPro->macAddress     "<<mPro->macAddress;
     }
 }
 
@@ -54,7 +53,7 @@ bool Test_CoreThread::initDev()
 {
     mLogs->updatePro(tr("即将开始"));
     bool ret  = false;
-    if(IP_PDUV3_SHATE == mItem->ip.version)
+    if((IP_PDUV3_SHATE == mItem->ip.version)||(IP_PDUV6 == mItem->ip.version))
         ret = true;
     else{
         ret = mRead->readSn();
@@ -172,7 +171,6 @@ bool Test_CoreThread::eleErrRange0(int i)
         str += tr("正常");
         ret = true;
     }
-
     return mLogs->updatePro(str, ret);
 }
 
@@ -467,8 +465,8 @@ void Test_CoreThread::workResult(bool)
     }
     mPacket->updatePro(str, res);
 
-    sleep(2);
-    Json_Pack::bulid()->http_post("testdata/add","192.168.1.12");//全流程才发送记录(http)
+    // sleep(2);
+    // Json_Pack::bulid()->http_post("testdata/add","192.168.1.12");//全流程才发送记录(http)
     mPro->step = Test_Over;
 }
 
@@ -478,7 +476,7 @@ void Test_CoreThread::workDown()
     bool ret = false;
     ret = initDev();
     if(ret) {
-        if(IP_PDUV3_SHATE != mItem->ip.version){
+        if((IP_PDUV3_SHATE != mItem->ip.version)&&(IP_PDUV6 != mItem->ip.version)){
             ret = checkErrRange();
             if(mItem->cTh.enModify) {
                 if(ret) ret = writeAlarmTh();
