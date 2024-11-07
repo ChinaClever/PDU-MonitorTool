@@ -50,7 +50,7 @@ private:
     Test_DevCtrl *mCtrl;
     Test_NetWork *mNetWork;
     QString mMacStr;
-    UdpSendSocket *mSendUdp;
+//    UdpSendSocket *mSendUdp;
 };
 
 #endif // TEST_CORETHREAD_H

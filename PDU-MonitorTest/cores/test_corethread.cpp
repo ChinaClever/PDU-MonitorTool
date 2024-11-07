@@ -21,8 +21,8 @@ void Test_CoreThread::initFunSlot()
     mNetWork = Test_NetWork::bulid(this);
     connect(mNetWork , SIGNAL(sendMACSig(QString)) , this , SLOT(getMacSlot(QString)));
     Printer_BarTender::bulid(this);
-    mSendUdp = new UdpSendSocket(this);
-    mSendUdp->initSocket(47755);
+//    mSendUdp = new UdpSendSocket(this);
+//    mSendUdp->initSocket(47755);
 }
 
 void Test_CoreThread::getMacSlot(QString str)
@@ -465,8 +465,9 @@ void Test_CoreThread::workResult(bool)
     }
     mPacket->updatePro(str, res);
 
-    // sleep(2);
-    // Json_Pack::bulid()->http_post("testdata/add","192.168.1.12");//全流程才发送记录(http)
+//    sleep(2);
+//    Json_Pack::bulid()->http_post("testdata/add","192.168.1.12");//全流程才发送记录(http)
+
     mPro->step = Test_Over;
 }
 
@@ -487,7 +488,7 @@ void Test_CoreThread::workDown()
         if(ret) ret = factorySet();
         if(ret){
             if(mItem->macprinter){
-                if( !this->mMacStr.isEmpty() && IP_PDU == mDt->devType){
+                if( !this->mMacStr.isEmpty() && (IP_PDU == mDt->devType || IP_PDUV3_SHATE == mItem->ip.version)){
                     ret = Printer_BarTender::bulid()->printMAC(this->mMacStr);
                     if(!ret) ret = Printer_BarTender::bulid()->printMAC(this->mMacStr);
                     if(ret) mLogs->updatePro(tr("MAC标签打印成功"), ret);
